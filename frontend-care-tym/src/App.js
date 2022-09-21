@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom"
+import Footer from "./Component/Footer";
+import Activation from "./Page/Activation";
+import Create from "./Page/AdminAPP/Create";
+import Edit from "./Page/AdminAPP/Edit";
+import Home from "./Page/AdminAPP/Home";
+import Login from "./Page/Login";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    return (
+        <div>
+            <div className="min-h-screen">
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/activation" element={<Activation />} />
+
+                    <Route path="/admin/home" element={<Home/>}/>
+                    <Route path="/admin/create" element={<Create/>}/>
+                    <Route path="/admin/edit/:key" element={<Edit/>}/>
+
+                    <Route path="/recovery" element={<Login />} />
+
+                </Routes>
+            </div>
+
+            <Footer />
+        </div>
+
+    )
 }
-
-export default App;
