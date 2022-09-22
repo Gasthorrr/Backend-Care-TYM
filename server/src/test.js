@@ -3,7 +3,7 @@ const productosModel = require("./database");
 
 (async () => {
 
-    console.log( await productosModel.testModule());
+    console.log( await productosModel.testDBAccess());
 
 }
 )()
