@@ -1,17 +1,19 @@
 import { useNavigate } from "react-router-dom"
-import NavBar from "../../Component/NavBar";
 
-export default function Edit() {
+export default function Create() {
 
     const history = useNavigate()
 
     return (
         <div className="flex justify-center flex-col">
-            <NavBar />
 
             <div className="flex justify-center">
                 <div className="mt-10 mb-4 w-5/6 flex md:max-w-2xl lg:max-w-4xl">
-                    <h1 className="ml-4 text-xl font-medium align-top">Editar centro médico</h1>
+                    <button onClick={() => history(-1)}>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    </button>
+
+                    <h1 className="ml-4 text-xl font-medium align-top">Crear centro médico</h1>
                 </div>
             </div>
             <div className="flex justify-center">
@@ -32,13 +34,8 @@ export default function Edit() {
                         <div>
                             <label className="my-2 block font-medium">Correo electrónico</label>
                             <input type="password" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
-                        </div>
-                        <div className="grid grid-cols-2">
-                            <button className="p-3 my-2 mr-2 bg-green-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">Enviar cambios</button>
-                            <button className="p-3 my-2 ml-2 bg-red-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm" onClick={() => history(-1)}>Cancelar</button>
-                        </div>
-                        <button className="p-3 bg-white text-red-500 border-2 border-red-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">Eliminar centro</button>
-
+                        </div>                       
+                        <button className="p-3 my-2 bg-green-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">Registrar </button>
                     </form>
                 </div>
             </div>
