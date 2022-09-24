@@ -16,7 +16,9 @@ const testDBAccess = async ()=>{
     const query= await client.query(`select  * from cadena_medica where nombre='test'`);
     return(query.rows[0]);
 }
-
+/**
+ * @returns {Array}  una lista con los centros medicos organizados por columnas[[ids],[Nombres],[Direcciones],[Ciudades]]
+ */
 const mostrarCentrosMedicos = async ()=>{ 
     const query= await client.query(`select * from centro_medico `);
     const cantidadCentros=query.rowCount;
