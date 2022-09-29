@@ -40,6 +40,7 @@ const mostrarCentrosMedicos = async ()=>{
 
 module.exports = {
     /// las funciones que se veran al exportar el modulo
+    client,
     testDBAccess,
     mostrarCentrosMedicos
 }
