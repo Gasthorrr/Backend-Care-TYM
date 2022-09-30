@@ -22,18 +22,17 @@ const testDBAccess = async ()=>{
 const mostrarCentrosMedicos = async ()=>{ 
     const query= await client.query(`select * from centro_medico `);
     const cantidadCentros=query.rowCount;
-    const listaIds=new Array(cantidadCentros);
-    const listaNombres=new Array(cantidadCentros);
-    const listaDirecciones=new Array(cantidadCentros);
-    const listaCiudades=new Array(cantidadCentros);
+    const ListaCentros=new Array(cantidadCentros);
     for(var i=0;i<cantidadCentros;i++){
-        listaIds[i]=await query.rows[i]['id'];
-        listaNombres[i]=await query.rows[i]['nombre'];
-        listaDirecciones[i]=await query.rows[i]['direccion'];
-        listaCiudades[i]=await query.rows[i]['ciudad'];
+        const id=await query.rows[i]['id'];
+        const nombre=await query.rows[i]['nombre'];
+        const direccion=await query.rows[i]['direccion'];
+        const ciudad=await query.rows[i]['ciudad'];
+        centro={"id":id,"nombre":nombre,"direccion":direccion,"ciudad":ciudad};
+        ListaCentros[i]=centro;
     }
     ///return query;
-    return([listaIds,listaNombres,listaDirecciones,listaCiudades]);
+    return(JSON.stringify(ListaCentros));
 }
 
 
