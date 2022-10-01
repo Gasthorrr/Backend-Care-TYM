@@ -6,7 +6,7 @@ const getMedicCenter = async(req,res) =>{
         const client = await getConnection.client;
         const query = await client.query(`select * from centro_medico where id=`+ id);
         const result = query['rows']
-        res.json(result);
+        res.status(200).json(result);
     }catch(error){
         res.status(500);
         res.send(error.message);
@@ -19,7 +19,7 @@ const getMedicCenters = async(req,res) =>{
         const client = await getConnection.client;
         const query = await client.query(`select * from centro_medico`);
         const result = query['rows']
-        res.json(result);
+        res.status(200).json(result);
     }catch(error){
         res.status(500);
         res.send(error.message);

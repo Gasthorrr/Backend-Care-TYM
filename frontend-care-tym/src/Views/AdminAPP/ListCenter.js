@@ -1,9 +1,25 @@
 import Component from "../../Component/AdminAPP/Component";
 import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import {getRequest} from "../../Services/Request";
 
 export default function ListCenter() {
 
     const history = useNavigate()
+
+    const [center, setCenter] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(()=>{
+
+        const request = async () => {
+            setCenter(await getRequest("http://127.0.0.1:8000/api/user/center"))
+        }
+
+        request()
+        setLoading(false)
+    },[])
+
 
     return (
         <>
@@ -20,10 +36,13 @@ export default function ListCenter() {
 
             <div className="flex justify-center">
                 <div className="col-span-3 flex flex-col w-full md:w-5/6 md:max-w-2xl lg:max-w-4xl">
-                    <Component name="Rads" />
-                    <Component name="Intregramedica" />
-                    <Component name="Red salud" />
-                    <Component name="Hospital coquimbo" />
+                    {
+                        loading ?
+                        null : 
+                        center.map((x) => (
+                            <Component key={x.id} name={x.nombre} id={x.id} />
+                        ))
+                    }
                 </div>
             </div>
 
