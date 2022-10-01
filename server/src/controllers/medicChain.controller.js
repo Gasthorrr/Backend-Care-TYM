@@ -2,15 +2,15 @@ const getConnection = require("./../database");
 
 const getMedicChain = async(req,res) =>{
     try{
-        const {name} = req.params;
+        const {nombre} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`select * from cadena_medica where nombre=`+ name);
+        const query = await client.query(`select * from cadena_medica where nombre='${nombre}'`);
         const result = query['rows']
         res.json(result);
     }catch(error){
         res.status(500);
         res.send(error.message);
-    }
+    };
     
 };
 
@@ -49,9 +49,9 @@ const addMedicChain = async(req,res) =>{
 
 const deleteMedicChain = async(req,res) =>{
     try{
-        const {name} = req.params;
+        const {nombre} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`delete from cadena_medica where nombre=`+ name);
+        const query = await client.query(`delete from cadena_medica where nombre='${nombre}'`);
         const result = query['rows']
         res.json(result);
     }catch(error){

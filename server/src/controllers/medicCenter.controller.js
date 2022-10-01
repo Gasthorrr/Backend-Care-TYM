@@ -4,13 +4,13 @@ const getMedicCenter = async(req,res) =>{
     try{
         const {id} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`select * from centro_medico where id=`+ id);
+        const query = await client.query(`select * from centro_medico where id='${id}'`);
         const result = query['rows']
         res.status(200).json(result);
     }catch(error){
         res.status(500);
         res.send(error.message);
-    }
+    };
     
 };
 
@@ -51,7 +51,7 @@ const deleteMedicCenter = async(req,res) =>{
     try{
         const {id} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`delete from centro_medico where id=`+ id);
+        const query = await client.query(`delete from centro_medico where id='${id}'`);
         const result = query['rows']
         res.json(result);
     }catch(error){
