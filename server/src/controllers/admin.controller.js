@@ -1,10 +1,10 @@
 const getConnection = require("./../database");
 
-const getMedicCenter = async(req,res) =>{
+const getAdmin = async(req,res) =>{
     try{
-        const {id} = req.params;
+        const {usuario} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`select * from centro_medico where id=`+ id);
+        const query = await client.query(`select * from administrador where usuario=`+ usuario);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -14,10 +14,10 @@ const getMedicCenter = async(req,res) =>{
     
 };
 
-const getMedicCenters = async(req,res) =>{
+const getAdministrators = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const query = await client.query(`select * from centro_medico`);
+        const query = await client.query(`select * from administrador`);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -27,19 +27,19 @@ const getMedicCenters = async(req,res) =>{
     
 };
 
-const addMedicCenter = async(req,res) =>{
+const addAdmin= async(req,res) =>{
     try{
-        const { id_cadena_medica, nombre, contraseña, direccion, ciudad } = req.body;
+        const { usuario, contraseña } = req.body;
 
-        if(id_cadena_medica === undefined || nombre === undefined || contraseña === undefined || direccion === undefined || ciudad === undefined){
+        if(usuario === undefined || contraseña === undefined){
             res.status(400).json({message: "Bad Request. Please fill all field"});
         }
 
         const client = await getConnection.client;
         await client.query(
-            `INSERT INTO "centro_medico" ("id_cadena_medica", "nombre", "contraseña", "direccion", "ciudad") 
-            VALUES ($1, $2, $3, $4, $5)`, [id_cadena_medica, nombre, contraseña, direccion, ciudad]);
-        res.json({ message: "Center added" });
+            `INSERT INTO "administrador" ("usuario", "contraseña") 
+            VALUES ($1, $2)`, [usuario, contraseña]);
+        res.json({ message: "Admin added" });
     }catch(error){
         res.status(500);
         res.send(error.message);
@@ -47,11 +47,11 @@ const addMedicCenter = async(req,res) =>{
     
 };
 
-const deleteMedicCenter = async(req,res) =>{
+const deleteAdmin = async(req,res) =>{
     try{
-        const {id} = req.params;
+        const {usuario} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`delete from centro_medico where id=`+ id);
+        const query = await client.query(`delete from administrador where usuario=`+ usuario);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -61,11 +61,11 @@ const deleteMedicCenter = async(req,res) =>{
     
 };
 
-const updateMedicCenter = async(req,res) =>{
+const updateAdmin = async(req,res) =>{
     try{
-        const { id_cadena_medica, nombre, contraseña, direccion, ciudad } = req.body;
+        const { usuario, contraseña } = req.body;
         const {id} = req.params;
-        if(id === undefined || id_cadena_medica === undefined || nombre === undefined || contraseña === undefined || direccion === undefined || ciudad === undefined){
+        if(usuario === undefined || contraseña === undefined){
             res.status(400).json({message: "Bad Request. Please fill all field"});
         }
 
@@ -82,11 +82,11 @@ const updateMedicCenter = async(req,res) =>{
 };
 
 const methods = {
-    getMedicCenter,
-    getMedicCenters,
-    addMedicCenter,
-    deleteMedicCenter,
-    updateMedicCenter
+    getAdmin,
+    getAdministrators,
+    addAdmin,
+    deleteAdmin,
+    updateAdmin
 };
 
 module.exports = methods;
