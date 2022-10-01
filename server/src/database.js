@@ -16,90 +16,63 @@ const testDBAccess = async ()=>{
     const query= await client.query(`select  * from cadena_medica where nombre='test'`);
     return(query.rows[0]);
 }
+
 /**
- * @returns {Array}  una lista con los centros medicos organizados por columnas[[ids],[Nombres],[Direcciones],[Ciudades]]
+ * @returns {Array}  A list with all the medic centers sorted by columns[[ids],[Nombres],[Direcciones],[Ciudades]]
  */
-const mostrarCentrosMedicos = async ()=>{ 
+const showMedicCenters = async ()=>{ 
     const query= await client.query(`select * from centro_medico `);
-    const cantidadCentros=query.rowCount;
-    const ListaCentros=new Array(cantidadCentros);
-    for(var i=0;i<cantidadCentros;i++){
+    const numberOfCenters=query.rowCount; 
+    const centerList=new Array(numberOfCenters);
+    for(var i=0;i<numberOfCenters;i++){
         const id=await query.rows[i]['id'];
-        const nombre=await query.rows[i]['nombre'];
-        const direccion=await query.rows[i]['direccion'];
-        const ciudad=await query.rows[i]['ciudad'];
-        centro={"id":id,"nombre":nombre,"direccion":direccion,"ciudad":ciudad};
-        ListaCentros[i]=centro;
+        const name=await query.rows[i]['nombre'];
+        const direction=await query.rows[i]['direccion'];
+        const city=await query.rows[i]['ciudad'];
+        center={"id":id,"nombre":name,"direccion":direction,"ciudad":city};
+        centerList[i]=center;
     }
     ///return query;
-    return(JSON.stringify(ListaCentros));
+    return(JSON.stringify(centerList));
 }
 
-const getTipoDeUsuario = async (key)=>{ 
-    //// buscar usuario como admin
-    const queryAdmin= await client.query(`select * from administrador where usuario='${key}'`);
-    if(queryAdmin.rowCount!=0){
+const getUseruserType = async (key)=>{ 
+    //// Searches the user into the admin table
+    const adminQuery= await client.query(`select * from administrador where usuario='${key}'`);
+    if(adminQuery.rowCount!=0){
         return "administrador";
     }
-    //// buscar usuario como cadena medica
-    const queryCadena= await client.query(`select * from cadena_medica where nombre='${key}'`);
-    if(queryCadena.rowCount!=0){
+    //// Searches the user into the medic chain table
+    const medicChainQuery= await client.query(`select * from cadena_medica where nombre='${key}'`);
+    if(medicChainQuery.rowCount!=0){
         return "cadena_medica";
     }
-    //// buscar usuario como centro medico
-    const queryCentroMedico= await client.query(`select * from centro_medico where nombre='${key}'`);
-    if(queryCentroMedico.rowCount!=0){
+    //// Searches the user into the medic center table
+    const medicCenterQuery= await client.query(`select * from centro_medico where nombre='${key}'`);
+    if(medicCenterQuery.rowCount!=0){
         return "centro_medico";
     }
-    //// buscar usuario como coordinador
-    const queryCoordinador= await client.query(`select * from coordinador where rut='${key}'`);
-    if(queryCoordinador.rowCount!=0){
+    //// Searches the user into the coordinator/secretary table
+    const coordinatorQuery= await client.query(`select * from coordinador where rut='${key}'`);
+    if(coordinatorQuery.rowCount!=0){
         return "coordinador";
     }
-    //// buscar usuario como  medico
-    const queryMedico= await client.query(`select * from medico where rut='${key}'`);
-    if(queryMedico.rowCount!=0){
+    //// Searches the user into the medic table
+    const medicQuery= await client.query(`select * from medico where rut='${key}'`);
+    if(medicQuery.rowCount!=0){
         return "medico";
     }
-    //// buscar usuario como paciente 
-    const queryPaciente= await client.query(`select * from paciente where rut='${key}'`);
-    if(queryPaciente.rowCount!=0){
+    //// Searches the user into the patient table
+    const patientQuery= await client.query(`select * from paciente where rut='${key}'`);
+    if(patientQuery.rowCount!=0){
         return "paciente";
     }
 
-    return "no encontrado";
-
-};
-
-const login = async (key,password)=>{ 
-    const DiccionarioPK={
-        "administrador":"usuario",
-        "cadena_medica":"nombre",
-        "centro_medico":"nombre",
-        "coordinador" : "rut",
-        "medico" : "rut", 
-        "paciente" : "rut" 
-    };
-    const tipo=await getTipoDeUsuario(key);
-    if(tipo=="no encontrado"){
-        return "no encontrado";
-    }
-    else{
-        const primaryKey = DiccionarioPK [tipo];
-        queryValidarContraseña = await client.query(`select * from ${tipo} where (${primaryKey}='${key}' and contraseña='${password}')`);
-        if(queryValidarContraseña.rowCount==1){
-            return(tipo);
-        }
-        return "contraseña incorrecta";    
-    }
+    return "Not Found";
 
 };
 
 module.exports = {
     /// las funciones que se veran al exportar el modulo
     client,
-    testDBAccess,
-    mostrarCentrosMedicos,
-    getTipoDeUsuario,
-    login
 }

@@ -3,9 +3,9 @@ const databaseAPI = require("./database");
 
 (async () => {
 
-    //console.log( await productosModel.testDBAccess());
-    ///mostrar centros medicos
-    console.log( await databaseAPI.login("21.466.478-5 ","123pedro"));
+    ///Show all medic centers
+    console.log( await databaseAPI.showMedicCenters());
+    console.log( await databaseAPI.login("20.007.466-1","qwerty"));
 
 }
 )()
