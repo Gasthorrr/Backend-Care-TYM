@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const centerController = require("./../controllers/medicCenter.controller");
-const adminController = require("./../controllers/admin.controller");
+const adminController = require("../controllers/user.controller");
 
 router.get("/center/:id",centerController.getMedicCenter);
 router.get('/center',centerController.getMedicCenters);

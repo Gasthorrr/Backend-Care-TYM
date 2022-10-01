@@ -1,4 +1,4 @@
-const getConnection = require("./../database");
+const getConnection = require("../database");
 
 const getAdmin = async(req,res) =>{
     try{

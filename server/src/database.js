@@ -69,7 +69,7 @@ const getTipoDeUsuario = async (key)=>{
 
     return "no encontrado";
 
-}
+};
 
 
 module.exports = {
