@@ -5,7 +5,7 @@ const databaseAPI = require("./database");
 
     //console.log( await productosModel.testDBAccess());
     ///mostrar centros medicos
-    console.log( await databaseAPI.getTipoDeUsuario("20.007.466-2"));
+    console.log( await databaseAPI.login("21.466.478-5 ","123pedro"));
 
 }
 )()

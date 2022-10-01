@@ -49,12 +49,12 @@ const getTipoDeUsuario = async (key)=>{
     //// buscar usuario como centro medico
     const queryCentroMedico= await client.query(`select * from centro_medico where nombre='${key}'`);
     if(queryCentroMedico.rowCount!=0){
-        return "centro medico";
+        return "centro_medico";
     }
     //// buscar usuario como coordinador
     const queryCoordinador= await client.query(`select * from coordinador where rut='${key}'`);
     if(queryCoordinador.rowCount!=0){
-        return "centro_medico";
+        return "coordinador";
     }
     //// buscar usuario como  medico
     const queryMedico= await client.query(`select * from medico where rut='${key}'`);
@@ -71,11 +71,35 @@ const getTipoDeUsuario = async (key)=>{
 
 };
 
+const login = async (key,password)=>{ 
+    const DiccionarioPK={
+        "administrador":"usuario",
+        "cadena_medica":"nombre",
+        "centro_medico":"nombre",
+        "coordinador" : "rut",
+        "medico" : "rut", 
+        "paciente" : "rut" 
+    };
+    const tipo=await getTipoDeUsuario(key);
+    if(tipo=="no encontrado"){
+        return "no encontrado";
+    }
+    else{
+        const primaryKey = DiccionarioPK [tipo];
+        queryValidarContraseña = await client.query(`select * from ${tipo} where (${primaryKey}='${key}' and contraseña='${password}')`);
+        if(queryValidarContraseña.rowCount==1){
+            return(tipo);
+        }
+        return "contraseña incorrecta";    
+    }
+
+};
 
 module.exports = {
     /// las funciones que se veran al exportar el modulo
     client,
     testDBAccess,
     mostrarCentrosMedicos,
-    getTipoDeUsuario
+    getTipoDeUsuario,
+    login
 }
