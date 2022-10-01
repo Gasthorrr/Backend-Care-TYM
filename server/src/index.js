@@ -24,6 +24,7 @@ app.use(cookieParser());
 
 //Routes
 app.use('/api/user', require('./routes/index'));
+app.use('/api/login',require("./routes/login"));
 
 //Starting Server
 app.listen(app.get('port'), () => {
