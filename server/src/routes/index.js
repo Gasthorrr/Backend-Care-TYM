@@ -3,6 +3,10 @@ const router = Router();
 const centerController = require("./../controllers/medicCenter.controller");
 const adminController = require("../controllers/admin.controller");
 const chainsController = require("./../controllers/medicChain.controller");
+const loginController = require("./../controllers/login.controller");
+
+router.get("/login/",loginController.getLogin);
+router.get("/login/:key",loginController.getLogin);
 
 router.get("/center/:id",centerController.getMedicCenter);
 router.get('/center',centerController.getMedicCenters);

@@ -1,29 +1,24 @@
 const client = require('./../database');
 
 const login = async (key,password)=>{ 
-    const PrimaryKeyDicctionary={
-        "administrador":"usuario",
-        "cadena_medica":"nombre",
-        "centro_medico":"nombre",
-        "coordinador" : "rut",
-        "medico" : "rut", 
-        "paciente" : "rut" 
-    };
-    const userType=await getUseruserType(key);
-    if(userType=="Not Found"){
-        return "Not Found";
-    }
-    else{
-        const primaryKey = PrimaryKeyDicctionary [userType];
-        queryValidarContraseña = await client.query(`select * from ${userType} where (${primaryKey}='${key}' and contraseña='${password}')`);
-        if(queryValidarContraseña.rowCount==1){
-            return(userType);
-        }
-        return "Incorrect Password";    
-    }
+    
 
+};
+const getLogin = async(req,res) =>{
+    try{
+        const result =  await client.login("20.007.466-1","qwerty");   /// test
+        //const { key } = req.params;
+        ///const { password } = req.params;
+        ///const result =  await client.login(key,password);
+        res.status(200).json(result);
+    }catch(error){
+        res.status(500);
+        res.send(error.message);
+    }
+    
 };
 
 module.exports = {
     login,
+    getLogin
 }
