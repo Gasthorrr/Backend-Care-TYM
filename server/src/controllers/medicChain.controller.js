@@ -49,11 +49,11 @@ const addMedicChain = async(req,res) =>{
 
 const deleteMedicChain = async(req,res) =>{
     try{
-        const {nombre} = req.params;
+        const name = req.params.name;
         const client = await getConnection.client;
-        const query = await client.query(`delete from cadena_medica where nombre='${nombre}'`);
+        const query = await client.query(`delete from cadena_medica where nombre='${name}'`);
         const result = query['rows']
-        res.json(result);
+        res.status(200).json("The "+name+" medic chain was deleted succsesfuly");
     }catch(error){
         res.status(500);
         res.send(error.message);
@@ -63,16 +63,31 @@ const deleteMedicChain = async(req,res) =>{
 
 const updateMedicChain = async(req,res) =>{
     try{
-        const { id_cadena_medica, nombre, contraseña, direccion, ciudad } = req.body;
-        const {id} = req.params;
-        if(nombre === undefined || contraseña === undefined){
-            res.status(400).json({message: "Bad Request. Please fill all field"});
+        const id=req.body.id;
+        const name=req.body.name;
+        const password=req.body.password;
+        if(name === "" && password === ""){
+            res.status(400).json({message: "Bad Request. Please fill any field"});
         }
 
-        const client = await getConnection.client;
-        const query = await client.query();
-        const result = query['rows']
-        res.json(result);
+        
+        const databaseAccess = await getConnection.client;
+        if(name !== "" ){
+            ///change name
+            const queryName = await databaseAccess.query(`update cadena_medica set nombre='${name}' where id=${id}`);
+        }
+
+        if(password !== "" ){
+            const queryPassword = await databaseAccess.query(`update cadena_medica set contraseña='${password}' where id=${id}`);
+        }
+
+        
+        //// validate query (database UNIQUE restriction)
+        //const result = query['rows'];
+
+        ///
+        
+        res.status(200).json("Medic chain updated sucsesfully");
 
     }catch(error){
         res.status(500);

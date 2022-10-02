@@ -6,7 +6,6 @@ const chainsController = require("./../controllers/medicChain.controller");
 const loginController = require("./../controllers/login.controller");
 
 router.get("/login/",loginController.getLogin);
-router.get("/login/:key",loginController.getLogin);
 
 router.get("/center/:id",centerController.getMedicCenter);
 router.get('/center',centerController.getMedicCenters);
@@ -25,7 +24,7 @@ router.get("/chain/:nombre",chainsController.getMedicChain);
 router.get('/chain',chainsController.getMedicChains);
 router.post('/chain',chainsController.addMedicChain);
 router.delete("/chain/:name",chainsController.deleteMedicChain);
-router.put("/chain/:name",chainsController.updateMedicChain);
+router.put("/chain/",chainsController.updateMedicChain);
 
 
 module.exports = router;

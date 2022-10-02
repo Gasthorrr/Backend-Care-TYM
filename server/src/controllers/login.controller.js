@@ -6,10 +6,10 @@ const login = async (key,password)=>{
 };
 const getLogin = async(req,res) =>{
     try{
-        const result =  await client.login("20.007.466-1","qwerty");   /// test
-        //const { key } = req.params;
-        ///const { password } = req.params;
-        ///const result =  await client.login(key,password);
+        ////const result =  await client.login("20.007.466-1","qwerty");   /// test
+        const key = req.body.key;
+        const password = req.body.password;
+        const result =  await client.login(key,password);
         res.status(200).json(result);
     }catch(error){
         res.status(500);
