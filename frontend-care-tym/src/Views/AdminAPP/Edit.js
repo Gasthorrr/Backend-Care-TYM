@@ -1,29 +1,29 @@
 import { useState } from "react"
-import { postRequest } from "../../Services/Request"
+import { deleteRequest, postRequest, updateRequest } from "../../Services/Request"
 import { useNavigate, useParams } from "react-router-dom"
 
 export default function Edit(props) {
 
     const history = useNavigate()
 
-    const {key} = useParams()
+    const {name} = useParams()
 
-    const [name, setName] = useState()
+    const [nameChain, setNameChain] = useState()
     const [password, setPassword] = useState()
 
     const handleSubmit = async(x) => {
         x.preventDefault()
         const data = {
-            nombre:name,
+            nombre:nameChain,
             contraseña:password
         }
-        const resp = await postRequest("http://127.0.0.1:8000/api/user/center/"+key,JSON.stringify(data))
-        resp.status() === 201 ? history(-1) : document.getElementById("error").innerHTML = "Problemas al acualizar red"
+        const resp = await updateRequest("http://127.0.0.1:8000/api/user/chain/"+name,JSON.stringify(data))
+        resp.status === 200 ? history(-1) : document.getElementById("error").innerHTML = "Problemas al acualizar red"
     }
     const deleteCenter = async(x) => {
         x.preventDefault()
-        const resp = await postRequest("http://127.0.0.1:8000/api/user/center/"+key)
-        resp.status() === 201 ? history(-1) : document.getElementById("error").innerHTML = "Problemas al eliminar red"
+        const resp = await deleteRequest("http://127.0.0.1:8000/api/user/chain/"+name)
+        resp.status === 200 ? history(-1) : document.getElementById("error").innerHTML = "Problemas al eliminar red"
     }
 
 
@@ -41,7 +41,7 @@ export default function Edit(props) {
                     <form onSubmit={handleSubmit} className="grid gap-6 m-3">
                         <div>
                             <label className="my-2 block font-medium">Nombre</label>
-                            <input onChange={(x)=> setName(x.target.value)} type="password" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x)=> setNameChain(x.target.value)} type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div>
                             <label className="my-2 block font-medium">Contraseña</label>

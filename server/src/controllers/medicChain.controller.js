@@ -65,7 +65,7 @@ const updateMedicChain = async(req,res) =>{
     try{
         const { id_cadena_medica, nombre, contraseña, direccion, ciudad } = req.body;
         const {id} = req.params;
-        if(id === undefined || id_cadena_medica === undefined || nombre === undefined || contraseña === undefined || direccion === undefined || ciudad === undefined){
+        if(nombre === undefined || contraseña === undefined){
             res.status(400).json({message: "Bad Request. Please fill all field"});
         }
 
