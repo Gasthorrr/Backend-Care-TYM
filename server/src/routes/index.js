@@ -5,7 +5,7 @@ const adminController = require("../controllers/admin.controller");
 const chainsController = require("./../controllers/medicChain.controller");
 const loginController = require("./../controllers/login.controller");
 
-router.get("/login/",loginController.getLogin);
+router.post("/login/",loginController.getLogin);
 
 router.get("/center/:id",centerController.getMedicCenter);
 router.get('/center',centerController.getMedicCenters);

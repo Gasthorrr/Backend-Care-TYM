@@ -5,7 +5,7 @@ import AuthProvider from "../Auth/AuthProvider";
 
 export default function Login() {
 
-    const [user, setUser] = useState();
+    const [key, setKey] = useState();
     const [password, setPassword] = useState();
 
     const {Login} = useContext(AuthProvider)
@@ -13,7 +13,7 @@ export default function Login() {
     const handleLogin = async(e) => {
         e.preventDefault()
         const data = {
-            user,
+            key,
             password
         }
         const response = await Login(data)
@@ -29,7 +29,7 @@ export default function Login() {
                 <form onSubmit={handleLogin} className="grid gap-6 m-3">
                     <div className="">
                         <label className="my-2 block font-medium">Usuario</label>
-                        <input required className="bg-gray-100 border border-gray-300 rounded-lg shadow-lg block w-full p-2.5" onChange={(e) => setUser(e.target.value)} />
+                        <input required className="bg-gray-100 border border-gray-300 rounded-lg shadow-lg block w-full p-2.5" onChange={(e) => setKey(e.target.value)} />
                     </div>
                     <div className="">
                         <label className="my-2 block font-medium">Contraseña</label>

@@ -20,7 +20,7 @@ export default function App() {
                         <Route path="/admin" element={<Home />}>
                             <Route index element={<ListCenter />} />
                             <Route path="create" element={<Create />} />
-                            <Route path="edit/:name" element={<Edit />} />
+                            <Route path="edit/:id/:name" element={<Edit />} />
                         </Route>
 
 

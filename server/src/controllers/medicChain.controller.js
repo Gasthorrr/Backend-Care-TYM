@@ -66,18 +66,18 @@ const updateMedicChain = async(req,res) =>{
         const id=req.body.id;
         const name=req.body.name;
         const password=req.body.password;
-        if(name === "" && password === ""){
+        if(name === undefined && password === undefined){
             res.status(400).json({message: "Bad Request. Please fill any field"});
         }
 
         
         const databaseAccess = await getConnection.client;
-        if(name !== "" ){
+        if(name !== undefined ){
             ///change name
             const queryName = await databaseAccess.query(`update cadena_medica set nombre='${name}' where id=${id}`);
         }
 
-        if(password !== "" ){
+        if(password !== undefined ){
             const queryPassword = await databaseAccess.query(`update cadena_medica set contraseña='${password}' where id=${id}`);
         }
 

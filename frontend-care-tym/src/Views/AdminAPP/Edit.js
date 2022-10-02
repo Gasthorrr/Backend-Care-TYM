@@ -2,11 +2,11 @@ import { useState } from "react"
 import { deleteRequest, postRequest, updateRequest } from "../../Services/Request"
 import { useNavigate, useParams } from "react-router-dom"
 
-export default function Edit(props) {
+export default function Edit() {
 
     const history = useNavigate()
 
-    const {name} = useParams()
+    const {id, name} = useParams()
 
     const [nameChain, setNameChain] = useState()
     const [password, setPassword] = useState()
@@ -14,10 +14,11 @@ export default function Edit(props) {
     const handleSubmit = async(x) => {
         x.preventDefault()
         const data = {
-            nombre:nameChain,
-            contraseña:password
+            id:id,
+            name:nameChain,
+            password:password
         }
-        const resp = await updateRequest("http://127.0.0.1:8000/api/user/chain/"+name,JSON.stringify(data))
+        const resp = await updateRequest("http://127.0.0.1:8000/api/user/chain/",JSON.stringify(data))
         resp.status === 200 ? history(-1) : document.getElementById("error").innerHTML = "Problemas al acualizar red"
     }
     const deleteCenter = async(x) => {
@@ -41,11 +42,11 @@ export default function Edit(props) {
                     <form onSubmit={handleSubmit} className="grid gap-6 m-3">
                         <div>
                             <label className="my-2 block font-medium">Nombre</label>
-                            <input onChange={(x)=> setNameChain(x.target.value)} value={nameChain} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x)=> setNameChain(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div>
                             <label className="my-2 block font-medium">Contraseña</label>
-                            <input onChange={(x)=> setPassword(x.target.value)} value={nameChain} autocomplete="off" type="password" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x)=> setPassword(x.target.value)} autocomplete="off" type="password" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
 
                         

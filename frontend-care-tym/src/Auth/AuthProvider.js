@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { getRequest } from "../Services/Request";
 import { UseLocalStorage } from "./UseLocalStorage";
 
 const AuthContext = createContext();
@@ -12,12 +13,20 @@ export const AuthProvider = ({ children }) => {
     const history = useNavigate()
 
     const Login = async (data) => {
-        //logica login con api
+        const resp = await fetch("http://127.0.0.1:8000/api/user/login/", {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+        if(resp.status === 200) {
+            setUser(data)// se guarda jwt entregado la API
 
+            history("/admin/") //temporal, a la espera del json entregado del backend, este tendra distintos navigate segun el tipo de user
+        }
 
-        setUser(data)// se guarda jwt entregado la API
-
-        history("/admin/") //temporal, a la espera del json entregado del backend, este tendra distintos navigate segun el tipo de user
+        
         return 400
     }
 
