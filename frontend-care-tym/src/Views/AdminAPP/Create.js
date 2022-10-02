@@ -15,7 +15,7 @@ export default function Create() {
             nombre:name,
             contraseña:password
         }
-        const resp = await postRequest("http://127.0.0.1:8000/api/user/center",JSON.stringify(data))
+        const resp = await postRequest("http://127.0.0.1:8000/api/user/chain",JSON.stringify(data))
         resp.status() === 201 ? history(-1) : document.getElementById("error").innerHTML = "Problemas al registrar red"
     }
 
