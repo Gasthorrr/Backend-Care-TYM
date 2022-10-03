@@ -20,7 +20,7 @@ export default function Create() {
         const resp = await postRequest("http://127.0.0.1:8000/api/user/chain", JSON.stringify(data))
         setLoading(false)
 
-        resp === 200 ? history(-1) : document.getElementById("error").innerHTML = "Cadena de centro medico ya registrada"
+        resp.status === 200 ? history(-1) : document.getElementById("error").innerHTML = "Cadena de centro medico ya registrada"
     }
 
     return (

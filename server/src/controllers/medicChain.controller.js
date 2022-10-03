@@ -39,7 +39,7 @@ const addMedicChain = async(req,res) =>{
         await client.query(
             `INSERT INTO "cadena_medica" ("nombre", "contraseña") 
             VALUES ($1, $2)`, [nombre, contraseña]);
-        res.json({ message: "Chain added" });
+        res.status(200).json({ message: "Chain added" });
     }catch(error){
         res.status(500);
         res.send(error.message);

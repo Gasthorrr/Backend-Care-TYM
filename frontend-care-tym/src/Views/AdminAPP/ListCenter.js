@@ -17,7 +17,7 @@ export default function ListCenter() {
         }
 
         request()
-        setLoading(!loading)
+        setLoading(false)
     }, [])
 
 
