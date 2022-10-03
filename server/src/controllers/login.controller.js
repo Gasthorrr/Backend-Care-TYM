@@ -10,7 +10,13 @@ const getLogin = async(req,res) =>{
         const key = req.body.key;
         const password = req.body.password;
         const result =  await client.login(key,password);
-        res.status(200).json(result);
+        if(result !== "Not Found" && result !== "Incorrect Password"){
+            res.status(200).json(result);
+        }else{
+            res.status(400).json(result);
+        }
+
+        
     }catch(error){
         res.status(500);
         res.send(error.message);

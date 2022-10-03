@@ -7,8 +7,6 @@ export default function Home() {
 
     const {user}  = useContext(AuthProvider)
 
-    console.log(user)
-
     if(!user) return <Navigate to="/"/>    
 
     return (

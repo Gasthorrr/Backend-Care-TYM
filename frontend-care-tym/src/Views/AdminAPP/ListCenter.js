@@ -1,7 +1,7 @@
 import Component from "../../Component/AdminAPP/Component";
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
-import {getRequest} from "../../Services/Request";
+import { getRequest } from "../../Services/Request";
 
 export default function ListCenter() {
 
@@ -10,15 +10,15 @@ export default function ListCenter() {
     const [center, setCenter] = useState([])
     const [loading, setLoading] = useState(true)
 
-    useEffect(()=>{
+    useEffect(() => {
 
         const request = async () => {
             setCenter(await getRequest("http://127.0.0.1:8000/api/user/chain"))
         }
 
         request()
-        setLoading(false)
-    },[])
+        setLoading(!loading)
+    }, [])
 
 
     return (
@@ -38,10 +38,10 @@ export default function ListCenter() {
                 <div className="col-span-3 flex flex-col w-full md:w-5/6 md:max-w-2xl lg:max-w-4xl">
                     {
                         loading ?
-                        null : 
-                        center.map((x) => (
-                            <Component key={x.id} name={x.nombre} id={x.id} />
-                        ))
+                            null:
+                            center.map((x) => (
+                                <Component key={x.id} name={x.nombre} id={x.id} />
+                            ))
                     }
                 </div>
             </div>
