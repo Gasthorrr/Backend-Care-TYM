@@ -1,6 +1,8 @@
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseLocalStorage } from "./UseLocalStorage";
+import jwt from "jwt-decode"
+
 
 const AuthContext = createContext();
 
@@ -20,11 +22,17 @@ export const AuthProvider = ({ children }) => {
             body: JSON.stringify(data)
         })
         if(resp.status === 200) {
-            sessionStorage.setItem("auth-token", await resp.json())// se guarda jwt entregado la API
 
-            console.log(sessionStorage.getItem("auth-token"))
+            const token = await resp.json();
 
-            history("/admin/") //temporal, a la espera del json entregado del backend, este tendra distintos navigate segun el tipo de user
+           sessionStorage.setItem("auth-token", token)// se guarda jwt entregado la API
+
+            //console.log(sessionStorage.getItem("auth-token"))
+
+            console.log(jwt(token))
+
+            if(token.roles === "administrador") history("/admin/")
+
         }
 
         
@@ -33,6 +41,7 @@ export const AuthProvider = ({ children }) => {
 
     const Logout = async () => {
         //setUser(null)
+        sessionStorage.clear("auth-token")
         history("/")
     }
 

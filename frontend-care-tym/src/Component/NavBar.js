@@ -6,7 +6,7 @@ export default function NavBar() {
 
     const {user, Logout} = useContext(AuthProvider)
 
-    const [session, setSession] = useState(user === true ? true : false) // asigna booleano segun el estado del usuario (existe o no)
+    const [session, setSession] = useState(sessionStorage.getItem("auth-token") ? true : false) // asigna booleano segun el estado del usuario (existe o no)
 
     useEffect(()=>{
         if(user) {

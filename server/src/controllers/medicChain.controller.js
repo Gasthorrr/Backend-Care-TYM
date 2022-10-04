@@ -17,10 +17,7 @@ const getMedicChain = async(req,res) =>{
 
 const getMedicChains = async(req,res) =>{
 
-    if(req.user.roles !== "administrador"){
-        res.status(403)
-        res.json("Acceso no autorizado")
-    } 
+    
 
     try{
         const client = await getConnection.client;

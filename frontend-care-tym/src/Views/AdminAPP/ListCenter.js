@@ -13,7 +13,7 @@ export default function ListCenter() {
     useEffect(() => {
 
         const request = async () => {
-            setCenter(await getRequest("http://127.0.0.1:8000/api/user/chain"))
+            setCenter(await getRequest("http://127.0.0.1:8000/api/chain"))
         }
 
         request()
