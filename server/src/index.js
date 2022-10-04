@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const app = express();
 const cors = require('cors')
+const verifyToken = require('./routes/validation-session')
 
 ///////
 let corsOption = {
@@ -14,8 +15,8 @@ app.use(cors(corsOption))
 ////
 
 //Settings
-app.set('views', path.join(__dirname, 'views')); //Enfocar a express con la direccion del archivo index.js
-app.set('port', process.env.PORT || 8000); //Setear el puerto del sistema operativo o el puerto 3000 como puerto principal
+app.set('views', path.join(__dirname, 'views')); //Enfocar a express con la direccion del archivo index.js //eliminar?
+app.set('port', process.env.PORT || 8000); //Setear el puerto del sistema operativo o el puerto 3000 como puerto principal //reemplazar por .env
 
 //Middlewares
 app.use(morgan('dev'));
@@ -24,8 +25,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 //Routes
-app.use('/api/user', require('./routes/index'));
 app.use('/api/login',require("./routes/login"));
+app.use('/api/user',verifyToken, require('./routes/index'));
 
 //Starting Server
 app.listen(app.get('port'), () => {

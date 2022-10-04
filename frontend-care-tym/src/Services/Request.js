@@ -1,4 +1,5 @@
 export const getRequest = async (api) => {
+    
     const response = await fetch(
         api,
         {

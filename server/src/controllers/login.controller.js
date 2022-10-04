@@ -1,5 +1,5 @@
 const client = require('./../database');
-
+const jwt = require('jsonwebtoken')
 const login = async (key,password)=>{ 
     
 
@@ -11,7 +11,15 @@ const getLogin = async(req,res) =>{
         const password = req.body.password;
         const result =  await client.login(key,password);
         if(result !== "Not Found" && result !== "Incorrect Password"){
-            res.status(200).json(result);
+
+            const token = jwt.sign({
+                key : key,
+                roles: result
+            },"sdfghjklkjhg")//reemplazar por .env
+
+
+
+            res.status(200).json(token);
         }else{
             res.status(400).json(result);
         }

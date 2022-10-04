@@ -5,9 +5,9 @@ import { useContext } from "react";
 
 export default function Home() {
 
-    const {user}  = useContext(AuthProvider)
+    //const {user}  = useContext(AuthProvider)
 
-    if(!user) return <Navigate to="/"/>    
+    if(!sessionStorage.getItem("auth-token")) return <Navigate to="/"/>    
 
     return (
         <div className="flex justify-center flex-col">

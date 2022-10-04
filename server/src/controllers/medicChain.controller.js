@@ -1,6 +1,7 @@
 const getConnection = require("./../database");
 
 const getMedicChain = async(req,res) =>{
+    
     try{
         const {nombre} = req.params;
         const client = await getConnection.client;
@@ -15,10 +16,17 @@ const getMedicChain = async(req,res) =>{
 };
 
 const getMedicChains = async(req,res) =>{
+
+    if(req.user.roles !== "administrador"){
+        res.status(403)
+        res.json("Acceso no autorizado")
+    } 
+
     try{
         const client = await getConnection.client;
         const query = await client.query(`select * from cadena_medica`);
         const result = query['rows']
+        res.status(200)
         res.json(result);
     }catch(error){
         res.status(500);

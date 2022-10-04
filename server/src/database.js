@@ -7,7 +7,7 @@ const databaseAccess = {
     password: 'ItZGES5HKkPtd5VjCNpZ',
     port: 6535,
     user: 'postgres',
-};
+};//reemplazar por .env
 
 const client = new Pool(databaseAccess);
 

@@ -7,8 +7,6 @@ const loginController = require("./../controllers/login.controller");
 const medicController = require("./../controllers/medic.controller");
 const coordinatorController = require("./../controllers/coordinator.comtroller");
 
-router.post("/login/",loginController.getLogin);
-
 router.get("/center/:id",centerController.getMedicCenter);
 router.get('/center',centerController.getMedicCenters);
 router.post('/center',centerController.addMedicCenter);
