@@ -17,8 +17,6 @@ const getMedicChain = async(req,res) =>{
 
 const getMedicChains = async(req,res) =>{
 
-    
-
     try{
         const client = await getConnection.client;
         const query = await client.query(`select * from cadena_medica`);
@@ -37,7 +35,7 @@ const addMedicChain = async(req,res) =>{
         const { nombre, contraseña } = req.body;
 
         if(nombre === undefined || contraseña === undefined){
-            res.status(400).json({message: "Bad Request. Please fill all field"});
+            return res.status(400).json({message: "Bad Request. Please fill all field"});
         }
 
         const client = await getConnection.client;
@@ -72,7 +70,7 @@ const updateMedicChain = async(req,res) =>{
         const name=req.body.name;
         const password=req.body.password;
         if(name === undefined && password === undefined){
-            res.status(400).json({message: "Bad Request. Please fill any field"});
+           return res.status(400).json({message: "Bad Request. Please fill any field"});
         }
 
         

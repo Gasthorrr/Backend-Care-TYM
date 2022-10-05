@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UseLocalStorage } from "./UseLocalStorage";
+//import { UseLocalStorage } from "./UseLocalStorage";
 import jwt from "jwt-decode"
 
 
@@ -21,21 +21,23 @@ export const AuthProvider = ({ children }) => {
             method: "POST",
             body: JSON.stringify(data)
         })
-        if(resp.status === 200) {
+        if (resp.status === 200) {
 
             const token = await resp.json();
 
-           sessionStorage.setItem("auth-token", token)// se guarda jwt entregado la API
+            sessionStorage.setItem("auth-token", token)// se guarda jwt entregado la API
 
-            //console.log(sessionStorage.getItem("auth-token"))
+            const decode = jwt(token)
 
-            console.log(jwt(token))
+            //console.log(decode)
 
-            if(token.roles === "administrador") history("/admin/")
+            if (decode.roles === "administrador"){
+                return history("/admin/")
+            } 
 
         }
 
-        
+
         return 400
     }
 

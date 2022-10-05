@@ -1,11 +1,9 @@
 import Component from "../../Component/AdminAPP/Component";
-import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { getRequest } from "../../Services/Request";
+import BottonsGo from "../../Component/Bottons/BottonsGo";
 
 export default function ListCenter() {
-
-    const history = useNavigate()
 
     const [center, setCenter] = useState([])
     const [loading, setLoading] = useState(true)
@@ -29,7 +27,7 @@ export default function ListCenter() {
                         <h1 className="font-semibold text-xl">Redes de centro de salud</h1>
                     </div>
                     <div className="self-center">
-                        <button className="p-2 bg-green-500 rounded-lg shadow-lg font-semibold text-lg hover:shadow-sm" onClick={() => history("/admin/create")}>Añadir</button>
+                        <BottonsGo redirect={"/admin/create"} text={"Añadir"}/>
                     </div>
                 </div>
             </div>
