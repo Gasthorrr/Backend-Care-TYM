@@ -1,9 +1,9 @@
-import Component from "../../Component/AdminAPP/Component";
+import Component from "../Component/AdminAPP/Component";
 import { useEffect, useState } from "react";
-import { getRequest } from "../../Services/Request";
-import BottonsGo from "../../Component/Bottons/BottonsGo";
+import { getRequest } from "../Services/Request";
+import BottonsGo from "../Component/Bottons/BottonsGo";
 
-export default function ListCenter() {
+export default function ListCenter(props) {
 
     const [center, setCenter] = useState([])
     const [loading, setLoading] = useState(true)
@@ -11,7 +11,7 @@ export default function ListCenter() {
     useEffect(() => {
 
         const request = async () => {
-            setCenter(await getRequest("http://127.0.0.1:8000/api/chain"))
+            setCenter(await getRequest("http://127.0.0.1:8000/api/"+props.type))
         }
 
         request()
@@ -27,7 +27,7 @@ export default function ListCenter() {
                         <h1 className="font-semibold text-xl">Redes de centro de salud</h1>
                     </div>
                     <div className="self-center">
-                        <BottonsGo redirect={"/admin/create"} text={"Añadir"}/>
+                        <BottonsGo redirect={"/"+props.types+"/create"} text={"Añadir"}/>
                     </div>
                 </div>
             </div>

@@ -26,14 +26,18 @@ export const AuthProvider = ({ children }) => {
             const token = await resp.json();
 
             sessionStorage.setItem("auth-token", token)// se guarda jwt entregado la API
-
             const decode = jwt(token)
-
-            //console.log(decode)
+            if(decode.roles === "centro_medico" || decode.roles === "cadena_medica"){
+                sessionStorage.setItem("title", decode.key)
+            }else{
+                sessionStorage.setItem("title", "CareTYM")
+            }
 
             if (decode.roles === "administrador"){
                 return history("/admin/")
-            } 
+            }else if(decode.roles === "cadena_medica"){
+                return history("/chain/")
+            }
 
         }
 

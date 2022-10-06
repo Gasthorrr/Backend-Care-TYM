@@ -13,14 +13,13 @@ const verifyToken = (req, res, next) => {
 
         const RolesDicctionary={
             "administrador":"chain",
-            "centro_medico":"center" //falta los otros usuarios
+
+            "cadena_medica":"center" //falta los otros usuarios
         };
 
         req.user = verified 
-        
-        console.log(req.originalUrl.indexOf(RolesDicctionary[verified.roles]))
 
-        if(req.originalUrl.indexOf(RolesDicctionary[verified.roles]) === 0){
+        if(req.originalUrl.indexOf(RolesDicctionary[verified.roles]) === -1){
             return res.status(403).json({error:"Acceso no autorizado"})
         } 
 

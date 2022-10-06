@@ -1,23 +1,18 @@
 const client = require('./../database');
 const jwt = require('jsonwebtoken')
-const login = async (key,password)=>{ 
-    
 
-};
 const getLogin = async(req,res) =>{
     try{
-        ////const result =  await client.login("20.007.466-1","qwerty");   /// test
         const key = req.body.key;
         const password = req.body.password;
         const result =  await client.login(key,password);
         if(result !== "Not Found" && result !== "Incorrect Password"){
-
+            console.log(result)
             const token = jwt.sign({
                 key : key,
-                roles: result
+                roles: result.rol,
+                id : result.id
             },"sdfghjklkjhg")//reemplazar por .env
-
-
 
             res.status(200).json(token);
         }else{
@@ -33,6 +28,5 @@ const getLogin = async(req,res) =>{
 };
 
 module.exports = {
-    login,
     getLogin
 }

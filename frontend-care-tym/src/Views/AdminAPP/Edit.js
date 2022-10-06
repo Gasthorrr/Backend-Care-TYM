@@ -1,16 +1,12 @@
 import { useState } from "react"
-import { deleteRequest } from "../../Services/Request"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import BottonsUpdate from "../../Component/Bottons/BottonsUpdate"
 import BottonsDelete from "../../Component/Bottons/BottonsDelete"
 import BottonsCancel from "../../Component/Bottons/BottonsCancel"
 
 export default function Edit() {
 
-    const history = useNavigate()
-
     const { id, name } = useParams()
-
     const [nameChain, setNameChain] = useState()
     const [password, setPassword] = useState()
 
