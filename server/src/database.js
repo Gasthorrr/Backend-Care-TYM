@@ -12,30 +12,6 @@ const databaseAccess = {
 const client = new Pool(databaseAccess);
 
 
-const testDBAccess = async ()=>{ 
-    const query= await client.query(`select  * from cadena_medica where nombre='test'`);
-    return(query.rows[0]);
-}
-
-/**
- * @returns {Array}  A list with all the medic centers sorted by columns[[ids],[Nombres],[Direcciones],[Ciudades]]
- */
-const showMedicCenters = async ()=>{ 
-    const query= await client.query(`select * from centro_medico `);
-    const numberOfCenters=query.rowCount; 
-    const centerList=new Array(numberOfCenters);
-    for(var i=0;i<numberOfCenters;i++){
-        const id=await query.rows[i]['id'];
-        const name=await query.rows[i]['nombre'];
-        const direction=await query.rows[i]['direccion'];
-        const city=await query.rows[i]['ciudad'];
-        center={"id":id,"nombre":name,"direccion":direction,"ciudad":city};
-        centerList[i]=center;
-    }
-    ///return query;
-    return(JSON.stringify(centerList));
-}
-
 const getUseruserType = async (key)=>{ 
     //// Searches the user into the admin table
     const adminQuery= await client.query(`select * from administrador where usuario='${key}'`);

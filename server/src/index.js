@@ -26,12 +26,12 @@ app.use(cookieParser());
 
 //Routes
 app.use('/api/login',require("./routes/login"));
-app.use('/api/chain',require('./routes/chain'));
-app.use('/api/center',require('./routes/center'));
-app.use('/api/medic', require('./routes/medic'));
-app.use('/api/coordinator', require('./routes/coordinator'));
+app.use('/api/admin/chain',require('./routes/chain'));
+app.use('/api/chain/center',require('./routes/center'));
+app.use('/api/center/medic', require('./routes/medic'));
+app.use('/api/center/coordinator', require('./routes/coordinator'));
 app.use('/api/admin', require('./routes/admin'));
-app.use('/api/specialty', require('./routes/specialty'));
+app.use('/api/center/specialty', require('./routes/specialty'));
 
 //Starting Server
 app.listen(app.get('port'), () => {
