@@ -1,4 +1,4 @@
-const getConnection = require("./../database");
+const getConnection = require("../database");
 
 const getCoordinator = async(req,res) =>{
     try{
@@ -62,7 +62,7 @@ const deleteCoordinator = async(req,res) =>{
 
 const updateCoordinator = async(req,res) =>{
     try{
-        const rut = req.body.rut;
+        const rut = req.params.rut;
         const id_centro_medico = req.body.id_centro_medico;
         const nombre_completo = req.body.nombre_completo;
         const contraseña = req.body.contraseña;

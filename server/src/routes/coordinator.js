@@ -1,12 +1,12 @@
 const { Router } = require('express');
 const router = Router();
 
-const coordinatorController = require("./../controllers/coordinator.comtroller");
+const coordinatorController = require("../controllers/coordinator.controller");
 
-router.get("/coordinator/:rut",coordinatorController.getCoordinator);
-router.get("/coordinator",coordinatorController.getCoordinators);
-router.post("/coordinator",coordinatorController.addCoordinator);
-router.delete("/coordinator/:rut",coordinatorController.deleteCoordinator);
-router.put("/coordinator/:rut",coordinatorController.updateCoordinator);
+router.get("/:rut",coordinatorController.getCoordinator);
+router.get("/",coordinatorController.getCoordinators);
+router.post("/",coordinatorController.addCoordinator);
+router.delete("/:rut",coordinatorController.deleteCoordinator);
+router.put("/:rut",coordinatorController.updateCoordinator);
 
 module.exports = router;

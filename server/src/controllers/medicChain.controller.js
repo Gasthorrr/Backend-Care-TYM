@@ -1,11 +1,10 @@
 const getConnection = require("./../database");
 
 const getMedicChain = async(req,res) =>{
-    
     try{
-        const {nombre} = req.params;
+        const {id} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`select * from cadena_medica where nombre='${nombre}'`);
+        const query = await client.query(`select * from cadena_medica where id='${id}'`);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -16,9 +15,6 @@ const getMedicChain = async(req,res) =>{
 };
 
 const getMedicChains = async(req,res) =>{
-
-    
-
     try{
         const client = await getConnection.client;
         const query = await client.query(`select * from cadena_medica`);
@@ -44,7 +40,7 @@ const addMedicChain = async(req,res) =>{
         await client.query(
             `INSERT INTO "cadena_medica" ("nombre", "contraseña") 
             VALUES ($1, $2)`, [nombre, contraseña]);
-        res.status(200).json({ message: "Chain added" });
+        res.status(200).json("Chain added successfully");
     }catch(error){
         res.status(500);
         res.send(error.message);
@@ -54,11 +50,11 @@ const addMedicChain = async(req,res) =>{
 
 const deleteMedicChain = async(req,res) =>{
     try{
-        const name = req.params.name;
+        const id = req.params.id;
         const client = await getConnection.client;
-        const query = await client.query(`delete from cadena_medica where nombre='${name}'`);
-        const result = query['rows']
-        res.status(200).json("The "+name+" medic chain was deleted succsesfuly");
+        const query = await client.query(`delete from cadena_medica where id='${id}'`);
+        query['rows']
+        res.status(200).json("Medic chain deleted successfully");
     }catch(error){
         res.status(500);
         res.send(error.message);
@@ -68,22 +64,17 @@ const deleteMedicChain = async(req,res) =>{
 
 const updateMedicChain = async(req,res) =>{
     try{
-        const id=req.body.id;
-        const name=req.body.name;
-        const password=req.body.password;
-        if(name === undefined && password === undefined){
-            res.status(400).json({message: "Bad Request. Please fill any field"});
-        }
+        const id = req.params.id;
+        const nombre = req.body.nombre;
+        const contraseña = req.body.contraseña;
 
-        
         const databaseAccess = await getConnection.client;
-        if(name !== undefined ){
-            ///change name
-            const queryName = await databaseAccess.query(`update cadena_medica set nombre='${name}' where id=${id}`);
+        if(nombre !== undefined ){
+            await databaseAccess.query(`update cadena_medica set nombre='${nombre}' where id='${id}'`);
         }
 
-        if(password !== undefined ){
-            const queryPassword = await databaseAccess.query(`update cadena_medica set contraseña='${password}' where id=${id}`);
+        if(contraseña !== undefined ){
+            await databaseAccess.query(`update cadena_medica set contraseña='${contraseña}' where id='${id}'`);
         }
 
         
@@ -92,7 +83,7 @@ const updateMedicChain = async(req,res) =>{
 
         ///
         
-        res.status(200).json("Medic chain updated sucsesfully");
+        res.status(200).json("Medic chain updated successfully");
 
     }catch(error){
         res.status(500);

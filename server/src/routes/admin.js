@@ -3,10 +3,10 @@ const router = Router();
 
 const adminController = require("../controllers/admin.controller");
 
-router.get('/admin/:usuario',adminController.getAdmin);
-router.get('/admin',adminController.getAdministrators);
-router.post('/admin',adminController.addAdmin);
-router.delete("/admin/:usuario",adminController.deleteAdmin);
-router.put("/admin/:usuario",adminController.updateAdmin);
+router.get('/:usuario',adminController.getAdmin);
+router.get('/',adminController.getAdministrators);
+router.post('/',adminController.addAdmin);
+router.delete("/:usuario",adminController.deleteAdmin);
+router.put("/:usuario",adminController.updateAdmin);
 
 module.exports = router;

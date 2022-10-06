@@ -62,25 +62,33 @@ const deleteMedic = async(req,res) =>{
 
 const updateMedic = async(req,res) =>{
     try{
-        const rut = req.body.id;
-        const phone = req.body.telefono;
-        const password=req.body.password;
-        const name = req.body.name;
+        const rut = req.params.rut;
+        const telefono = req.body.telefono;
+        const contraseña=req.body.contraseña;
+        const nombre_completo = req.body.nombre_completo;
+        const id_centro_medico = req.body.id_centro_medico;
+        const duracion_atencion = req.body.duracion_atencion;
 
         const databaseAccess = await getConnection.client;
 
-        if(name !== undefined ){
-            await databaseAccess.query(`update medico set nombre_completo='${name}' where rut=${rut}`);
+        if(nombre_completo !== undefined ){
+            await databaseAccess.query(`update medico set nombre_completo='${nombre_completo}' where rut='${rut}'`);
         }
         
-        if(phone !== undefined ){
-            await databaseAccess.query(`update medico set telefono='${phone}' where rut=${rut}`);
+        if(telefono !== undefined ){
+            await databaseAccess.query(`update medico set telefono='${telefono}' where rut='${rut}'`);
         }
 
-        if(password !== undefined ){
-            await databaseAccess.query(`update medico set contraseña='${password}' where id=${rut}`);
+        if(contraseña !== undefined ){
+            await databaseAccess.query(`update medico set contraseña='${contraseña}' where rut='${rut}'`);
         }
-        
+
+        if(id_centro_medico !== undefined ){
+            await databaseAccess.query(`update medico set id_centro_medico='${id_centro_medico}' where rut='${rut}'`);
+        }
+        if(duracion_atencion !== undefined ){
+            await databaseAccess.query(`update medico set duracion_atencion='${duracion_atencion}' where rut='${rut}'`);
+        }
         res.status(200).json("Medic updated sucsesfully");
 
     }catch(error){

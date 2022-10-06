@@ -3,10 +3,10 @@ const router = Router();
 
 const medicController = require("./../controllers/medic.controller");
 
-router.get("/medic/:rut",medicController.getMedic);
-router.get("/medic",medicController.getMedics);
-router.post("/medic",medicController.addMedic);
-router.delete("/medic/:rut",medicController.deleteMedic);
-router.put("/medic/:rut",medicController.updateMedic);
+router.get("/:rut",medicController.getMedic);
+router.get("/",medicController.getMedics);
+router.post("/",medicController.addMedic);
+router.delete("/:rut",medicController.deleteMedic);
+router.put("/:rut",medicController.updateMedic);
 
 module.exports = router;
