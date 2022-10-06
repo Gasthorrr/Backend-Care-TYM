@@ -20,13 +20,13 @@ export default function Login() {
         }
         const response = await Login(data);
 
-
-
         if (response === 400) {
             document.getElementById("response").innerHTML = "Usuario y/o contraseña incorrecta"
             setLoading(false)
         }
     }
+
+
     return (
 
         <div className="grid ">
@@ -58,6 +58,7 @@ export default function Login() {
                                 </div>
                         }
                     </button>
+                    
                     <Link to="/recovery" className="text-center">Se me olvidó la contraseña</Link>
 
 

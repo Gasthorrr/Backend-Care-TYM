@@ -1,26 +1,22 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import AuthProvider from "../Auth/AuthProvider"
 
 export default function NavBar() {
 
-    const {user, Logout} = useContext(AuthProvider)
+    const {Logout} = useContext(AuthProvider)
 
-    const [session, setSession] = useState(sessionStorage.getItem("auth-token") ? true : false) // asigna booleano segun el estado del usuario (existe o no)
-
-    useEffect(()=>{
-        if(user) {
-            setSession(!session) // actualiza el estado del usuario
-        }
-    },[user])
+    const session = sessionStorage.getItem("auth-token") ? true : false // asigna booleano segun el estado del usuario (existe o no)
 
     const history = useNavigate()
 
     return (
-        <nav className="bg-blue-500 shadow-lg rounded-b-lg h-14 flex justify-center">
+        <nav className="bg-blue-500 shadow-2xl rounded-2xl m-1 h-14 flex justify-center md:m-0 md:rounded-none">
             <div className="grid grid-cols-2 w-5/6 md:max-w-2xl lg:max-w-4xl">
                 <div className="self-center grid justify-items-start md:ml-0 ">
-                    <button onClick={() => history("/")} className="font-bold text-2xl text-white">CareTYM</button>
+                    <button onClick={() => history("/")} className="font-bold text-2xl text-white">
+                        {session ? sessionStorage.getItem("title") : "CareTYM"}
+                    </button>
                 </div>
                 {
                     session === true ? (

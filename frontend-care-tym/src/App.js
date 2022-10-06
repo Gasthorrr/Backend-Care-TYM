@@ -3,10 +3,11 @@ import Footer from "./Component/Footer";
 import Activation from "./Page/Activation";
 import Create from "./Views/AdminAPP/Create";
 import Edit from "./Views/AdminAPP/Edit";
-import Home from "./Page/AdminAPP/Home";
+import Admin from "./Page/Admin";
 import Login from "./Page/Login";
-import ListCenter from "./Views/AdminAPP/ListCenter";
+import ListCenter from "./Views/ListCenter";
 import { AuthProvider } from "./Auth/AuthProvider";
+import Chain from "./Page/Chain";
 
 export default function App() {
     return (
@@ -17,10 +18,15 @@ export default function App() {
                         <Route path="/" element={<Login />} />
                         <Route path="/activation" element={<Activation />} />
 
-                        <Route path="/admin" element={<Home />}>
-                            <Route index element={<ListCenter />} />
+                        <Route path="/admin" element={<Admin />}>
+                            <Route index element={<ListCenter  type={"chain"} text={"Redes de cadenas de salud"} />} />
                             <Route path="create" element={<Create />} />
                             <Route path="edit/:id/:name" element={<Edit />} />
+                        </Route>
+
+                        <Route path="/chain" element={<Chain/>}>
+                            <Route index element={<ListCenter type={"center"} text={"Redes de centro de salud"}/>} />
+
                         </Route>
 
 

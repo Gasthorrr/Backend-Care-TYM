@@ -89,7 +89,10 @@ const login = async (key,password)=>{
         const primaryKey = PrimaryKeyDicctionary [userType];
         queryValidarContraseña = await client.query(`select * from ${userType} where (${primaryKey}='${key}' and contraseña='${password}')`);
         if(queryValidarContraseña.rowCount==1){
-            return(userType);
+            console.log(queryValidarContraseña['rows'])
+            return({rol : userType,
+                id: queryValidarContraseña['rows'][0].id
+            });
         }
         return "Incorrect Password";    
     }

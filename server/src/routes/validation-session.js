@@ -12,12 +12,14 @@ const verifyToken = (req, res, next) => {
         const verified = jwt.verify(token, "sdfghjklkjhg")//reemplazar por .env
 
         const RolesDicctionary={
-            "administrador":"chain", //falta los otros usuarios
+            "administrador":"chain",
+
+            "cadena_medica":"center" //falta los otros usuarios
         };
 
-        req.user = verified     
+        req.user = verified 
 
-        if("/api/"+RolesDicctionary[verified.roles] !== req.originalUrl){
+        if(req.originalUrl.indexOf(RolesDicctionary[verified.roles]) === -1){
             return res.status(403).json({error:"Acceso no autorizado"})
         } 
 

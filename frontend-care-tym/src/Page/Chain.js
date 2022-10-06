@@ -1,9 +1,7 @@
 import {Navigate, Outlet } from "react-router-dom"
-import NavBar from "../../Component/NavBar";
-import  AuthProvider  from "../../Auth/AuthProvider";
-import { useContext } from "react";
+import NavBar from "../Component/NavBar";
 
-export default function Home() {
+export default function Chain() {
 
     //const {user}  = useContext(AuthProvider)
 
