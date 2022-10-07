@@ -2,7 +2,7 @@ const getConnection = require("./../database");
 
 const getMedic = async(req,res) =>{
     try{
-        const {rut} = req.params;
+        const rut = req.params.rut;
         const client = await getConnection.client;
         const query = await client.query(`select * from medico where rut='${rut}'`);
         const result = query['rows']
@@ -29,15 +29,22 @@ const getMedics = async(req,res) =>{
 
 const addMedic = async(req,res) =>{
     try{
-        const { rut, id_centro_medico, id_especialidad, nombre_completo, contraseña, telefono, duracion_atencion } = req.body;
+        const rut = req.body.rut;
+        const medic_center_id = req.body.id_centro_medico;
+        const specialty_id = req.body.id_especialidad;
+        const complete_name = req.body.nombre_completo; 
+        const password = req.body.contraseña;
+        const phone = req.body.telefono;
+        const service_duration = req.body.duracion_atencion;
+        const email = req.body.correo;
 
-        if(rut === undefined || id_centro_medico === undefined || id_especialidad === undefined || nombre_completo === undefined || contraseña === undefined || telefono === undefined || duracion_atencion === undefined){
+        if(rut === undefined || medic_center_id === undefined || specialty_id === undefined || complete_name === undefined || password === undefined || phone === undefined || service_duration === undefined || email == undefined){
             res.status(400).json({message: "Bad Request. Please fill all field"});
         }
 
         const client = await getConnection.client;
-        await client.query(`INSERT INTO "medico" ("rut", "id_centro_medico", "id_especialidad", "nombre_completo", "contraseña", "telefono", "duracion_atencion") 
-        VALUES ($1, $2, $3, $4, $5, $6, $7)`, [rut, id_centro_medico, id_especialidad, nombre_completo, contraseña, telefono, duracion_atencion]);
+        await client.query(`INSERT INTO "medico" ("rut", "id_centro_medico", "id_especialidad", "nombre_completo", "contraseña", "telefono", "duracion_atencion", "correo") 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [rut, medic_center_id, specialty_id, complete_name, password, phone, service_duration, email]);
         res.status(200).json({ message: "Medic added" });
     }catch(error){
         res.status(500);
@@ -50,9 +57,8 @@ const deleteMedic = async(req,res) =>{
     try{
         const rut = req.params.rut;
         const client = await getConnection.client;
-        const query = await client.query(`delete from medico where rut='${rut}'`);
-        query['rows']
-        res.status(200).json("Medic deleted");
+        await client.query(`delete from medico where rut='${rut}'`);
+        res.status(200).json({ message: "Medic deleted" });
     }catch(error){
         res.status(500);
         res.send(error.message);
@@ -63,33 +69,38 @@ const deleteMedic = async(req,res) =>{
 const updateMedic = async(req,res) =>{
     try{
         const rut = req.params.rut;
-        const telefono = req.body.telefono;
-        const contraseña=req.body.contraseña;
-        const nombre_completo = req.body.nombre_completo;
-        const id_centro_medico = req.body.id_centro_medico;
-        const duracion_atencion = req.body.duracion_atencion;
-
+        const medic_center_id = req.body.id_centro_medico;
+        const complete_name = req.body.nombre_completo; 
+        const password = req.body.contraseña;
+        const phone = req.body.telefono;
+        const service_duration = req.body.duracion_atencion;
+        const email = req.body.correo;
+        
         const databaseAccess = await getConnection.client;
 
-        if(nombre_completo !== undefined ){
-            await databaseAccess.query(`update medico set nombre_completo='${nombre_completo}' where rut='${rut}'`);
+        if(complete_name !== undefined ){
+            await databaseAccess.query(`update medico set nombre_completo='${complete_name}' where rut='${rut}'`);
         }
         
-        if(telefono !== undefined ){
-            await databaseAccess.query(`update medico set telefono='${telefono}' where rut='${rut}'`);
+        if(phone !== undefined ){
+            await databaseAccess.query(`update medico set telefono='${phone}' where rut='${rut}'`);
         }
 
-        if(contraseña !== undefined ){
-            await databaseAccess.query(`update medico set contraseña='${contraseña}' where rut='${rut}'`);
+        if(password !== undefined ){
+            await databaseAccess.query(`update medico set contraseña='${password}' where rut='${rut}'`);
         }
 
-        if(id_centro_medico !== undefined ){
-            await databaseAccess.query(`update medico set id_centro_medico='${id_centro_medico}' where rut='${rut}'`);
+        if(medic_center_id !== undefined ){
+            await databaseAccess.query(`update medico set id_centro_medico='${medic_center_id}' where rut='${rut}'`);
         }
-        if(duracion_atencion !== undefined ){
-            await databaseAccess.query(`update medico set duracion_atencion='${duracion_atencion}' where rut='${rut}'`);
+        if(service_duration !== undefined ){
+            await databaseAccess.query(`update medico set duracion_atencion='${service_duration}' where rut='${rut}'`);
         }
-        res.status(200).json("Medic updated sucsesfully");
+        if(email !== undefined){
+            await databaseAccess.query(`update medico set correo='${email}' where rut='${rut}'`);
+        }
+
+        res.status(200).json({ message: "Medic updated sucsesfully" });
 
     }catch(error){
         res.status(500);

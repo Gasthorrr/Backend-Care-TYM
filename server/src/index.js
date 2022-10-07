@@ -30,7 +30,6 @@ app.use('/api/admin/chain',require('./routes/chain'));
 app.use('/api/chain/center',require('./routes/center'));
 app.use('/api/center/medic', require('./routes/medic'));
 app.use('/api/center/coordinator', require('./routes/coordinator'));
-app.use('/api/admin', require('./routes/admin'));
 app.use('/api/center/specialty', require('./routes/specialty'));
 
 //Starting Server
