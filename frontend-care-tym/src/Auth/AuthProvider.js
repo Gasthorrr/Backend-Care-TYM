@@ -33,9 +33,9 @@ export const AuthProvider = ({ children }) => {
                 sessionStorage.setItem("title", "CareTYM")
             }
 
-            if (decode.roles === "administrador"){
+            if (decode.rol === "administrador"){
                 return history("/admin/")
-            }else if(decode.roles === "cadena_medica"){
+            }else if(decode.rol === "cadena_medica"){
                 return history("/chain/")
             }
 

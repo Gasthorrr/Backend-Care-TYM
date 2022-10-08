@@ -6,7 +6,7 @@ import BottonsCancel from "../../Component/Bottons/BottonsCancel"
 
 export default function EditCenter() {
 
-    const { id, name } = useParams()
+    const { id } = useParams()
     const [nameCenter, setNameCenter] = useState()
     const [password, setPassword] = useState()
     const [email, setEmail] =useState()
