@@ -74,9 +74,18 @@ const login = async (key,password)=>{
             /// validates that the password(user input) matches with the encriptedPassword(stored in the database)
             if(result==true){
                 console.log(queryValidarContraseña.rows);
-                return({rol : userType,
-                    id: queryValidarContraseña['rows'][0].id
+                if(userType == "cadena_medica" || userType == "centro_medico" ){
+                    return({
+                        rol : userType,
+                        key:key,
+                        id: queryValidarContraseña['rows'][0].id
+                    });
+                }
+                return({
+                    rol : userType,
+                    key:key
                 });
+                
             }      
         }
         return "Incorrect Password";    
