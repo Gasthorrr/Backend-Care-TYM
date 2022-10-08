@@ -11,11 +11,8 @@ export default function BottonsCreate(props) {
     const handleSubmit = async (x) => {
         x.preventDefault()
         setLoading(!loading)
-        const data = {
-            nombre: props.name,
-            contraseña: props.password
-        }
-        const resp = await postRequest(props.api, JSON.stringify(data))
+        
+        const resp = await postRequest(props.api, JSON.stringify(props.data))
         setLoading(false)
 
         resp.status === 200 ? history(-1) : document.getElementById("error").innerHTML = props.error

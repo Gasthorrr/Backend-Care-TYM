@@ -69,7 +69,7 @@ const updateMedicChain = async(req,res) =>{
         const id = req.params.id;
         const name = req.body.nombre;
         const password = req.body.contraseña;
-        const email = req.body.corre;
+        const email = req.body.correo;
 
         const databaseAccess = await getConnection.client;
         if(name !== undefined ){

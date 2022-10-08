@@ -4,18 +4,22 @@ import BottonsUpdate from "../../Component/Bottons/BottonsUpdate"
 import BottonsDelete from "../../Component/Bottons/BottonsDelete"
 import BottonsCancel from "../../Component/Bottons/BottonsCancel"
 
-export default function Edit() {
+export default function EditCenter() {
 
     const { id, name } = useParams()
-    const [nameChain, setNameChain] = useState()
+    const [nameCenter, setNameCenter] = useState()
     const [password, setPassword] = useState()
     const [email, setEmail] =useState()
+    const [address, setAddress] =useState()
+    const [city, setCity] =useState()
 
     const data = {
-        nombre: nameChain,
+        nombre: nameCenter,
         contraseña: password,
-        correo : email
-    }
+        direccion: address,
+        correo: email,
+        ciudad: city
+    } 
 
     return (
         <div className="flex justify-center flex-col">
@@ -30,7 +34,15 @@ export default function Edit() {
                     <form className="grid gap-6 m-3">
                         <div>
                             <label className="my-2 block font-medium">Nombre</label>
-                            <input onChange={(x) => setNameChain(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x) => setNameCenter(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                        </div>
+                        <div>
+                            <label className="my-2 block font-medium">Ciudad</label>
+                            <input onChange={(x) => setCity(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                        </div>
+                        <div>
+                            <label className="my-2 block font-medium">Direccion</label>
+                            <input onChange={(x) => setAddress(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div>
                             <label className="my-2 block font-medium">Correo institucional</label>
@@ -43,10 +55,10 @@ export default function Edit() {
                         <div id="error" className="text-red-500 text-center"></div>
 
                         <div className="grid grid-cols-2">
-                            <BottonsUpdate api={"http://127.0.0.1:8000/api/admin/chain/"+id} text={"Actualizar"} load={"Actualizando"} data={data} error={"Error al actualizar"} />
-                            <BottonsCancel redirect={"/admin"} text={"Cancelar"}/>
+                            <BottonsUpdate api={"http://127.0.0.1:8000/api/chain/center/"+id} text={"Actualizar"} load={"Actualizando"} data={data} error={"Error al actualizar"} />
+                            <BottonsCancel redirect={"/chain"} text={"Cancelar"}/>
                         </div>
-                        <BottonsDelete api={"http://127.0.0.1:8000/api/admin/chain/"+id} text={"Eliminar cadena medica"} load={"Eliminando"} error={"Error al eliminar la cadena"}/>
+                        <BottonsDelete api={"http://127.0.0.1:8000/api/chain/center/"+id} text={"Eliminar centro medico"} load={"Eliminando"} error={"Error al eliminar centro"}/>
 
                     </form>
                 </div>
