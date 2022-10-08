@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
-
+const bcrypt = require('bcryptjs');
+const passwordManager = require("./passwordManager");
 
 const databaseAccess = {
     database: 'railway',
@@ -49,7 +50,9 @@ const getUseruserType = async (key)=>{
 };
 
 const login = async (key,password)=>{ 
+    /////////////////////// INSTEAD OF 'USERNAME', 'ID', ETC... WE USE THE VARIABLE NAME 'KEY' AS A GENERALITY TO REFER ANY OF THE FOLLOWING PRIMARY KEYS: 
     const PrimaryKeyDicctionary={
+        /// user type : primary key
         "administrador":"usuario",
         "cadena_medica":"nombre",
         "centro_medico":"nombre",
@@ -63,17 +66,27 @@ const login = async (key,password)=>{
     }
     else{
         const primaryKey = PrimaryKeyDicctionary [userType];
-        queryValidarContraseña = await client.query(`select * from ${userType} where (${primaryKey}='${key}' and contraseña='${password}')`);
-        if(queryValidarContraseña.rowCount==1){
-            console.log(queryValidarContraseña['rows'])
-            return({rol : userType,
-                id: queryValidarContraseña['rows'][0].id
-            });
+        queryValidarContraseña = await client.query(`select * from ${userType} where (${primaryKey}='${key}' )`);
+        /// validates that there is one row that matches primary key
+        if(queryValidarContraseña.rowCount==1){  
+            const encriptedPassword=queryValidarContraseña['rows'][0].contraseña;
+            const result = await passwordManager.validatePassword(password,encriptedPassword);
+            /// validates that the password(user input) matches with the encriptedPassword(stored in the database)
+            if(result==true){
+                console.log(queryValidarContraseña.rows);
+                return({rol : userType,
+                    id: queryValidarContraseña['rows'][0].id
+                });
+            }      
         }
         return "Incorrect Password";    
     }
 
 };
+
+
+
+
 
 module.exports = {
     /// las funciones que se veran al exportar el modulo

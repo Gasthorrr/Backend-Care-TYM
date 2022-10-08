@@ -1,4 +1,5 @@
 const getConnection = require("./../database");
+const passwordManager = require("../passwordManager");
 
 const getMedicChain = async(req,res) =>{
     try{
@@ -41,7 +42,7 @@ const addMedicChain = async(req,res) =>{
         const client = await getConnection.client;
         await client.query(
             `INSERT INTO "cadena_medica" ("nombre", "contraseña", "correo") 
-            VALUES ($1, $2, $3)`, [name, password, email]);
+            VALUES ($1, $2, $3)`, [name, await passwordManager.getEncriptedPassword(password), email]);
         res.status(200).json({ message: "Medic chain added" });
     }catch(error){
         res.status(500);
@@ -76,7 +77,7 @@ const updateMedicChain = async(req,res) =>{
         }
 
         if(password !== undefined ){
-            await databaseAccess.query(`update cadena_medica set contraseña='${password}' where id='${id}'`);
+            await databaseAccess.query(`update cadena_medica set contraseña='${await passwordManager.getEncriptedPassword(password)}' where id='${id}'`);
         }
 
         if(email !== undefined ){

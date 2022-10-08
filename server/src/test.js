@@ -1,11 +1,12 @@
 const databaseAPI = require("./database");
-
+const passwordManager = require("./passwordManager");
 
 (async () => {
 
-    ///Show all medic centers
-    //console.log( await databaseAPI.showMedicCenters());
-    console.log( await databaseAPI.login("20.007.466-1","qwerty"));
+    ///console.log(await databaseAPI.login("test2","123"));
+    console.log(await databaseAPI.login("20.007.466-1","qwerty"));
+    //console.log( await passwordManager.getEncriptedPassword("qwerty"));
+    //console.log( await passwordManager.validatePassword("qwerty","$2a$10$Dx0wXQ78jRTIR.nabExQv.tmAhL.Z.uRPo7yLbZxk3TOYzlTrTkWi"));
 
 }
 )()

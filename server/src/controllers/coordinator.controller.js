@@ -1,4 +1,5 @@
 const getConnection = require("../database");
+const passwordManager = require("../passwordManager");
 
 const getCoordinator = async(req,res) =>{
     try{
@@ -41,7 +42,7 @@ const addCoordinator = async(req,res) =>{
 
         const client = await getConnection.client;
         await client.query(`INSERT INTO "coordinador" ("rut", "id_centro_medico", "nombre_completo", "contraseña", "correo") 
-        VALUES ($1, $2, $3, $4, $5)`, [rut, medic_center_id, complete_name, password, email]);
+        VALUES ($1, $2, $3, $4, $5)`, [rut, medic_center_id, complete_name,await passwordManager.getEncriptedPassword(password), email]);
         res.status(200).json({ message: "Coordinator added" });
     }catch(error){
         res.status(500);
@@ -72,7 +73,6 @@ const updateCoordinator = async(req,res) =>{
         const email = req.body.correo;
 
         const databaseAccess = await getConnection.client;
-
         if(medic_center_id !== undefined ){
             await databaseAccess.query(`update coordinador set id_centro_medico='${medic_center_id}' where rut='${rut}'`);
         }
@@ -82,7 +82,7 @@ const updateCoordinator = async(req,res) =>{
         }
         
         if(password !== undefined ){
-            await databaseAccess.query(`update coordinador set contraseña='${password}' where rut='${rut}'`);
+            await databaseAccess.query(`update coordinador set contraseña='${await passwordManager.getEncriptedPassword(password)}' where rut='${rut}'`);
         }
 
         if(email !== undefined){

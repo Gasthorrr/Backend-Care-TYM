@@ -1,4 +1,5 @@
 const getConnection = require("./../database");
+const passwordManager = require("../passwordManager");
 
 const getMedicCenter = async(req,res) =>{
     try{
@@ -43,7 +44,7 @@ const addMedicCenter = async(req,res) =>{
         const client = await getConnection.client;
         await client.query(
             `INSERT INTO "centro_medico" ("id_cadena_medica", "nombre", "contraseña", "direccion", "ciudad", "correo") 
-            VALUES ($1, $2, $3, $4, $5, $6)`, [medic_chain_id, name, password,address, city, email]);
+            VALUES ($1, $2, $3, $4, $5, $6)`, [medic_chain_id, name, await passwordManager.getEncriptedPassword(password),address, city, email]);
         res.status(200).json({ message: "Medic center added" });
     }catch(error){
         res.status(500);
@@ -83,7 +84,7 @@ const updateMedicCenter = async(req,res) =>{
             await client.query(`update centro_medico set nombre='${name}' where id='${id}'`);
         }
         if(password !== undefined){
-            await client.query(`update centro_medico set contraseña='${password}' where id='${id}'`);
+            await client.query(`update centro_medico set contraseña='${await passwordManager.getEncriptedPassword(password)}' where id='${id}'`);
         }
         if(address !== undefined){
             await client.query(`update centro_medico set direccion='${address}' where id='${id}'`);
