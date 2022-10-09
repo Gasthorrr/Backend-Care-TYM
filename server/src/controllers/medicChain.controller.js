@@ -5,8 +5,9 @@ const getMedicChain = async(req,res) =>{
     try{
         const id = req.params.id;
         const client = await getConnection.client;
-        const query = await client.query(`select * from cadena_medica where id='${id}'`);
-        const result = query['rows']
+        const query = await client.query(`select id,nombre,correo from cadena_medica where id='${id}'`);
+        const result = query['rows'][0]
+        console.log(result)
         res.json(result);
     }catch(error){
         res.status(500);
@@ -18,7 +19,7 @@ const getMedicChain = async(req,res) =>{
 const getMedicChains = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const query = await client.query(`select * from cadena_medica`);
+        const query = await client.query(`select id,nombre,correo from cadena_medica`);
         const result = query['rows']
         res.status(200)
         res.json(result);

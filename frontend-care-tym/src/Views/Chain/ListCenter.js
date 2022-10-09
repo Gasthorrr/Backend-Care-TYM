@@ -27,7 +27,7 @@ export default function ListChain(props) {
                         <h1 className="font-semibold text-xl">Centros de salud</h1>
                     </div>
                     <div className="self-center">
-                        <BottonsGo redirect={"/"+props.type+"/create"} text={"Añadir"}/>
+                        <BottonsGo redirect={"/"+props.type+"/create/"+props.id} text={"Añadir"}/>
                     </div>
                 </div>
             </div>

@@ -5,8 +5,8 @@ const getMedicCenter = async(req,res) =>{
     try{
         const {id} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`select * from centro_medico where id_cadena_medica='${id}'`);
-        const result = query['rows']
+        const query = await client.query(`select id,id_cadena_medica,nombre,direccion,ciudad,correo from centro_medico where id='${id}'`);
+        const result = query['rows'][0]
         res.status(200).json(result);
     }catch(error){
         res.status(500);
@@ -18,7 +18,7 @@ const getMedicCenter = async(req,res) =>{
 const getMedicCenters = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const query = await client.query(`select * from centro_medico where id_cadena_medica='${req.user.id}'`);
+        const query = await client.query(`select id,id_cadena_medica,nombre,direccion,ciudad,correo from centro_medico where id_cadena_medica='${req.user.id}'`);
         const result = query['rows']
         res.status(200).json(result);
     }catch(error){
@@ -30,21 +30,20 @@ const getMedicCenters = async(req,res) =>{
 
 const addMedicCenter = async(req,res) =>{
     try{
-        const medic_chain_id = req.body.id_cadena_medica;
         const name = req.body.nombre;
         const password = req.body.contraseña;
         const address = req.body.direccion;
         const city = req.body.ciudad;
         const email = req.body.correo;
 
-        if(medic_chain_id === undefined || name === undefined || password === undefined || address === undefined || city === undefined || email === undefined){
-            res.status(400).json({message: "Bad Request. Please fill all field"});
+        if(name === undefined || password === undefined || address === undefined || city === undefined || email === undefined){
+            return res.status(400).json({message: "Bad Request. Please fill all field"});
         }
         const id = req.user.id
         const client = await getConnection.client;
         await client.query(
             `INSERT INTO "centro_medico" ("id_cadena_medica", "nombre", "contraseña", "direccion", "ciudad", "correo") 
-            VALUES ($1, $2, $3, $4, $5, $6)`, [medic_chain_id, name, await passwordManager.getEncriptedPassword(password),address, city, email]);
+            VALUES ($1, $2, $3, $4, $5, $6)`, [id, name, await passwordManager.getEncriptedPassword(password),address, city, email]);
         res.status(200).json({ message: "Medic center added" });
     }catch(error){
         res.status(500);

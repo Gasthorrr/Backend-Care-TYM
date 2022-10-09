@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import BottonsUpdate from "../../Component/Bottons/BottonsUpdate"
 import BottonsDelete from "../../Component/Bottons/BottonsDelete"
 import BottonsCancel from "../../Component/Bottons/BottonsCancel"
+import { getRequest } from "../../Services/Request"
 
 export default function EditCenter() {
 
@@ -12,6 +13,20 @@ export default function EditCenter() {
     const [email, setEmail] =useState()
     const [address, setAddress] =useState()
     const [city, setCity] =useState()
+
+    useEffect(()=>{
+        const getData = async() =>{
+            const data = await getRequest("http://127.0.0.1:8000/api/chain/center/"+id)
+            setNameCenter(data.nombre)
+            setAddress(data.direccion)
+            setCity(data.ciudad)
+            setEmail(data.correo)
+            setPassword(data.contraseña)
+        }
+        getData()
+        
+    },[])
+    
 
     const data = {
         nombre: nameCenter,
@@ -34,19 +49,19 @@ export default function EditCenter() {
                     <form className="grid gap-6 m-3">
                         <div>
                             <label className="my-2 block font-medium">Nombre</label>
-                            <input onChange={(x) => setNameCenter(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x) => setNameCenter(x.target.value)} value={nameCenter} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div>
                             <label className="my-2 block font-medium">Ciudad</label>
-                            <input onChange={(x) => setCity(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x) => setCity(x.target.value)} value={city} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div>
                             <label className="my-2 block font-medium">Direccion</label>
-                            <input onChange={(x) => setAddress(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x) => setAddress(x.target.value)} value={address} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div>
                             <label className="my-2 block font-medium">Correo institucional</label>
-                            <input onChange={(x) => setEmail(x.target.value)} autocomplete="off" type="email" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x) => setEmail(x.target.value)} value={email} autocomplete="off" type="email" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div>
                             <label className="my-2 block font-medium">Contraseña</label>

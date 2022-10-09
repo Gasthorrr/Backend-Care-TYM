@@ -24,13 +24,13 @@ export default function App() {
                         <Route path="/admin" element={<Admin />}>
                             <Route index element={<ListChain  type={"admin/chain"} text={"Redes de cadenas de salud"} />} />
                             <Route path="/admin/chain/create" element={<Create />} />
-                            <Route path="/admin/chain/edit/:id/:name" element={<Edit />} />
+                            <Route path="/admin/chain/edit/:id" element={<Edit />} />
                         </Route>
 
                         <Route path="/chain" element={<Chain/>}>
                             <Route index element={<ListCenter type={"chain/center"} text={"Centros de salud"}/>} />
                             <Route path="/chain/center/edit/:id/:name" element={<EditCenter />}/>
-                            <Route path="/chain/center/create" element={<CreateCenter />}/>
+                            <Route path="/chain/center/create/:id" element={<CreateCenter />}/>
 
                         </Route>
 

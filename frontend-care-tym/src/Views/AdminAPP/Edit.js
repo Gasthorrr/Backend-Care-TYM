@@ -1,15 +1,25 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import BottonsUpdate from "../../Component/Bottons/BottonsUpdate"
 import BottonsDelete from "../../Component/Bottons/BottonsDelete"
 import BottonsCancel from "../../Component/Bottons/BottonsCancel"
+import { getRequest } from "../../Services/Request"
 
-export default function Edit() {
+export default function Edit(props) {
 
-    const { id, name } = useParams()
+    const { id } = useParams()
     const [nameChain, setNameChain] = useState()
     const [password, setPassword] = useState()
     const [email, setEmail] =useState()
+
+    useEffect(()=>{
+        const getData= async()=>{
+            const data = await getRequest("http://127.0.0.1:8000/api/admin/chain/"+id)
+            setNameChain(data.nombre)
+            setEmail(data.correo)
+        }
+        getData()
+    },[])
 
     const data = {
         nombre: nameChain,
@@ -30,11 +40,11 @@ export default function Edit() {
                     <form className="grid gap-6 m-3">
                         <div>
                             <label className="my-2 block font-medium">Nombre</label>
-                            <input onChange={(x) => setNameChain(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x) => setNameChain(x.target.value)} value={nameChain} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div>
                             <label className="my-2 block font-medium">Correo institucional</label>
-                            <input onChange={(x) => setEmail(x.target.value)} autocomplete="off" type="email" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                            <input onChange={(x) => setEmail(x.target.value)} value={email} autocomplete="off" type="email" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div>
                             <label className="my-2 block font-medium">Contraseña</label>

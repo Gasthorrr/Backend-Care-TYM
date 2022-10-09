@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
             sessionStorage.setItem("auth-token", token)// se guarda jwt entregado la API
             const decode = jwt(token)
-            if(decode.roles === "centro_medico" || decode.roles === "cadena_medica"){
+            if(decode.rol === "centro_medico" || decode.rol === "cadena_medica"){
                 sessionStorage.setItem("title", decode.key)
             }else{
                 sessionStorage.setItem("title", "CareTYM")

@@ -1,11 +1,13 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import BottonsCreate from "../../Component/Bottons/BottonsCreate"
 
 
-export default function CreateCenter() {
+export default function CreateCenter(props) {
 
     const history = useNavigate()
+
+    const id = useParams()
 
     const [nameCenter, setNameCenter] = useState()
     const [password, setPassword] = useState()
