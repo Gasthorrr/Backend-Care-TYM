@@ -1,15 +1,13 @@
 import {Navigate, Outlet } from "react-router-dom"
-import NavBar from "../Component/NavBar";
 
 export default function Chain() {
 
     //const {user}  = useContext(AuthProvider)
 
-    if(!sessionStorage.getItem("auth-token")) return <Navigate to="/"/>    
+    if(!sessionStorage.getItem("auth-token") || sessionStorage.getItem("rol") !== "cadena_medica") return <Navigate to="/"/>    
 
     return (
         <div className="flex justify-center flex-col">
-            <NavBar />
             <Outlet />
         </div>
     )

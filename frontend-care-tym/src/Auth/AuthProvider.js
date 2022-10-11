@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
 
             sessionStorage.setItem("auth-token", token)// se guarda jwt entregado la API
             const decode = jwt(token)
+            sessionStorage.setItem("rol",decode.rol)
             if(decode.rol === "centro_medico" || decode.rol === "cadena_medica"){
                 sessionStorage.setItem("title", decode.key)
             }else{
@@ -37,6 +38,8 @@ export const AuthProvider = ({ children }) => {
                 return history("/admin/")
             }else if(decode.rol === "cadena_medica"){
                 return history("/chain/")
+            }else if(decode.rol === "centro_medico"){
+                return history("/center/")
             }
 
         }

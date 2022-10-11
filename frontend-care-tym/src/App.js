@@ -11,12 +11,15 @@ import { AuthProvider } from "./Auth/AuthProvider";
 import Chain from "./Page/Chain";
 import EditCenter from "./Views/Chain/EditCenter";
 import CreateCenter from "./Views/Chain/CreateCenter";
+import NavBar from "./Component/NavBar";
+import Center from "./Page/Center";
 
 export default function App() {
     return (
         <div>
             <div className="min-h-screen">
                 <AuthProvider>
+                    <NavBar/>
                     <Routes>
                         <Route path="/" element={<Login />} />
                         <Route path="/activation" element={<Activation />} />
@@ -31,6 +34,9 @@ export default function App() {
                             <Route index element={<ListCenter type={"chain/center"} text={"Centros de salud"}/>} />
                             <Route path="/chain/center/edit/:id/:name" element={<EditCenter />}/>
                             <Route path="/chain/center/create/:id" element={<CreateCenter />}/>
+                        </Route>
+
+                        <Route parh="/center" element={<Center/>}>
 
                         </Route>
 

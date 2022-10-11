@@ -3,7 +3,6 @@ import NavBar from "../Component/NavBar";
 export default function Activation() {
     return(
         <div className="grid">
-            <NavBar />
             <div className="m-4 flex flex-col md:justify-self-center md:bg-slate-300 md:w-1/2 md:max-w-lg md:rounded-xl md:shadow-xl">
                 <h1 className="font-semibold text-xl my-5 md:mt-10 md:text-center md:text-2xl">Activacion de la cuenta</h1>
                 <form className=" grid gap-6 m-3">
