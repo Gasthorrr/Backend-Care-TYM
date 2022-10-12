@@ -3,6 +3,8 @@ const router = Router();
 
 const chainsController = require("../controllers/medicChain.controller");
 
+
+//// Medic Chain management
 router.get("/:id",chainsController.getMedicChain);
 router.get('/',chainsController.getMedicChains);
 router.post('/',chainsController.addMedicChain);
