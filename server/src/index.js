@@ -31,6 +31,7 @@ app.use('/api/chain/center',verifyToken,require('./routes/center'));
 app.use('/api/center/medic',verifyToken, require('./routes/medic'));
 app.use('/api/center/coordinator',verifyToken, require('./routes/coordinator'));
 app.use('/api/center/specialty',verifyToken, require('./routes/specialty'));
+app.use('/api/medic/attention_block',verifyToken, require('./routes/attentionBlock'));
 
 //Starting Server
 app.listen(app.get('port'), () => {
