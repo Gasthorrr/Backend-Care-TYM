@@ -13,10 +13,9 @@ const verifyToken = (req, res, next) => {
         
 
         const RolesDicctionary={
-            "administrador":"admin/chain",
-            "cadena_medica":"chain/center",
-            "cadena_medica":"chain/center",
-            "centro_medico":"center/specialty",
+            "administrador":"admin",
+            "cadena_medica":"chain",
+            "centro_medico":"center",
             "medico" : "medic"
             //falta los otros usuarios
         };
