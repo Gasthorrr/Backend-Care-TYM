@@ -13,6 +13,7 @@ import EditCenter from "./Views/Chain/EditCenter";
 import CreateCenter from "./Views/Chain/CreateCenter";
 import NavBar from "./Component/NavBar";
 import Center from "./Page/Center";
+import HomeCenter from "./Views/Center/HomeCenter";
 
 export default function App() {
     return (
@@ -36,7 +37,9 @@ export default function App() {
                             <Route path="/chain/center/create/:id" element={<CreateCenter />}/>
                         </Route>
 
-                        <Route parh="/center" element={<Center/>}>
+                        <Route path="/center" element={<Center/>}>
+                            <Route index element={<HomeCenter/>} />
+                            
 
                         </Route>
 

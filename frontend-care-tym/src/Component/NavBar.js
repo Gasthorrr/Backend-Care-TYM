@@ -14,7 +14,7 @@ export default function NavBar() {
     const [navbarOpen, setNavbarOpen] = useState(false);
     return (
         <>
-            <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-blue-500 m-1 rounded-2xl md:m-0 md:rounded-none mb-3">
+            <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 m-1 rounded-2xl md:m-0 md:rounded-none mb-3">
                 <div className={"container px-4 mx-auto flex flex-wrap items-center justify-between"+(type !=="centro_medico" ? " flex-nowrap" : "")}>
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                         <button onClick={() => history("/")} className="font-bold text-2xl text-white">
@@ -44,16 +44,16 @@ export default function NavBar() {
                                 type === "centro_medico" && session ? (
                                     <>
                                         <li>
-                                            <a href="/admin" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 dark:text-white" aria-current="page">Inicio</a>
+                                            <a href="/center" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Inicio</a>
                                         </li>
                                         <li>
-                                            <a href="/admin" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 dark:text-white" aria-current="page">Medicos</a>
+                                            <a href="/center/medic" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Medicos</a>
                                         </li>
                                         <li>
-                                            <a href="/admin" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 dark:text-white" aria-current="page">Especialidades</a>
+                                            <a href="/center/specialty" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Especialidades</a>
                                         </li>
                                         <li>
-                                            <a href="/admin" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent md:p-0 dark:text-white" aria-current="page">Coordinadores</a>
+                                            <a href="/center/coordinator" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Coordinadores</a>
                                         </li>
                                     </>
 
