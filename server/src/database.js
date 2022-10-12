@@ -94,17 +94,9 @@ const login = async (key,password)=>{
 };
 
 
-const insertarBloqueHorario = async (rut,day,startTime,endTime)=>{  //// startTime, endTime  -> "hh:mm:ss"
-    //// Searches the user into the admin table
-    const query= await client.query(`insert into bloque_de_atencion(rut_medico,dia,hora_inicio,hora_fin) values('${rut}','${day}','${startTime}','${endTime}')`);
-    return query;
-};
-
-
 module.exports = {
     /// las funciones que se veran al exportar el modulo
     client,
     getUseruserType,
     login,
-    insertarBloqueHorario
 }
