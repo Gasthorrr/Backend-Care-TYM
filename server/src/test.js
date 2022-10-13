@@ -8,7 +8,6 @@ const passwordManager = require("./passwordManager");
     //console.log(await databaseAPI.login("20.007.466-1","qwerty"));
     //console.log( await passwordManager.getEncriptedPassword("123"));
     //console.log( await passwordManager.validatePassword("qwerty","$2a$10$Dx0wXQ78jRTIR.nabExQv.tmAhL.Z.uRPo7yLbZxk3TOYzlTrTkWi"));
-    //databaseAPI.insertarBloqueHorario("19.456.655-k","Martes","00:09:30","12:30:00");
 
 }
 )()

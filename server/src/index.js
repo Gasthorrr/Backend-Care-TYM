@@ -33,7 +33,7 @@ app.use('/api/chain',verifyToken,require('./routes/chain'));
 
 app.use('/api/center',verifyToken,require('./routes/center'));
 
-app.use('/api/medic',verifyToken, require('./routes/attentionBlock'));
+app.use('/api/medic',verifyToken, require('./routes/medic'));
 
 //Starting Server
 app.listen(app.get('port'), () => {
