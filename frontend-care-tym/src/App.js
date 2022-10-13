@@ -26,15 +26,15 @@ export default function App() {
                         <Route path="/activation" element={<Activation />} />
 
                         <Route path="/admin" element={<Admin />}>
-                            <Route index element={<ListChain  type={"admin/chain"} text={"Redes de cadenas de salud"} />} />
-                            <Route path="/admin/chain/create" element={<Create />} />
-                            <Route path="/admin/chain/edit/:id" element={<Edit />} />
+                            <Route index element={<ListChain  type={"admin/"} text={"Redes de cadenas de salud"} />} />
+                            <Route path="/admin/create" element={<Create />} />
+                            <Route path="/admin/edit/:id" element={<Edit />} />
                         </Route>
 
                         <Route path="/chain" element={<Chain/>}>
-                            <Route index element={<ListCenter type={"chain/center"} text={"Centros de salud"}/>} />
-                            <Route path="/chain/center/edit/:id/:name" element={<EditCenter />}/>
-                            <Route path="/chain/center/create/:id" element={<CreateCenter />}/>
+                            <Route index element={<ListCenter type={"chain/"} text={"Centros de salud"}/>} />
+                            <Route path="/chain/edit/:id/:name" element={<EditCenter />}/>
+                            <Route path="/chain/create/" element={<CreateCenter />}/>
                         </Route>
 
                         <Route path="/center" element={<Center/>}>

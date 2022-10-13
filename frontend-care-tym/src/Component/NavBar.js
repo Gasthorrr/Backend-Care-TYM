@@ -29,9 +29,9 @@ export default function NavBar() {
                                     <button className="text-black cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded  block lg:hidden outline-none focus:outline-none" type="button" onClick={() => setNavbarOpen(!navbarOpen)}>
                                         {
                                             !navbarOpen ? (
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                                             ) : (
-                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                             )
                                         }
                                     </button>
@@ -44,16 +44,16 @@ export default function NavBar() {
                                 type === "centro_medico" && session ? (
                                     <>
                                         <li>
-                                            <a href="/center" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Inicio</a>
+                                            <a href="/center" className="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Inicio</a>
                                         </li>
                                         <li>
-                                            <a href="/center/medic" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Medicos</a>
+                                            <a href="/center/medic" className="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Medicos</a>
                                         </li>
                                         <li>
-                                            <a href="/center/specialty" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Especialidades</a>
+                                            <a href="/center/specialty" className="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Especialidades</a>
                                         </li>
                                         <li>
-                                            <a href="/center/coordinator" class="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Coordinadores</a>
+                                            <a href="/center/coordinator" className="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Coordinadores</a>
                                         </li>
                                     </>
 

@@ -8,6 +8,8 @@ export default function ListChain(props) {
     const [center, setCenter] = useState([])
     const [loading, setLoading] = useState(true)
 
+    console.log(props.type)
+
     useEffect(() => {
 
         const request = async () => {
@@ -27,7 +29,7 @@ export default function ListChain(props) {
                         <h1 className="font-semibold text-xl">Centros de salud</h1>
                     </div>
                     <div className="self-center">
-                        <BottonsGo redirect={"/"+props.type+"/create/"+props.id} text={"Añadir"}/>
+                        <BottonsGo redirect={"create/"} text={"Añadir"}/>
                     </div>
                 </div>
             </div>

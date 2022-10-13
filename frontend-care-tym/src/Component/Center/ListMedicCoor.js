@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getRequest } from "../../Services/Request"
 
-export default function ListShort(props) {
+export default function ListMedic(props) {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -26,8 +26,8 @@ export default function ListShort(props) {
                 ) : (
                     data.map((x) => (
                         <div key={x.id} className="m-2">
-                            <h1 className="font-medium">{x.nombre}</h1>
-                            <h1 className="font-light">ID {x.id}</h1>
+                            <h1 className="font-medium">{x.nombre_completo}</h1>
+                            <h1 className="font-light">RUT {x.rut}</h1>
                         </div>
                     ))
                 )

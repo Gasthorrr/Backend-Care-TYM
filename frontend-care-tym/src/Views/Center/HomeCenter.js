@@ -1,3 +1,4 @@
+import ListMedicCoor from "../../Component/Center/ListMedicCoor";
 import ListShort from "../../Component/Center/ListShort";
 
 export default function HomeCenter() {
@@ -7,17 +8,11 @@ export default function HomeCenter() {
                 <h1 className="text-center text-2xl font-semibold mt-2">Resumen centro medico</h1>
                 <div className="flex flex-col sm:flex-row flex-nowrap my-5">
 
-                    <ListShort title={"Especialidades globales"}/>
+                    <ListShort title={"Especialidades globales"} api={"http://127.0.0.1:8000/api/center/specialty"}/>
 
-                    <div className="mx-2 w-2/6 py-5 bg-slate-50 rounded-xl shadow-xl">
-                        <h1 className="text-center text-lg font-semibold mb-5">Medicos</h1>
+                    <ListMedicCoor title={"Medicos"} api={"http://127.0.0.1:8000/api/center/medic"}/>
 
-
-                    </div>
-
-                    <div className="mx-2 w-2/6 py-5 bg-slate-50 rounded-xl shadow-xl">
-                        <h1 className="text-center text-lg font-semibold mb-5">Coordinadores</h1>
-                    </div>
+                    <ListMedicCoor title={"Coordinadores"} api={"http://127.0.0.1:8000/api/center/coordinator"}/>
 
                 </div>
 

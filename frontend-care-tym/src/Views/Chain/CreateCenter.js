@@ -58,7 +58,7 @@ export default function CreateCenter(props) {
                             <input onChange={(x) => setPassword(x.target.value)} autocomplete="off" type="password" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                         </div>
                         <div id="error" className="text-red-500 text-center"></div>
-                        <BottonsCreate text={"Registrar"} load={"Registrando"} data={data} api={"http://127.0.0.1:8000/api/chain/center"} error={"Problemas al registrar la cadena medica"}/>
+                        <BottonsCreate text={"Registrar"} load={"Registrando"} data={data} api={"http://127.0.0.1:8000/api/chain"} error={"Problemas al registrar la cadena medica"}/>
                     </form>
                 </div>
             </div>
