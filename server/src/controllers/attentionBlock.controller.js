@@ -7,7 +7,9 @@ const validDaysDicctionary={
     "Martes":1,
     "Miercoles":1,
     "Jueves":1,
-    "Viernes":1
+    "Viernes":1,
+    "Sabado":1,
+    "Domingo":1
 };
 
 const getBlocks = async(req,res) =>{
