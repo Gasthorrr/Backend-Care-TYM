@@ -18,7 +18,7 @@ export default function ListShort(props) {
 
 
     return (
-        <div className="mx-2 min-w-fit my-5 sm:w-4/12 py-5 px-2 bg-slate-50 rounded-xl shadow-xl divide-y">
+        <div className="mx-2 min-w-fit my-5 sm:w-4/12 py-5 px-2 bg-gray-200 rounded-xl shadow-xl divide-y divide-slate-300">
             <h1 className="text-center text-lg font-semibold mb-5">{props.title}</h1>
             {
                 loading ? (

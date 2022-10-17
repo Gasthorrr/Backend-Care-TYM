@@ -31,7 +31,7 @@ const getMedics = async(req,res) =>{
 const addMedic = async(req,res) =>{
     try{
         const rut = req.body.rut;
-        const medic_center_id = req.body.id_centro_medico;
+        const medic_center_id = req.user.id;
         const specialty_id = req.body.id_especialidad;
         const complete_name = req.body.nombre_completo; 
         const password = req.body.contraseña;
@@ -58,8 +58,11 @@ const deleteMedic = async(req,res) =>{
     try{
         const rut = req.params.rut;
         const client = await getConnection.client;
-        await client.query(`delete from medico where rut='${rut}'`);
-        res.status(200).json({ message: "Medic deleted" });
+        const query = await client.query(`delete from medico where rut='${rut}'`);
+        console.log(query["rowCount"])
+        if(query === 0 ) return res.status(404).json({error : "Error al eliminar medico"})
+        if(query === 1 ) return res.status(200).json({ message: "Medic deleted" });
+        
     }catch(error){
         res.status(500);
         res.send(error.message);
@@ -70,7 +73,7 @@ const deleteMedic = async(req,res) =>{
 const updateMedic = async(req,res) =>{
     try{
         const rut = req.params.rut;
-        const medic_center_id = req.body.id_centro_medico;
+        const medic_center_id = req.user.id;
         const complete_name = req.body.nombre_completo; 
         const password = req.body.contraseña;
         const phone = req.body.telefono;

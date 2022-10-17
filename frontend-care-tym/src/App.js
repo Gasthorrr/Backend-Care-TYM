@@ -14,6 +14,7 @@ import CreateCenter from "./Views/Chain/CreateCenter";
 import NavBar from "./Component/NavBar";
 import Center from "./Page/Center";
 import HomeCenter from "./Views/Center/HomeCenter";
+import Medic from "./Views/Center/Medic";
 
 export default function App() {
     return (
@@ -39,6 +40,7 @@ export default function App() {
 
                         <Route path="/center" element={<Center/>}>
                             <Route index element={<HomeCenter/>} />
+                            <Route path="/center/medic" element={<Medic/>}/>
                             
 
                         </Route>
