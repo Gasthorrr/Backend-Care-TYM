@@ -15,6 +15,7 @@ import NavBar from "./Component/NavBar";
 import Center from "./Page/Center";
 import HomeCenter from "./Views/Center/HomeCenter";
 import Medic from "./Views/Center/Medic";
+import Specialty from "./Views/Center/Specialty";
 
 export default function App() {
     return (
@@ -41,6 +42,7 @@ export default function App() {
                         <Route path="/center" element={<Center/>}>
                             <Route index element={<HomeCenter/>} />
                             <Route path="/center/medic" element={<Medic/>}/>
+                            <Route path="/center/specialty" element={<Specialty/>}/>
                             
 
                         </Route>

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { getRequest } from "../../Services/Request"
 
 export default function ListShort(props) {
+
+    const history = useNavigate()
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -34,7 +37,7 @@ export default function ListShort(props) {
 
             }
             <div className="flex justify-end">
-                <button className="bg-blue-700 text-white font-medium p-2.5 rounded-xl shadow-xl mt-4 hover:shadow-none">Ver mas</button>
+                <button className="bg-blue-700 text-white font-medium p-2.5 rounded-xl shadow-xl mt-4 hover:shadow-none" onClick={()=> history("/center/specialty")}>Ver mas</button>
             </div>
 
         </div>

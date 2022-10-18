@@ -19,7 +19,7 @@ export default function BottonsCreate(props) {
     }
 
     return (
-        <button disabled={loading} onClick={handleSubmit} className="p-3 my-2 bg-green-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">
+        <button disabled={loading} onClick={handleSubmit} className="p-2 my-2 bg-green-400 rounded-lg shadow-lg font-semibold text-lg hover:shadow-sm">
             {
                 loading ?
                     <div className="flex flex-row text-center justify-center ">

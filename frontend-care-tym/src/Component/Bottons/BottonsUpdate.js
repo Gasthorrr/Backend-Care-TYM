@@ -18,7 +18,7 @@ export default function BottonsUpdate(props) {
     }
 
     return (
-        <button onClick={handleSubmit} className="p-3 my-2 mr-2 bg-green-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">
+        <button onClick={handleSubmit} className="p-2 my-2 mr-2 bg-green-400 rounded-lg shadow-lg font-semibold text-lg hover:shadow-sm">
             {
                 loadingSave ?
                     <div className="flex flex-row text-center justify-center ">

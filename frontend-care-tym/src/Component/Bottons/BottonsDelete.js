@@ -17,7 +17,7 @@ export default function BottonsDelete(props){
     }
 
     return(
-        <button onClick={deleteCenter} className="p-3 bg-white text-red-500 border-2 border-red-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">
+        <button onClick={deleteCenter} className="p-3 bg-white text-red-600 border-2 border-red-600 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">
                             {
                                 loadingDelete ?
                                     <div className="flex flex-row text-center justify-center ">

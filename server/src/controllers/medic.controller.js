@@ -59,9 +59,8 @@ const deleteMedic = async(req,res) =>{
         const rut = req.params.rut;
         const client = await getConnection.client;
         const query = await client.query(`delete from medico where rut='${rut}'`);
-        console.log(query["rowCount"])
-        if(query === 0 ) return res.status(404).json({error : "Error al eliminar medico"})
-        if(query === 1 ) return res.status(200).json({ message: "Medic deleted" });
+        if(query["rowCount"] === 0 ) return res.status(404).json({error : "Error al eliminar medico"})
+        if(query["rowCount"] === 1 ) return res.status(200).json({ message: "Medic deleted" });
         
     }catch(error){
         res.status(500);
@@ -79,6 +78,7 @@ const updateMedic = async(req,res) =>{
         const phone = req.body.telefono;
         const service_duration = req.body.duracion_atencion;
         const email = req.body.correo;
+        const specialty = req.body.id_especialidad;
         
         const databaseAccess = await getConnection.client;
 
@@ -102,6 +102,9 @@ const updateMedic = async(req,res) =>{
         }
         if(email !== undefined){
             await databaseAccess.query(`update medico set correo='${email}' where rut='${rut}'`);
+        }
+        if(specialty !== undefined){
+            await databaseAccess.query(`update medico set id_especialidad='${specialty}' where rut='${rut}'`);
         }
 
         res.status(200).json({ message: "Medic updated sucsesfully" });
