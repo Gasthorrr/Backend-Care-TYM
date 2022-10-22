@@ -93,10 +93,22 @@ const login = async (key,password)=>{
 
 };
 
+const test = async (key)=>{ 
+    const text=`select * from paciente where rut=$1`;
+    try {
+        const res = await client.query(text, [key])
+        console.log(res.rows[0])
+        // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
+      } catch (err) {
+        console.log(err.stack)
+      }
+
+};
 
 module.exports = {
     /// las funciones que se veran al exportar el modulo
     client,
     getUseruserType,
     login,
+    test
 }

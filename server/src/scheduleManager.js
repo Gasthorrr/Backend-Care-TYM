@@ -33,7 +33,7 @@ function getDayOfWeek(date) {
 
   }
 
-const getAvailableaBlocks = async (date,rut)=>{
+const getAvailableaBlocks = async (date, rut) => {
 
   //// convert date to day of week
   const day = getDayOfWeek(date);
@@ -41,51 +41,72 @@ const getAvailableaBlocks = async (date,rut)=>{
   console.log(day)
 
   //// get medic time per attention
-  const medicQuery = await client.query(`select * from medico where rut='${rut}'`);
+  const medicQuery = await client.query(`select * from medico where rut=$1`, [rut]);
   const timePerAttention = medicQuery['rows'][0].duracion_atencion;
   console.log(timePerAttention + "min");
 
   //// get attention by date
-  const attentionQuery = await client.query(`Select * from atencion where (rut_medico ='${rut}'and fecha='${date}') order by hora_inicio`);
+  const attentionQuery = await client.query(`Select * from atencion where (rut_medico=$1 and fecha=$2) order by hora_inicio`, [rut, date]);
   const attentionList = new Array(attentionQuery.rowCount);
   var indexA = 0;
   for (var a = 0; a < attentionQuery.rowCount; a++) {
     const startOfAttention = await attentionQuery.rows[a]['hora_inicio'];
     const endOfAttention = await attentionQuery.rows[a]['hora_finalizacion_estimada'];
     attentionList[a] = [startOfAttention, endOfAttention];
-
   }
-  console.log(attentionList);
+  console.log("Attention list:"+attentionList+"\n\n");
 
-   /////     
-   var available = new Array();
+  var availableList = new Array();
 
   //// get attention blocks of the day
-  const attetionBlocksQuery = await client.query(`Select * from bloque_de_atencion where (rut_medico ='${rut}'and dia='${day}') order by hora_inicio`);
+  const attetionBlocksQuery = await client.query(`Select * from bloque_de_atencion where (rut_medico =$1 and dia=$2) order by hora_inicio`, [rut, day]);
   const blockList = new Array(attetionBlocksQuery.rowCount);
   for (var b = 0; b < attetionBlocksQuery.rowCount; b++) {
     const startOfTheBlock = await attetionBlocksQuery.rows[b]['hora_inicio'];
     const endOfTheBlock = await attetionBlocksQuery.rows[b]['hora_fin'];
-    var posibleAttentionStart =startOfTheBlock;
+    var posibleAttentionStart = startOfTheBlock;
     blockList[b] = [startOfTheBlock, endOfTheBlock];
-    console.log("Block: "+blockList[b]);
-    while (true) {
-      ///create posible attention
-      var posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
-      if ( !isInside(posibleAttention[1],startOfTheBlock,endOfTheBlock)) {
-        console.log("*Se rompe*");
-        break;
+    console.log("Block: " + blockList[b]);
+    /// create possible attention
+    var posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
+    while (isInside(posibleAttention[1], startOfTheBlock, endOfTheBlock)) {  /// while possible attention is inside the block
+      //// check if it colides with another attention
+      if (indexA < attentionList.length) { /// there is at least 1 attention left to compare
+        const isStartInside=isInside(posibleAttention[0], attentionList[indexA][0], attentionList[indexA][1]);
+        const isEndInside = isInside(posibleAttention[1], attentionList[indexA][0], attentionList[indexA][1]);
+        if (isStartInside & isEndInside) { /// if possible attention collides with an attention
+          console.log(posibleAttention + " colides with: " + attentionList[indexA]);
+          /// try next possible attention (at the end of the collition)
+          posibleAttentionStart = addMinutes(attentionList[indexA][1], 10);
+          posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
+          indexA++;
+        }
+        else { /// doesnt collide
+          /// add it to the availableList
+          availableList.push(posibleAttention);
+          console.log(posibleAttention + " doesnt colide with: " + attentionList[indexA]);
+          /// try next possible attention
+          posibleAttentionStart = addMinutes(posibleAttentionStart, 10);
+          posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
+        }
       }
-      console.log("posible attention: " + posibleAttention);
-      posibleAttentionStart=addMinutes(posibleAttentionStart, timePerAttention);
+      else { /// no attentions left to compare every possible attention inside the block is valid
+        /// add it to the possible attention list
+        availableList.push(posibleAttention);
+        console.log("possible attention: " + posibleAttention);
+        /// try next possible attention
+        posibleAttentionStart = addMinutes(posibleAttentionStart, 10);  
+        posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
+      }
     }
-    console.log("//////////////////// end of the block //////////////////////////")
-    
+    console.log("//////////////////// end of the block //////////////////////////");
+
   }
-  console.log(blockList);
+  console.log("\n available:");
+  console.log(availableList);
 
 
- 
+
 
 
 
