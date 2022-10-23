@@ -18,9 +18,24 @@ function getDayOfWeek(date) {
 
 
   function isInside(hour,intervalStart,intervalEnd) {
-    if((intervalStart<=hour) & (hour<=intervalEnd)){
+    if((intervalStart<hour) & (hour<=intervalEnd)){
         return true;
     }
+    return false;
+  }
+
+  function isColliding(x1,x2,y1,y2) {
+    //// true if x inside y
+    const isXInside=((y1<x1) & (x1<y2)) || ((y1<x2) & (x2<y2));/// (y1<x1<y2) || (y1<x2<y2)  
+    //// true if y inside x
+    const isyInside=((x1<y1) & (y1<x2)) || ((x1<y2) & (y2<x2));/// (x1<y1<x2) || (x1<y2<x2)  
+    //// true if x=y
+    const isEqual=(x1==y1) & (x2==y2);
+
+    if(isXInside || isyInside || isEqual){
+      return true;
+    }
+
     return false;
   }
 
@@ -33,11 +48,12 @@ function getDayOfWeek(date) {
 
   }
 
-const getAvailableaBlocks = async (date, rut) => {
-
+const getAvailableBlocks = async (rut,date) => {
+  //// convert date to string
+  const stringDate = dateToStringDate(date);
   //// convert date to day of week
-  const day = getDayOfWeek(date);
-  console.log(date)
+  const day = getDayOfWeek(stringDate);
+  console.log(stringDate)
   console.log(day)
 
   //// get medic time per attention
@@ -46,7 +62,7 @@ const getAvailableaBlocks = async (date, rut) => {
   console.log(timePerAttention + "min");
 
   //// get attention by date
-  const attentionQuery = await client.query(`Select * from atencion where (rut_medico=$1 and fecha=$2) order by hora_inicio`, [rut, date]);
+  const attentionQuery = await client.query(`Select * from atencion where (rut_medico=$1 and fecha=$2) order by hora_inicio`, [rut, stringDate]);
   const attentionList = new Array(attentionQuery.rowCount);
   var indexA = 0;
   for (var a = 0; a < attentionQuery.rowCount; a++) {
@@ -72,12 +88,11 @@ const getAvailableaBlocks = async (date, rut) => {
     while (isInside(posibleAttention[1], startOfTheBlock, endOfTheBlock)) {  /// while possible attention is inside the block
       //// check if it colides with another attention
       if (indexA < attentionList.length) { /// there is at least 1 attention left to compare
-        const isStartInside=isInside(posibleAttention[0], attentionList[indexA][0], attentionList[indexA][1]);
-        const isEndInside = isInside(posibleAttention[1], attentionList[indexA][0], attentionList[indexA][1]);
-        if (isStartInside & isEndInside) { /// if possible attention collides with an attention
+        /// if possible attention collides with an attention
+        if (isColliding(posibleAttention[0],posibleAttention[1],attentionList[indexA][0], attentionList[indexA][1])) { 
           console.log(posibleAttention + " colides with: " + attentionList[indexA]);
           /// try next possible attention (at the end of the collition)
-          posibleAttentionStart = addMinutes(attentionList[indexA][1], 10);
+          posibleAttentionStart = attentionList[indexA][1];
           posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
           indexA++;
         }
@@ -86,7 +101,7 @@ const getAvailableaBlocks = async (date, rut) => {
           availableList.push(posibleAttention);
           console.log(posibleAttention + " doesnt colide with: " + attentionList[indexA]);
           /// try next possible attention
-          posibleAttentionStart = addMinutes(posibleAttentionStart, 10);
+          posibleAttentionStart = addMinutes(posibleAttentionStart, timePerAttention);
           posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
         }
       }
@@ -95,16 +110,16 @@ const getAvailableaBlocks = async (date, rut) => {
         availableList.push(posibleAttention);
         console.log("possible attention: " + posibleAttention);
         /// try next possible attention
-        posibleAttentionStart = addMinutes(posibleAttentionStart, 10);  
+        posibleAttentionStart = addMinutes(posibleAttentionStart, timePerAttention);  
         posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
       }
     }
     console.log("//////////////////// end of the block //////////////////////////");
-
   }
+
   console.log("\n available:");
   console.log(availableList);
-
+  return(availableList);
 
 
 
@@ -116,18 +131,18 @@ const getAvailableaBlocks = async (date, rut) => {
 
 
 
+
 //// Test
 (async () => {
     
 
     const query= await client.query('select * from atencion');
     const testDate= query['rows'][0].fecha;
-    const s="2022-01-01"+" "+"09:00:00";
+    const s="2022-12-19"+" "+"00:00:00";
     var aDate=new Date(s);
     const testTime=query['rows'][0].hora_inicio;
-    getAvailableaBlocks(dateToStringDate(testDate),'19.456.655-k');
-    const x=addMinutes("14:00:00",10);
-    ///console.log(x);
+    getAvailableBlocks('19.456.655-k',aDate);
+    //const x=addMinutes("14:00:00",10);
     
 
 }
@@ -136,5 +151,5 @@ const getAvailableaBlocks = async (date, rut) => {
 
 
 module.exports = {
-    getAvailableaBlocks
+    getAvailableBlocks
 }

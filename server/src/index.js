@@ -35,6 +35,8 @@ app.use('/api/center',verifyToken,require('./routes/center'));
 
 app.use('/api/medic',verifyToken, require('./routes/medic'));
 
+app.use('/api/patient', require('./routes/patient'));
+
 //Starting Server
 app.listen(app.get('port'), () => {
     console.log('Server on port', app.get('port'))
