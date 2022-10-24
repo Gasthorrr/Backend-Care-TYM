@@ -70,7 +70,9 @@ const getAvailableBlocks = async (rut,date) => {
     const endOfAttention = await attentionQuery.rows[a]['hora_finalizacion_estimada'];
     attentionList[a] = [startOfAttention, endOfAttention];
   }
-  console.log("Attention list:"+attentionList+"\n\n");
+  console.log("Attention list:");
+  console.log(attentionList);
+  console.log("");
 
   var availableList = new Array();
 
@@ -117,7 +119,9 @@ const getAvailableBlocks = async (rut,date) => {
     console.log("//////////////////// end of the block //////////////////////////");
   }
 
-  console.log("\n available:");
+  console.log("\n\n\n\n Not available:");
+  console.log(attentionList);
+  console.log("\n Available:");
   console.log(availableList);
   return(availableList);
 
