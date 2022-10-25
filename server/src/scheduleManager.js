@@ -18,9 +18,24 @@ function getDayOfWeek(date) {
 
 
   function isInside(hour,intervalStart,intervalEnd) {
-    if((intervalStart<=hour) & (hour<=intervalEnd)){
+    if((intervalStart<hour) & (hour<=intervalEnd)){
         return true;
     }
+    return false;
+  }
+
+  function isColliding(x1,x2,y1,y2) {
+    //// true if x inside y
+    const isXInside=((y1<x1) & (x1<y2)) || ((y1<x2) & (x2<y2));/// (y1<x1<y2) || (y1<x2<y2)  
+    //// true if y inside x
+    const isyInside=((x1<y1) & (y1<x2)) || ((x1<y2) & (y2<x2));/// (x1<y1<x2) || (x1<y2<x2)  
+    //// true if x=y
+    const isEqual=(x1==y1) & (x2==y2);
+
+    if(isXInside || isyInside || isEqual){
+      return true;
+    }
+
     return false;
   }
 
@@ -33,59 +48,84 @@ function getDayOfWeek(date) {
 
   }
 
-const getAvailableaBlocks = async (date,rut)=>{
-
+const getAvailableBlocks = async (rut,date) => {
+  //// convert date to string
+  const stringDate = dateToStringDate(date);
   //// convert date to day of week
-  const day = getDayOfWeek(date);
-  console.log(date)
+  const day = getDayOfWeek(stringDate);
+  console.log(stringDate)
   console.log(day)
 
   //// get medic time per attention
-  const medicQuery = await client.query(`select * from medico where rut='${rut}'`);
+  const medicQuery = await client.query(`select * from medico where rut=$1`, [rut]);
   const timePerAttention = medicQuery['rows'][0].duracion_atencion;
   console.log(timePerAttention + "min");
 
   //// get attention by date
-  const attentionQuery = await client.query(`Select * from atencion where (rut_medico ='${rut}'and fecha='${date}') order by hora_inicio`);
+  const attentionQuery = await client.query(`Select * from atencion where (rut_medico=$1 and fecha=$2) order by hora_inicio`, [rut, stringDate]);
   const attentionList = new Array(attentionQuery.rowCount);
   var indexA = 0;
   for (var a = 0; a < attentionQuery.rowCount; a++) {
     const startOfAttention = await attentionQuery.rows[a]['hora_inicio'];
     const endOfAttention = await attentionQuery.rows[a]['hora_finalizacion_estimada'];
     attentionList[a] = [startOfAttention, endOfAttention];
-
   }
+  console.log("Attention list:");
   console.log(attentionList);
+  console.log("");
 
-   /////     
-   var available = new Array();
+  var availableList = new Array();
 
   //// get attention blocks of the day
-  const attetionBlocksQuery = await client.query(`Select * from bloque_de_atencion where (rut_medico ='${rut}'and dia='${day}') order by hora_inicio`);
+  const attetionBlocksQuery = await client.query(`Select * from bloque_de_atencion where (rut_medico =$1 and dia=$2) order by hora_inicio`, [rut, day]);
   const blockList = new Array(attetionBlocksQuery.rowCount);
   for (var b = 0; b < attetionBlocksQuery.rowCount; b++) {
     const startOfTheBlock = await attetionBlocksQuery.rows[b]['hora_inicio'];
     const endOfTheBlock = await attetionBlocksQuery.rows[b]['hora_fin'];
-    var posibleAttentionStart =startOfTheBlock;
+    var posibleAttentionStart = startOfTheBlock;
     blockList[b] = [startOfTheBlock, endOfTheBlock];
-    console.log("Block: "+blockList[b]);
-    while (true) {
-      ///create posible attention
-      var posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
-      if ( !isInside(posibleAttention[1],startOfTheBlock,endOfTheBlock)) {
-        console.log("*Se rompe*");
-        break;
+    console.log("Block: " + blockList[b]);
+    /// create possible attention
+    var posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
+    while (isInside(posibleAttention[1], startOfTheBlock, endOfTheBlock)) {  /// while possible attention is inside the block
+      //// check if it colides with another attention
+      if (indexA < attentionList.length) { /// there is at least 1 attention left to compare
+        /// if possible attention collides with an attention
+        if (isColliding(posibleAttention[0],posibleAttention[1],attentionList[indexA][0], attentionList[indexA][1])) { 
+          console.log(posibleAttention + " colides with: " + attentionList[indexA]);
+          /// try next possible attention (at the end of the collition)
+          posibleAttentionStart = attentionList[indexA][1];
+          posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
+          indexA++;
+        }
+        else { /// doesnt collide
+          /// add it to the availableList
+          availableList.push(posibleAttention);
+          console.log(posibleAttention + " doesnt colide with: " + attentionList[indexA]);
+          /// try next possible attention
+          posibleAttentionStart = addMinutes(posibleAttentionStart, timePerAttention);
+          posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
+        }
       }
-      console.log("posible attention: " + posibleAttention);
-      posibleAttentionStart=addMinutes(posibleAttentionStart, timePerAttention);
+      else { /// no attentions left to compare every possible attention inside the block is valid
+        /// add it to the possible attention list
+        availableList.push(posibleAttention);
+        console.log("possible attention: " + posibleAttention);
+        /// try next possible attention
+        posibleAttentionStart = addMinutes(posibleAttentionStart, timePerAttention);  
+        posibleAttention = [posibleAttentionStart, addMinutes(posibleAttentionStart, timePerAttention)];
+      }
     }
-    console.log("//////////////////// end of the block //////////////////////////")
-    
+    console.log("//////////////////// end of the block //////////////////////////");
   }
-  console.log(blockList);
+
+  console.log("\n\n\n\n Not available:");
+  console.log(attentionList);
+  console.log("\n Available:");
+  console.log(availableList);
+  return(availableList);
 
 
- 
 
 
 
@@ -95,18 +135,18 @@ const getAvailableaBlocks = async (date,rut)=>{
 
 
 
+
 //// Test
 (async () => {
     
 
     const query= await client.query('select * from atencion');
     const testDate= query['rows'][0].fecha;
-    const s="2022-01-01"+" "+"09:00:00";
+    const s="2022-12-19"+" "+"00:00:00";
     var aDate=new Date(s);
     const testTime=query['rows'][0].hora_inicio;
-    getAvailableaBlocks(dateToStringDate(testDate),'19.456.655-k');
-    const x=addMinutes("14:00:00",10);
-    ///console.log(x);
+    getAvailableBlocks('19.456.655-k',aDate);
+    //const x=addMinutes("14:00:00",10);
     
 
 }
@@ -115,5 +155,5 @@ const getAvailableaBlocks = async (date,rut)=>{
 
 
 module.exports = {
-    getAvailableaBlocks
+    getAvailableBlocks
 }

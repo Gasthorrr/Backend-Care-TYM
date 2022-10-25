@@ -10,13 +10,13 @@ const verifyToken = (req, res, next) => {
 
     try {
         const verified = jwt.verify(token, "sdfghjklkjhg")//reemplazar por .env
-        
 
         const RolesDicctionary={
             "administrador":"admin",
             "cadena_medica":"chain",
             "centro_medico":"center",
-            "medico" : "medic"
+            "medico" : "medic",
+            "paciente" : "patient"
             //falta los otros usuarios
         };
 
