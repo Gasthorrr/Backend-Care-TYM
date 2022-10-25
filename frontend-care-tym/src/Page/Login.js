@@ -42,7 +42,7 @@ export default function Login() {
                         <input required type="password" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div id="response" className="text-red-500 text-center"></div>
-                    <button type="submit" className="p-3 my-2 bg-green-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">
+                    <button type="submit" className="p-3 my-2 bg-gradient-to-r from-green-400 to-green-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">
                         {
                             loading ?
                                 <div className="flex flex-row text-center justify-center ">

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { deleteRequest, getRequest } from "../../../Services/Request"
 import Swal from 'sweetalert2'
 
@@ -25,7 +24,7 @@ export default function ListEditMedic(props) {
     }
 
     const handleDelete = async (data, x) => {
-        
+
         const deleteAccion = await Swal.fire({
             title: "Accion permanente",
             text: "Eliminar medico con rut: " + x.rut,
@@ -38,12 +37,14 @@ export default function ListEditMedic(props) {
         })
         if (deleteAccion.isConfirmed) {
             const resp = await deleteRequest("http://127.0.0.1:8000/api/center/medic/" + x.rut)
-            if (resp.status === 200){
+            if (resp.status === 200) {
                 Swal.fire({
                     title: "Medico con rut: " + x.rut + " eliminado con exito!",
                     icon: "success"
                 })
-            }else{
+                const deleteData = data.filter(data => data.rut !== x.rut)
+                setData(deleteData)
+            } else {
                 Swal.fire({
                     title: "Error desconocido, se recomienda actualizar la pagina.",
                     icon: "error",
@@ -58,11 +59,6 @@ export default function ListEditMedic(props) {
         }
 
 
-        //if (resp.status === 200){
-        //window.location.reload()
-        //const deleteData = data.filter(data => data.rut !== x.rut)
-        //console.log(deleteData)
-        //setData(deleteData)
 
     }
 

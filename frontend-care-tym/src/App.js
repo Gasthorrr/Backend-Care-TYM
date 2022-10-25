@@ -16,6 +16,7 @@ import Center from "./Page/Center";
 import HomeCenter from "./Views/Center/HomeCenter";
 import Medic from "./Views/Center/Medic";
 import Specialty from "./Views/Center/Specialty";
+import Coordinator from "./Page/Coordinator";
 
 export default function App() {
     return (
@@ -43,6 +44,7 @@ export default function App() {
                             <Route index element={<HomeCenter/>} />
                             <Route path="/center/medic" element={<Medic/>}/>
                             <Route path="/center/specialty" element={<Specialty/>}/>
+                            <Route path="/center/coordinator" element={<Coordinator/>}/>
                             
 
                         </Route>

@@ -30,7 +30,6 @@ export default function EditMedic(props) {
         const getData = async() => {
             setDataSpecialty(await getRequest("http://127.0.0.1:8000/api/center/specialty/"))
             setLoading(false)
-            console.log(dataSpecialty)
         }
         getData()
     },[])
