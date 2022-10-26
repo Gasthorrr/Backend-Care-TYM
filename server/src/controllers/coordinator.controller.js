@@ -31,7 +31,7 @@ const getCoordinators = async(req,res) =>{
 const addCoordinator = async(req,res) =>{
     try{
         const rut = req.body.rut;
-        const medic_center_id = req.body.id_centro_medico;
+        const medic_center_id = req.user.id;
         const complete_name = req.body.nombre_completo;
         const password = req.body.contraseña;
         const email = req.body.correo;

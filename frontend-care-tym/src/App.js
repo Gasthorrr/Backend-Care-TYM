@@ -16,7 +16,7 @@ import Center from "./Page/Center";
 import HomeCenter from "./Views/Center/HomeCenter";
 import Medic from "./Views/Center/Medic";
 import Specialty from "./Views/Center/Specialty";
-import Coordinator from "./Page/Coordinator";
+import Coordinator from "./Views/Center/Coordinator";
 
 export default function App() {
     return (

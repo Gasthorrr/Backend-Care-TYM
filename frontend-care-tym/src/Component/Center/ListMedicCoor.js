@@ -37,7 +37,7 @@ export default function ListMedic(props) {
 
             }
             <div className="flex justify-end">
-                <button className="bg-blue-700 text-white font-medium p-2.5 rounded-xl shadow-xl mt-4 hover:shadow-none" onClick={()=> history("/center/medic")}>Ver mas</button>
+                <button className="bg-blue-700 text-white font-medium p-2.5 rounded-xl shadow-xl mt-4 hover:shadow-none" onClick={()=> history(props.route)}>Ver mas</button>
             </div>
 
         </div>

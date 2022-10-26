@@ -12,7 +12,7 @@ export default function HomeCenter() {
 
                     <ListMedicCoor title={"Medicos"} api={"http://127.0.0.1:8000/api/center/medic"} route={"/center/medic"}/>
 
-                    <ListMedicCoor title={"Coordinadores"} api={"http://127.0.0.1:8000/api/center/coordinator"}/>
+                    <ListMedicCoor title={"Coordinadores"} api={"http://127.0.0.1:8000/api/center/coordinator"} route={"/center/coordinator"}/>
 
                 </div>
 
