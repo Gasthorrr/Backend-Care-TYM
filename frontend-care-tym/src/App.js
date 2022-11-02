@@ -17,11 +17,12 @@ import HomeCenter from "./Views/Center/HomeCenter";
 import Medic from "./Views/Center/Medic";
 import Specialty from "./Views/Center/Specialty";
 import Coordinator from "./Views/Center/Coordinator";
+import Schedule from "./Page/Schedule";
 
 export default function App() {
     return (
         <div>
-            <div className="min-h-screen">
+            <div className="min-h-screen bg-stone-200">
                 <AuthProvider>
                     <NavBar/>
                     <Routes>
@@ -45,9 +46,9 @@ export default function App() {
                             <Route path="/center/medic" element={<Medic/>}/>
                             <Route path="/center/specialty" element={<Specialty/>}/>
                             <Route path="/center/coordinator" element={<Coordinator/>}/>
-                            
-
                         </Route>
+
+                        <Route path="/:center" element={<Schedule/>}/>
 
 
                         <Route path="/recovery" element={<Login />} />

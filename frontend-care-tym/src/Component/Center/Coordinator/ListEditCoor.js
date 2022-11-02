@@ -5,14 +5,29 @@ import Swal from 'sweetalert2'
 export default function ListEditCoor(props) {
 
     const [data, setData] = useState([])
+    const [backupData, setBackupData] = useState([])
+    const [search, setSearch] = useState()
+
     const [loading, setLoading] = useState(true)
 
     const api = props.api
 
+    useEffect(() => {
+
+        const newData = backupData.filter((coor) => {
+            const name = coor.nombre_completo.toUpperCase()
+            const rut = coor.rut
+            return name.indexOf(search.toUpperCase()) > -1 || rut.indexOf(search) > -1
+        })
+        setData(newData)
+    }, [search])
+
 
     useEffect(() => {
         const getData = async () => {
-            setData(await getRequest(api))
+            const data = await getRequest(api)
+            setData(data)
+            setBackupData(data)
         }
         getData()
         setLoading(false)
@@ -65,27 +80,33 @@ export default function ListEditCoor(props) {
 
 
     return (
-        <div className="sm:w-96 my-5 sm:mx-4 py-5 px-2 bg-gray-200 rounded-xl shadow-xl divide-y divide-slate-300">
-            <h1 className="text-center text-lg font-semibold mb-5">{props.title}</h1>
-            {
-                loading ? (
-                    null
-                ) : (
-                    data.map((x) => (
-                        <div key={x.rut} className="m-2">
-                            <h1 className="font-medium text-lg">{x.nombre_completo}</h1>
-                            <h1 className="font-normal">RUT: {x.rut}</h1>
-                            <h1 className="font-normal">Correo: {x.correo}</h1>
-                            <h1 className="font-normal">Telefono: {x.telefono}</h1>
-                            <div>
-                                <button className="m-2 p-1 ml-0 text-white border-2 border-blue-700 bg-blue-700 rounded-md font-medium" onClick={() => handleEdit(x)} >Editar</button>
-                                <button className="m-2 border-2 border-red-600 text-red-600 rounded-md p-1 font-medium" onClick={() => handleDelete(data, x)}>Eliminar</button>
-                            </div>
-                        </div>
-                    ))
-                )
+        <div className="sm:w-96 my-5 sm:mx-4 py-5 px-2 bg-slate-50 rounded-xl shadow-xl divide-y divide-slate-300">
+            <div className="flex flex-col">
+                <h1 className="text-center text-xl font-semibold mb-2" >{props.title}</h1>
+                <input className="border rounded-md m-3 p-1" placeholder="Filtro por nombre o rut" value={search} onChange={(e) => setSearch(e.target.value)}></input>
+            </div>
+            <div className="flex flex-col overflow-auto sm:h-[85%] h-[400px] divide-y">
 
-            }
+                {
+                    loading ? (
+                        null
+                    ) : (
+                        data.map((x) => (
+                            <div key={x.rut} className="m-2">
+                                <h1 className="font-medium text-lg">{x.nombre_completo}</h1>
+                                <h1 className="font-normal">RUT: {x.rut}</h1>
+                                <h1 className="font-normal">Correo: {x.correo}</h1>
+                                <h1 className="font-normal">Telefono: {x.telefono}</h1>
+                                <div>
+                                    <button className="m-2 p-1 ml-0 text-white border-2 border-blue-700 bg-blue-700 rounded-md font-medium" onClick={() => handleEdit(x)} >Editar</button>
+                                    <button className="m-2 border-2 border-red-600 text-red-600 rounded-md p-1 font-medium" onClick={() => handleDelete(data, x)}>Eliminar</button>
+                                </div>
+                            </div>
+                        ))
+                    )
+
+                }
+            </div>
         </div>
     )
 }

@@ -11,7 +11,7 @@ export default function ListChain(props) {
     useEffect(() => {
 
         const request = async () => {
-            setChain(await getRequest("http://127.0.0.1:8000/api/"+props.type))
+            setChain(await getRequest("http://127.0.0.1:8000/api/" + props.type))
         }
 
         request()
@@ -20,31 +20,35 @@ export default function ListChain(props) {
 
 
     return (
-        <>
+        <div className="m-auto">
+            <div className="my-5 sm:mx-4 sm:w-[700px] py-5 px-2 bg-slate-50 rounded-xl shadow-lg">
             <div className="flex justify-center">
-                <div className="my-10 w-5/6 flex justify-between md:max-w-2xl lg:max-w-4xl">
-                    <div className="self-center">
-                        <h1 className="font-semibold text-xl">Redes de centro de salud</h1>
-                    </div>
-                    <div className="self-center">
-                        <BottonsGo redirect={"/"+props.type+"create"} text={"Añadir"}/>
+                    <div className="my-10 w-5/6 flex justify-between md:max-w-2xl lg:max-w-4xl">
+                        <div className="self-center">
+                            <h1 className="font-semibold text-xl">Redes de centro de salud</h1>
+                        </div>
+                        <div className="self-center">
+                            <BottonsGo redirect={"/" + props.type + "create"} text={"Añadir"} />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="flex justify-center">
-                <div className="col-span-3 flex flex-col w-full md:w-5/6 md:max-w-2xl lg:max-w-4xl">
-                    {
-                        loading ?
-                            null:
-                            chain.map((x) => (
-                                <Component key={x.id} name={x.nombre} id={x.id} />
-                            ))
-                    }
+                <div className="flex justify-center">
+                    <div className="col-span-3 flex flex-col w-full md:w-5/6 md:max-w-2xl lg:max-w-4xl">
+                        {
+                            loading ?
+                                null :
+                                chain.map((x) => (
+                                    <Component key={x.id} name={x.nombre} id={x.id} />
+                                ))
+                        }
+                    </div>
                 </div>
+
             </div>
 
-        </>
+        </div>
+
 
     )
 }

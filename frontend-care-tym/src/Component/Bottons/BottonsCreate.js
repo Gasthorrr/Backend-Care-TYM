@@ -1,21 +1,21 @@
 import { postRequest } from "../../Services/Request"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import Swal from "sweetalert2";
 
 export default function BottonsCreate(props) {
-
-    const history = useNavigate()
 
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (x) => {
         x.preventDefault()
         setLoading(!loading)
-        
+
         const resp = await postRequest(props.api, JSON.stringify(props.data))
         setLoading(false)
 
-        resp.status === 200 ? history(-1) : document.getElementById("error").innerHTML = props.error
+        resp.status === 200 ? 
+            await Swal.fire("Accion exitosa", props.action + " creado exitosamente!!", "success") : document.getElementById("error").innerHTML = props.error
+        window.location.reload(true)
     }
 
     return (

@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { deleteRequest } from "../../Services/Request"
+import Swal from "sweetalert2";
 
 export default function BottonsDelete(props){
-
-    const history = useNavigate()
 
     const [loadingDelete, setLoadingDelete] = useState(false)
 
@@ -13,7 +12,8 @@ export default function BottonsDelete(props){
         setLoadingDelete(!loadingDelete)
         const resp = await deleteRequest(props.api)
         setLoadingDelete(false)
-        resp.status === 200 ? history(-1) : document.getElementById("error").innerHTML = props.error
+        resp.status === 200 ? await Swal.fire("Accion exitosa", props.action + " eliminado exitosamente!!", "success") : document.getElementById("error").innerHTML = props.error
+        window.location.reload(true)
     }
 
     return(

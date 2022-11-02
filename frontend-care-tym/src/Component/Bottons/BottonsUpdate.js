@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { updateRequest } from "../../Services/Request"
+import Swal from "sweetalert2";
 
 export default function BottonsUpdate(props) {
 
@@ -14,7 +15,8 @@ export default function BottonsUpdate(props) {
         
         const resp = await updateRequest(props.api, JSON.stringify(props.data))
         setLoadingSave(false)
-        resp.status === 200 ? history(-1) : document.getElementById("error").innerHTML = props.error
+        resp.status === 200 ? await Swal.fire("Accion exitosa", props.action + " actualizado exitosamente!!", "success") : document.getElementById("error").innerHTML = props.error
+        window.location.reload(true)
     }
 
     return (

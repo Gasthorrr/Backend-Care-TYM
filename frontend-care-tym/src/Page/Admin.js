@@ -7,7 +7,7 @@ export default function Admin() {
     if(!sessionStorage.getItem("auth-token") || sessionStorage.getItem("rol") !== "administrador") return <Navigate to="/"/>    
 
     return (
-        <div className="flex justify-center flex-col">
+        <div className="flex flex-col justify-center">
             <Outlet />
         </div>
     )

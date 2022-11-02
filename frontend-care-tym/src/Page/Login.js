@@ -30,16 +30,16 @@ export default function Login() {
     return (
 
         <div className="grid ">
-            <div className="m-4 flex flex-col md:justify-self-center md:bg-slate-300 md:w-1/2 md:max-w-lg md:rounded-xl md:shadow-xl">
+            <div className="m-4 flex flex-col md:justify-self-center md:bg-slate-50 md:w-1/2 md:max-w-lg md:rounded-xl md:shadow-xl">
                 <h1 className="font-semibold text-xl my-5 md:mt-10 md:text-center md:text-2xl">Acceso usuario</h1>
                 <form onSubmit={handleLogin} className="grid gap-6 m-3">
                     <div className="">
                         <label className="my-2 block font-medium">Usuario</label>
-                        <input required className="bg-gray-100 border border-gray-300 rounded-lg shadow-lg block w-full p-2.5" onChange={(e) => setKey(e.target.value)} />
+                        <input required className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={(e) => setKey(e.target.value)} />
                     </div>
                     <div className="">
                         <label className="my-2 block font-medium">Contraseña</label>
-                        <input required type="password" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" onChange={(e) => setPassword(e.target.value)} />
+                        <input required type="password" className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div id="response" className="text-red-500 text-center"></div>
                     <button type="submit" className="p-3 my-2 bg-gradient-to-r from-green-400 to-green-500 rounded-lg shadow-lg font-semibold text-xl hover:shadow-sm">
