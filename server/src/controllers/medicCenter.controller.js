@@ -57,7 +57,6 @@ const deleteMedicCenter = async(req,res) =>{
         const {id} = req.params;
         const client = await getConnection.client;
         const query = await client.query(`delete from centro_medico where id=$1`,[id]);
-        const result = query['rows']
         res.status(200).json("Medic center deleted successfully")
     }catch(error){
         res.status(500);

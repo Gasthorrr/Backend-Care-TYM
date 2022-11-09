@@ -41,7 +41,7 @@ const addBlock = async(req,res) =>{
         }
         console.log(rut+","+day+","+startTime+","+endTime);  /// startTime, endTime -> "hh:mm:ss"
         const client = await getConnection.client;
-        const query= await client.query(`insert into bloque_de_atencion(rut_medico,dia,hora_inicio,hora_fin) values($1,$2,$3,$4)`,[rut,day,startTime,endTime]);
+        await client.query(`insert into bloque_de_atencion(rut_medico,dia,hora_inicio,hora_fin) values($1,$2,$3,$4)`,[rut,day,startTime,endTime]);
         res.status(200).json({ message: "Attention Block added" });
     }catch(error){
         res.status(500);
@@ -64,7 +64,7 @@ const updateBlock = async(req,res) =>{
             if(validDaysDicctionary[day]==undefined){
                 return res.status(403).json({error:"Invalid day value"});
             }
-            const query=await client.query(`update bloque_de_atencion set dia=$1 where  (rut_medico=$2 and id=$3)`,[day,rut,id]);
+            await client.query(`update bloque_de_atencion set dia=$1 where  (rut_medico=$2 and id=$3)`,[day,rut,id]);
 
         }
         if(startTime !== undefined ){

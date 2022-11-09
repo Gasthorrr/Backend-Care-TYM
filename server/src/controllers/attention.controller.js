@@ -1,4 +1,3 @@
-const getConnection = require("../database");
 const schedule = require("../scheduleManager");
 
 const getAvailableBlocks = async(req,res) =>{
