@@ -5,7 +5,7 @@ const getMedicCenter = async(req,res) =>{
     try{
         const {id} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`select id,id_cadena_medica,nombre,direccion,ciudad,correo from centro_medico where id=$1`,[id]);
+        const query = await client.query(`select id,id_medical_chain,name,address,city,email from medical_center where id=$1`,[id]);
         const result = query['rows'][0]
         res.status(200).json(result);
     }catch(error){
@@ -18,7 +18,7 @@ const getMedicCenter = async(req,res) =>{
 const getMedicCenters = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const query = await client.query(`select id,id_cadena_medica,nombre,direccion,ciudad,correo from centro_medico where id_cadena_medica=$1`,[req.user.id]);
+        const query = await client.query(`select id,id_medical_chain,name,address,city,email from medical_center where id_medical_center=$1`,[req.user.id]);
         const result = query['rows']
         res.status(200).json(result);
     }catch(error){
@@ -42,7 +42,7 @@ const addMedicCenter = async(req,res) =>{
         const id = req.user.id
         const client = await getConnection.client;
         await client.query(
-            `INSERT INTO "centro_medico" ("id_cadena_medica", "nombre", "contraseña", "direccion", "ciudad", "correo") 
+            `INSERT INTO "medical_center" ("id_medical_chain", "name", "password", "address", "city", "email") 
             VALUES ($1, $2, $3, $4, $5, $6)`, [id, name, await passwordManager.getEncriptedPassword(password),address, city, email]);
         res.status(200).json({ message: "Medic center added" });
     }catch(error){
@@ -56,7 +56,7 @@ const deleteMedicCenter = async(req,res) =>{
     try{
         const {id} = req.params;
         const client = await getConnection.client;
-        const query = await client.query(`delete from centro_medico where id=$1`,[id]);
+        const query = await client.query(`delete from medical_center where id=$1`,[id]);
         res.status(200).json("Medic center deleted successfully")
     }catch(error){
         res.status(500);
@@ -77,22 +77,22 @@ const updateMedicCenter = async(req,res) =>{
 
         const client = await getConnection.client;
         if(medic_center_id !== undefined){
-            await client.query(`update centro_medico set id_cadena_medica=$1 where id=$2`,[medic_center_id,id]);
+            await client.query(`update medical_center set id_medical_chain=$1 where id=$2`,[medic_center_id,id]);
         }
         if(name !== undefined){
-            await client.query(`update centro_medico set nombre=$1 where id=$2`,[name,id]);
+            await client.query(`update medical_center set name=$1 where id=$2`,[name,id]);
         }
         if(password !== undefined){
-            await client.query(`update centro_medico set contraseña=$1 where id=$2`,[await passwordManager.getEncriptedPassword(password), id]);
+            await client.query(`update medical_center set password=$1 where id=$2`,[await passwordManager.getEncriptedPassword(password), id]);
         }
         if(address !== undefined){
-            await client.query(`update centro_medico set direccion=$1 where id=$2`,[address,id]);
+            await client.query(`update medical_center set address=$1 where id=$2`,[address,id]);
         }
         if(city !== undefined){
-            await client.query(`update centro_medico set ciudad=$1 where id=$2`,[city,id]);
+            await client.query(`update medical_center set city=$1 where id=$2`,[city,id]);
         }
         if(email !== undefined){
-            await client.query(`update centro_medico set correo=$1 where id=$2`,[email,id]);
+            await client.query(`update medical_center set email=$1 where id=$2`,[email,id]);
         }
         
         res.status(200).json("Medic center updated successfully");

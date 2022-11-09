@@ -5,7 +5,7 @@ const getCoordinator = async(req,res) =>{
     try{
         const {rut} = req.params.rut;
         const client = await getConnection.client;
-        const query = await client.query(`select * from coordinador where rut=$1`,[rut]);
+        const query = await client.query(`select * from coordinator where rut=$1`,[rut]);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -18,7 +18,7 @@ const getCoordinator = async(req,res) =>{
 const getCoordinators = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const query = await client.query(`select * from coordinador`);
+        const query = await client.query(`select * from coordinator`);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -41,7 +41,7 @@ const addCoordinator = async(req,res) =>{
         }
 
         const client = await getConnection.client;
-        await client.query(`INSERT INTO "coordinador" ("rut", "id_centro_medico", "nombre_completo", "contraseña", "correo") 
+        await client.query(`INSERT INTO "coordinator" ("rut", "id_medical_center", "full_name", "password", "email") 
         VALUES ($1, $2, $3, $4, $5)`, [rut, medic_center_id, complete_name,await passwordManager.getEncriptedPassword(password), email]);
         res.status(200).json({ message: "Coordinator added" });
     }catch(error){
@@ -55,7 +55,7 @@ const deleteCoordinator = async(req,res) =>{
     try{
         const rut = req.params.rut;
         const client = await getConnection.client;
-        await client.query(`delete from coordinador where rut=$1`,[rut]);
+        await client.query(`delete from coordinator where rut=$1`,[rut]);
         res.status(200).json({ message: "Coordinator deleted" });
     }catch(error){
         res.status(500);
@@ -74,19 +74,19 @@ const updateCoordinator = async(req,res) =>{
 
         const databaseAccess = await getConnection.client;
         if(medic_center_id !== undefined ){
-            await databaseAccess.query(`update coordinador set id_centro_medico=$1 where rut=$2`,[medic_center_id,rut]);
+            await databaseAccess.query(`update coordinator set id_medical_center=$1 where rut=$2`,[medic_center_id,rut]);
         }
 
         if(complete_name !== undefined ){
-            await databaseAccess.query(`update coordinador set nombre_completo=$1 where rut=$2`,[complete_name,rut]);
+            await databaseAccess.query(`update coordinator set full_name=$1 where rut=$2`,[complete_name,rut]);
         }
         
         if(password !== undefined ){
-            await databaseAccess.query(`update coordinador set contraseña=$1 where rut=$2`,[await passwordManager.getEncriptedPassword(password),rut]);
+            await databaseAccess.query(`update coordinator set password=$1 where rut=$2`,[await passwordManager.getEncriptedPassword(password),rut]);
         }
 
         if(email !== undefined){
-            await databaseAccess.query(`update coordinador set correo=$1 where rut=$2`,[email,rut]);
+            await databaseAccess.query(`update coordinator set email=$1 where rut=$2`,[email,rut]);
         }
         
         res.status(200).json({ message: "Conrdinator updated" });

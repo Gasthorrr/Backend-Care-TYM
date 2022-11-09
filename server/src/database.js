@@ -15,34 +15,34 @@ const client = new Pool(databaseAccess);
 
 const getUseruserType = async (key)=>{ 
     //// Searches the user into the admin table
-    const adminQuery= await client.query(`select * from administrador where usuario=$1`,[key]);
+    const adminQuery= await client.query(`select * from admin where username=$1`,[key]);
     if(adminQuery.rowCount!=0){
-        return "administrador";
+        return "admin";
     }
     //// Searches the user into the medic chain table
-    const medicChainQuery= await client.query(`select * from cadena_medica where nombre=$1`,[key]);
+    const medicChainQuery= await client.query(`select * from medical_chain where name=$1`,[key]);
     if(medicChainQuery.rowCount!=0){
-        return "cadena_medica";
+        return "medical_chain";
     }
     //// Searches the user into the medic center table
-    const medicCenterQuery= await client.query(`select * from centro_medico where nombre=$1`,[key]);
+    const medicCenterQuery= await client.query(`select * from medical_center where name=$1`,[key]);
     if(medicCenterQuery.rowCount!=0){
-        return "centro_medico";
+        return "medical_center";
     }
     //// Searches the user into the coordinator/secretary table
-    const coordinatorQuery= await client.query(`select * from coordinador where rut=$1`,[key]);
+    const coordinatorQuery= await client.query(`select * from coordinator where rut=$1`,[key]);
     if(coordinatorQuery.rowCount!=0){
-        return "coordinador";
+        return "coordinator";
     }
     //// Searches the user into the medic table
-    const medicQuery= await client.query(`select * from medico where rut=$1`,[key]);
+    const medicQuery= await client.query(`select * from doctor where rut=$1`,[key]);
     if(medicQuery.rowCount!=0){
-        return "medico";
+        return "doctor";
     }
     //// Searches the user into the patient table
-    const patientQuery= await client.query(`select * from paciente where rut=$1`,[key]);
+    const patientQuery= await client.query(`select * from patient where rut=$1`,[key]);
     if(patientQuery.rowCount!=0){
-        return "paciente";
+        return "patient";
     }
 
     return "Not Found";
@@ -53,12 +53,12 @@ const login = async (key,password)=>{
     /////////////////////// INSTEAD OF 'USERNAME', 'ID', ETC... WE USE THE VARIABLE NAME 'KEY' AS A GENERALITY TO REFER ANY OF THE FOLLOWING PRIMARY KEYS: 
     const PrimaryKeyDicctionary={
         /// user type : primary key
-        "administrador":"usuario",
-        "cadena_medica":"nombre",
-        "centro_medico":"nombre",
-        "coordinador" : "rut",
-        "medico" : "rut", 
-        "paciente" : "rut" 
+        "admin":"username",
+        "medical_chain":"name",
+        "medical_center":"name",
+        "coordinator" : "rut",
+        "doctor" : "rut", 
+        "patient" : "rut" 
     };
     const userType=await getUseruserType(key);
     if(userType=="Not Found"){
@@ -74,7 +74,7 @@ const login = async (key,password)=>{
             /// validates that the password(user input) matches with the encriptedPassword(stored in the database)
             if(result==true){
                 console.log(queryValidarContraseña.rows);
-                if(userType == "cadena_medica" || userType == "centro_medico" ){
+                if(userType == "medical_chain" || userType == "medical_center" ){
                     return({
                         rol : userType,
                         key:key,
