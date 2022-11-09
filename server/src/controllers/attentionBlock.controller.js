@@ -16,7 +16,7 @@ const getBlocks = async(req,res) =>{
     try{
         const rut = req.user.key;
         const client = await getConnection.client;
-        const query = await client.query(`select * from bloque_de_atencion where rut_medico ='${rut}'`);
+        const query = await client.query(`select * from attention_block where rut_doctor =$1`,[rut]);
         const result = query['rows'];
         res.json(result);
     }catch(error){
@@ -37,11 +37,11 @@ const addBlock = async(req,res) =>{
         }
 
         if(medic_center_id !== undefined ){
-            await client.query(`update coordinador set id_centro_medico='${medic_center_id}' where rut='${rut}'`);
+            await client.query(`update coordinator set id_medical_center=$1 where rut=$2`,[medic_center_id,rut]);
         }
         console.log(rut+","+day+","+startTime+","+endTime);  /// startTime, endTime -> "hh:mm:ss"
         const client = await getConnection.client;
-        const query= await client.query(`insert into bloque_de_atencion(rut_medico,dia,hora_inicio,hora_fin) values('${rut}','${day}','${startTime}','${endTime}')`);
+        await client.query(`insert into attention_block(rut_doctor,weekday,start_time,end_time) values($1,$2,$3,$4)`,[rut,day,startTime,endTime]);
         res.status(200).json({ message: "Attention Block added" });
     }catch(error){
         res.status(500);
@@ -64,14 +64,14 @@ const updateBlock = async(req,res) =>{
             if(validDaysDicctionary[day]==undefined){
                 return res.status(403).json({error:"Invalid day value"});
             }
-            const query=await client.query(`update bloque_de_atencion set dia='${day}' where  (rut_medico='${rut}' and id=${id})`);
+            await client.query(`update attention_block set weekday=$1 where  (rut_doctor=$2 and id=$3)`,[day,rut,id]);
 
         }
         if(startTime !== undefined ){
-            await client.query(`update bloque_de_atencion set hora_inicio='${startTime}' where  (rut_medico='${rut}' and id=${id})`);
+            await client.query(`update attention_block set start_time=$1 where  (rut_doctor=$2' and id=$3)`,[startTime,rut,id]);
         }
         if(endTime !== undefined ){
-            await client.query(`update bloque_de_atencion set hora_fin='${endTime}' where  (rut_medico='${rut}' and id=${id})`);
+            await client.query(`update attention_block set end_time=$1 where  (rut_doctor=$2 and id=$3)`,[endTime,rut,id]);
         }
         
         res.status(200).json({ message: "Attention Block updated" });
@@ -87,7 +87,7 @@ const deleteBlock = async(req,res) =>{
         const rut = req.user.key;
         const id = req.body.blocK_id;
         const client = await getConnection.client;
-        await client.query(`delete from bloque_de_atencion where (rut_medico='${rut}' and id=${id})`);
+        await client.query(`delete from attention_block where (rut_doctor=$1 and id=$2)`,[rut,id]);
         res.status(200).json({ message: "Attention Block deleted" });
 
     }catch(error){

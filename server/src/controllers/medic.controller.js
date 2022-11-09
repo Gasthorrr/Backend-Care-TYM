@@ -5,7 +5,7 @@ const getMedic = async(req,res) =>{
     try{
         const rut = req.params.rut;
         const client = await getConnection.client;
-        const query = await client.query(`select * from medico where rut='${rut}'`);
+        const query = await client.query(`select * from doctor where rut=$1`,[rut]);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -18,7 +18,7 @@ const getMedic = async(req,res) =>{
 const getMedics = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const query = await client.query(`select * from medico`);
+        const query = await client.query(`select * from doctor`);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -44,7 +44,7 @@ const addMedic = async(req,res) =>{
         }
 
         const client = await getConnection.client;
-        await client.query(`INSERT INTO "medico" ("rut", "id_centro_medico", "id_especialidad", "nombre_completo", "contraseña", "telefono", "duracion_atencion", "correo") 
+        await client.query(`INSERT INTO "doctor" ("rut", "id_medical_center", "id_specialty", "full_name", "password", "phone", "attention_duration", "email") 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [rut, medic_center_id, specialty_id, complete_name, await passwordManager.getEncriptedPassword(password), phone, service_duration, email]);
         res.status(200).json({ message: "Medic added" });
     }catch(error){
@@ -58,7 +58,7 @@ const deleteMedic = async(req,res) =>{
     try{
         const rut = req.params.rut;
         const client = await getConnection.client;
-        const query = await client.query(`delete from medico where rut='${rut}'`);
+        const query = await client.query(`delete from doctor where rut=$1`,[rut]);
         if(query["rowCount"] === 0 ) return res.status(404).json({error : "Error al eliminar medico"})
         if(query["rowCount"] === 1 ) return res.status(200).json({ message: "Medic deleted" });
         
@@ -83,28 +83,28 @@ const updateMedic = async(req,res) =>{
         const databaseAccess = await getConnection.client;
 
         if(complete_name !== undefined ){
-            await databaseAccess.query(`update medico set nombre_completo='${complete_name}' where rut='${rut}'`);
+            await databaseAccess.query(`update doctor set full_name=$1 where rut=$2`,[complete_name,rut]);
         }
         
         if(phone !== undefined ){
-            await databaseAccess.query(`update medico set telefono='${phone}' where rut='${rut}'`);
+            await databaseAccess.query(`update doctor set phone=$1 where rut=$2`,[phone,rut]);
         }
 
         if(password !== undefined ){
-            await databaseAccess.query(`update medico set contraseña='${await passwordManager.getEncriptedPassword(password)}' where rut='${rut}'`);
+            await databaseAccess.query(`update doctor set password=$1 where rut=$2`,[await passwordManager.getEncriptedPassword(password),rut]);
         }
 
         if(medic_center_id !== undefined ){
-            await databaseAccess.query(`update medico set id_centro_medico='${medic_center_id}' where rut='${rut}'`);
+            await databaseAccess.query(`update doctor set id_medical_center=$1 where rut=$2`,[medic_center_id,rut]);
         }
         if(service_duration !== undefined ){
-            await databaseAccess.query(`update medico set duracion_atencion='${service_duration}' where rut='${rut}'`);
+            await databaseAccess.query(`update doctor set attention_duration=$1 where rut=$2`,[service_duration,rut]);
         }
         if(email !== undefined){
-            await databaseAccess.query(`update medico set correo='${email}' where rut='${rut}'`);
+            await databaseAccess.query(`update doctor set email=$1 where rut=$2`,[email,rut]);
         }
         if(specialty !== undefined){
-            await databaseAccess.query(`update medico set id_especialidad='${specialty}' where rut='${rut}'`);
+            await databaseAccess.query(`update doctor set id_specialty=$1 where rut=$2`,[specialty,rut]);
         }
 
         res.status(200).json({ message: "Medic updated sucsesfully" });

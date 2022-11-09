@@ -5,7 +5,7 @@ const getMedicChain = async(req,res) =>{
     try{
         const id = req.params.id;
         const client = await getConnection.client;
-        const query = await client.query(`select id,nombre,correo from cadena_medica where id='${id}'`);
+        const query = await client.query(`select id,name,email from medical_chain where id=$1`,[id]);
         const result = query['rows'][0]
         console.log(result)
         res.json(result);
@@ -19,7 +19,7 @@ const getMedicChain = async(req,res) =>{
 const getMedicChains = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const query = await client.query(`select id,nombre,correo from cadena_medica`);
+        const query = await client.query(`select id,name,email from medical_chain`);
         const result = query['rows']
         res.status(200)
         res.json(result);
@@ -42,7 +42,7 @@ const addMedicChain = async(req,res) =>{
 
         const client = await getConnection.client;
         await client.query(
-            `INSERT INTO "cadena_medica" ("nombre", "contraseña", "correo") 
+            `INSERT INTO "medical_chain" ("name", "password", "email") 
             VALUES ($1, $2, $3)`, [name, await passwordManager.getEncriptedPassword(password), email]);
         res.status(200).json({ message: "Medic chain added" });
     }catch(error){
@@ -56,7 +56,7 @@ const deleteMedicChain = async(req,res) =>{
     try{
         const id = req.params.id;
         const client = await getConnection.client;
-        await client.query(`delete from cadena_medica where id='${id}'`);
+        await client.query(`delete from medical_chain where id=$1`,[id]);
         res.status(200).json({message:"Medic chain deleted"});
     }catch(error){
         res.status(500);
@@ -74,15 +74,15 @@ const updateMedicChain = async(req,res) =>{
 
         const databaseAccess = await getConnection.client;
         if(name !== undefined ){
-            await databaseAccess.query(`update cadena_medica set nombre='${name}' where id='${id}'`);
+            await databaseAccess.query(`update medical_chain set name=$1 where id=$2`,[name,id]);
         }
 
         if(password !== undefined ){
-            await databaseAccess.query(`update cadena_medica set contraseña='${await passwordManager.getEncriptedPassword(password)}' where id='${id}'`);
+            await databaseAccess.query(`update medical_chain set password=$1 where id=$2`,[await passwordManager.getEncriptedPassword(password),id]);
         }
 
         if(email !== undefined ){
-            await databaseAccess.query(`update cadena_medica set correo='${email}' where id='${id}'`);
+            await databaseAccess.query(`update medical_chain set email=$1 where id=$2`,[email,id]);
         }
         res.status(200).json({message:"Medic chain updated"});
 
