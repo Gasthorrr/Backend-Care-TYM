@@ -1,9 +1,11 @@
 import { useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 export default function Schedule() {
 
     const { center } = useParams()
+
+    const history = useNavigate()
 
     const [rut, setRut] = useState("")
     const [password, setPassword] = useState("")
@@ -19,7 +21,7 @@ export default function Schedule() {
             document.getElementById("button").onclick = handleValidation
             document.getElementById("button").innerText = "Iniciar sesion"
         } else {
-            //history... pag distinta y se ingresa los datos 
+             history("/register/"+rut)
         }
     }
 
@@ -27,7 +29,7 @@ export default function Schedule() {
         console.log("Estoy validando xd")
 
 
-        
+
     }
 
     return (
