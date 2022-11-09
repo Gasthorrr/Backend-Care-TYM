@@ -15,32 +15,32 @@ const client = new Pool(databaseAccess);
 
 const getUseruserType = async (key)=>{ 
     //// Searches the user into the admin table
-    const adminQuery= await client.query(`select * from administrador where usuario='${key}'`);
+    const adminQuery= await client.query(`select * from administrador where usuario=$1`,[key]);
     if(adminQuery.rowCount!=0){
         return "administrador";
     }
     //// Searches the user into the medic chain table
-    const medicChainQuery= await client.query(`select * from cadena_medica where nombre='${key}'`);
+    const medicChainQuery= await client.query(`select * from cadena_medica where nombre=$1`,[key]);
     if(medicChainQuery.rowCount!=0){
         return "cadena_medica";
     }
     //// Searches the user into the medic center table
-    const medicCenterQuery= await client.query(`select * from centro_medico where nombre='${key}'`);
+    const medicCenterQuery= await client.query(`select * from centro_medico where nombre=$1`,[key]);
     if(medicCenterQuery.rowCount!=0){
         return "centro_medico";
     }
     //// Searches the user into the coordinator/secretary table
-    const coordinatorQuery= await client.query(`select * from coordinador where rut='${key}'`);
+    const coordinatorQuery= await client.query(`select * from coordinador where rut=$1`,[key]);
     if(coordinatorQuery.rowCount!=0){
         return "coordinador";
     }
     //// Searches the user into the medic table
-    const medicQuery= await client.query(`select * from medico where rut='${key}'`);
+    const medicQuery= await client.query(`select * from medico where rut=$1`,[key]);
     if(medicQuery.rowCount!=0){
         return "medico";
     }
     //// Searches the user into the patient table
-    const patientQuery= await client.query(`select * from paciente where rut='${key}'`);
+    const patientQuery= await client.query(`select * from paciente where rut=$1`,[key]);
     if(patientQuery.rowCount!=0){
         return "paciente";
     }
@@ -66,7 +66,7 @@ const login = async (key,password)=>{
     }
     else{
         const primaryKey = PrimaryKeyDicctionary [userType];
-        queryValidarContraseña = await client.query(`select * from ${userType} where (${primaryKey}='${key}' )`);
+        queryValidarContraseña = await client.query(`select * from ${userType} where (${primaryKey}=$1 )`,[key]);
         /// validates that there is one row that matches primary key
         if(queryValidarContraseña.rowCount==1){  
             const encriptedPassword=queryValidarContraseña['rows'][0].contraseña;
@@ -93,22 +93,10 @@ const login = async (key,password)=>{
 
 };
 
-const test = async (key)=>{ 
-    const text=`select * from paciente where rut=$1`;
-    try {
-        const res = await client.query(text, [key])
-        console.log(res.rows[0])
-        // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
-      } catch (err) {
-        console.log(err.stack)
-      }
-
-};
 
 module.exports = {
     /// las funciones que se veran al exportar el modulo
     client,
     getUseruserType,
-    login,
-    test
+    login
 }

@@ -5,7 +5,7 @@ const getCoordinator = async(req,res) =>{
     try{
         const {rut} = req.params.rut;
         const client = await getConnection.client;
-        const query = await client.query(`select * from coordinador where rut='${rut}'`);
+        const query = await client.query(`select * from coordinador where rut=$1`,[rut]);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -55,7 +55,7 @@ const deleteCoordinator = async(req,res) =>{
     try{
         const rut = req.params.rut;
         const client = await getConnection.client;
-        await client.query(`delete from coordinador where rut='${rut}'`);
+        await client.query(`delete from coordinador where rut=$1`,[rut]);
         res.status(200).json({ message: "Coordinator deleted" });
     }catch(error){
         res.status(500);
@@ -74,19 +74,19 @@ const updateCoordinator = async(req,res) =>{
 
         const databaseAccess = await getConnection.client;
         if(medic_center_id !== undefined ){
-            await databaseAccess.query(`update coordinador set id_centro_medico='${medic_center_id}' where rut='${rut}'`);
+            await databaseAccess.query(`update coordinador set id_centro_medico=$1 where rut=$2`,[medic_center_id,rut]);
         }
 
         if(complete_name !== undefined ){
-            await databaseAccess.query(`update coordinador set nombre_completo='${complete_name}' where rut='${rut}'`);
+            await databaseAccess.query(`update coordinador set nombre_completo=$1 where rut=$2`,[complete_name,rut]);
         }
         
         if(password !== undefined ){
-            await databaseAccess.query(`update coordinador set contraseña='${await passwordManager.getEncriptedPassword(password)}' where rut='${rut}'`);
+            await databaseAccess.query(`update coordinador set contraseña=$1 where rut=$2`,[await passwordManager.getEncriptedPassword(password),rut]);
         }
 
         if(email !== undefined){
-            await databaseAccess.query(`update coordinador set correo='${email}' where rut='${rut}'`);
+            await databaseAccess.query(`update coordinador set correo=$1 where rut=$2`,[email,rut]);
         }
         
         res.status(200).json({ message: "Conrdinator updated" });

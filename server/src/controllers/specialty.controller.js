@@ -5,7 +5,7 @@ const getSpecialty = async(req,res) =>{
     try{
         const id = req.params.id;
         const client = await getConnection.client;
-        const query = await client.query(`select * from especialidad where id='${id}'`);
+        const query = await client.query(`select * from especialidad where id=$1`,[id]);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -53,7 +53,7 @@ const deleteSpecialty = async(req,res) =>{
     try{
         const id = req.params.id;
         const client = await getConnection.client;
-        await client.query(`delete from especialidad where id='${id}'`);
+        await client.query(`delete from especialidad where id=$1`,[id]);
         res.status(200).json({message:"Specialty deleted"});
     }catch(error){
         res.status(500);
@@ -71,7 +71,7 @@ const updateSpecialty = async(req,res) =>{
             res.status(400).json({message: "Bad Request. Please fill any field"});
         }
         else{
-            await databaseAccess.query(`update especialidad set nombre='${name}' where id=${id}`);
+            await databaseAccess.query(`update especialidad set nombre=$1 where id=$2`,[name,id]);
             res.status(200).json({message:"Specialty updated"});
         }
         
