@@ -6,15 +6,15 @@ export default function CreateCoor() {
     const [name,setName] = useState()
     const [rut,setRut] = useState()
     const [email,setEmail] = useState()
-    const [cellphone,setCellphone] = useState()
+    //const [phone,setPhone] = useState()
     const [password,setPassword] = useState()
 
     const data = {
-        nombre_completo : name,
+        full_name : name,
         rut,
-        correo: email,
-        telefono: cellphone,
-        contraseña: password
+        email,
+        //phone,
+        password
     }
 
     return (
@@ -29,9 +29,6 @@ export default function CreateCoor() {
 
                 <label className="my-2 block font-medium">Correo electronico</label>
                 <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={e=>setEmail(e.target.value)} type="email" required/>
-
-                <label className="my-2 block font-medium">Telefono</label>
-                <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={e=>setCellphone(e.target.value)} type="tel" required/>
 
                 <label className="my-2 block font-medium">Contraseña</label>
                 <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={e=>setPassword(e.target.value)} type="password" required/>

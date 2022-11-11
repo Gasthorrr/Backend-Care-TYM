@@ -32,12 +32,12 @@ const addCoordinator = async(req,res) =>{
     try{
         const rut = req.body.rut;
         const medic_center_id = req.user.id;
-        const complete_name = req.body.nombre_completo;
-        const password = req.body.contraseña;
-        const email = req.body.correo;
+        const complete_name = req.body.full_name;
+        const password = req.body.password;
+        const email = req.body.email;
 
-        if(rut === undefined || medic_center_id === undefined || complete_name === undefined || password === undefined || email == undefined){
-            res.status(400).json({message: "Bad Request. Please fill all field"});
+        if(rut === undefined || medic_center_id === undefined || complete_name === undefined || password === undefined || email === undefined ){
+            return res.status(400).json({message: "Bad Request. Please fill all field"});
         }
 
         const client = await getConnection.client;
@@ -67,10 +67,10 @@ const deleteCoordinator = async(req,res) =>{
 const updateCoordinator = async(req,res) =>{
     try{
         const rut = req.params.rut;
-        const medic_center_id = req.body.id_centro_medico;
-        const complete_name = req.body.nombre_completo;
-        const password = req.body.contraseña;
-        const email = req.body.correo;
+        const medic_center_id = req.user.id;
+        const complete_name = req.body.full_name;
+        const password = req.body.password;
+        const email = req.body.email;
 
         const databaseAccess = await getConnection.client;
         if(medic_center_id !== undefined ){

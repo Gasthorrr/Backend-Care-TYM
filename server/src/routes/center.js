@@ -25,7 +25,7 @@ router.get("/specialty/:id",specialtyController.getSpecialty);
 router.get('/specialty',specialtyController.getSpecialties);
 router.post('/specialty',specialtyController.addSpecialty);
 router.delete("/specialty/:id",specialtyController.deleteSpecialty);
-router.put("/specialty:id",specialtyController.updateSpecialty);
+router.put("/specialty/:id",specialtyController.updateSpecialty);
 
 
 module.exports = router;

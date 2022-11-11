@@ -29,7 +29,7 @@ export default function ListShort(props) {
                 ) : (
                     data.map((x) => (
                         <div key={x.id} className="m-2">
-                            <h1 className="font-medium">{x.nombre}</h1>
+                            <h1 className="font-medium">{x.name}</h1>
                             <h1 className="font-light">ID {x.id}</h1>
                         </div>
                     ))
