@@ -5,8 +5,6 @@ import Swal from "sweetalert2";
 
 export default function BottonsUpdate(props) {
 
-    const history = useNavigate()
-
     const [loadingSave, setLoadingSave] = useState(false)
 
     const handleSubmit = async (x) => {

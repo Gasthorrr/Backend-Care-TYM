@@ -32,15 +32,15 @@ const addMedic = async(req,res) =>{
     try{
         const rut = req.body.rut;
         const medic_center_id = req.user.id;
-        const specialty_id = req.body.id_especialidad;
-        const complete_name = req.body.nombre_completo; 
-        const password = req.body.contraseña;
-        const phone = req.body.telefono;
-        const service_duration = req.body.duracion_atencion;
-        const email = req.body.correo;
+        const specialty_id = req.body.id_specialty;
+        const complete_name = req.body.full_name; 
+        const password = req.body.password;
+        const phone = req.body.phone;
+        const service_duration = req.body.attencion_duration;
+        const email = req.body.email;
 
         if(rut === undefined || medic_center_id === undefined || specialty_id === undefined || complete_name === undefined || password === undefined || phone === undefined || service_duration === undefined || email == undefined){
-            res.status(400).json({message: "Bad Request. Please fill all field"});
+            return res.status(400).json({message: "Bad Request. Please fill all field"});
         }
 
         const client = await getConnection.client;
@@ -73,12 +73,14 @@ const updateMedic = async(req,res) =>{
     try{
         const rut = req.params.rut;
         const medic_center_id = req.user.id;
-        const complete_name = req.body.nombre_completo; 
-        const password = req.body.contraseña;
-        const phone = req.body.telefono;
-        const service_duration = req.body.duracion_atencion;
-        const email = req.body.correo;
-        const specialty = req.body.id_especialidad;
+        const complete_name = req.body.full_name; 
+        const password = req.body.password;
+        const phone = req.body.phone;
+        const service_duration = req.body.attencion_duration;
+        const email = req.body.email;
+        const specialty = req.body.id_specialty;
+
+        console.log(specialty)
         
         const databaseAccess = await getConnection.client;
 

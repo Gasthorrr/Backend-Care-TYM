@@ -7,7 +7,7 @@ export default function CreateMedic() {
     const [name,setName] = useState()
     const [rut,setRut] = useState()
     const [email,setEmail] = useState()
-    const [cellphone,setCellphone] = useState()
+    const [phone,setPhone] = useState()
     const [specialty,setSpecialty] = useState()
     const [time,setTime] = useState()
     const [password,setPassword] = useState()
@@ -16,13 +16,13 @@ export default function CreateMedic() {
     const [dataSpecialty, setDataSpecialty] = useState()
 
     const data = {
-        nombre_completo : name,
+        full_name: name,
         rut,
-        correo: email,
-        telefono: cellphone,
-        id_especialidad : specialty,
-        duracion_atencion : time,
-        contraseña: password
+        email,
+        phone,
+        id_specialty : specialty,
+        attencion_duration : time,
+        password
     }
     useEffect(()=>{
         const getData = async() => {
@@ -48,7 +48,7 @@ export default function CreateMedic() {
                 <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={e=>setEmail(e.target.value)} type="email" required/>
 
                 <label className="my-2 block font-medium">Telefono</label>
-                <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={e=>setCellphone(e.target.value)} type="tel" required/>
+                <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={e=>setPhone(e.target.value)} type="tel" required/>
 
                 <label className="my-2 block font-medium">Especialidad</label>
                 <select onChange={e=>setSpecialty(e.target.value)} className={"bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5"} required>
@@ -58,7 +58,7 @@ export default function CreateMedic() {
                             <div>Cargando</div>
                         ) : (
                             dataSpecialty.map((x)=>(
-                                <option value={x.id}>{x.nombre}</option>
+                                <option value={x.id}>{x.name}</option>
                             ))
                         )
                     }

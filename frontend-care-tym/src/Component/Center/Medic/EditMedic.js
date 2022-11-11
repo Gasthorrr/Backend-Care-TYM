@@ -9,7 +9,7 @@ export default function EditMedic(props) {
         setRut(props.edit.rut)
         setEmail(props.edit.email)
         setPhone(props.edit.phone)
-        setSpecialty(props.edit.id_specailty)
+        setSpecialty(props.edit.id_specialty)
         setAttentionDuration(props.edit.attention_duration)
 
 
@@ -37,11 +37,11 @@ export default function EditMedic(props) {
 
 
     const data = {
-        name,
+        full_name: name,
         rut,
         email,
         phone,
-        specialty,
+        id_specialty : specialty,
         attention_duration : attentionDuration,
         password
     }
