@@ -5,7 +5,7 @@ const getSpecialty = async(req,res) =>{
     try{
         const id = req.params.id;
         const client = await getConnection.client;
-        const query = await client.query(`select * from specialty where id=$1`,[id]);
+        const query = await client.query(`select * from specialty where medical_center_id=$1`,[id]);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -32,6 +32,7 @@ const getSpecialties = async(req,res) =>{
 const addSpecialty = async(req,res) =>{
     try{
         const name = req.body.nombre;
+        const centerId=req.user.key;
 
         if(name === undefined){
             res.status(400).json({message: "Bad Request. Please fill all field"});
@@ -39,8 +40,8 @@ const addSpecialty = async(req,res) =>{
 
         const client = await getConnection.client;
         await client.query(
-            `INSERT INTO "specialty" ("name") 
-            VALUES ($1)`, [name]);
+            `INSERT INTO "specialty" ("name","medical_center_id") 
+            VALUES ($1,$2)`, [name,centerId]);
         res.status(200).json({ message: "Specialty added" });
     }catch(error){
         res.status(500);
