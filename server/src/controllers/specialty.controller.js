@@ -31,11 +31,11 @@ const getSpecialties = async(req,res) =>{
 
 const addSpecialty = async(req,res) =>{
     try{
-        const name = req.body.nombre;
-        const centerId=req.user.key;
+        const name = req.body.name;
+        const centerId=req.user.id;
 
         if(name === undefined){
-            res.status(400).json({message: "Bad Request. Please fill all field"});
+            return res.status(400).json({message: "Bad Request. Please fill all field"});
         }
 
         const client = await getConnection.client;
@@ -66,7 +66,7 @@ const deleteSpecialty = async(req,res) =>{
 const updateSpecialty = async(req,res) =>{
     try{
         const id = req.params.id;
-        const name=req.body.nombre;
+        const name = req.body.name;
         const databaseAccess = await getConnection.client;
         if(name === undefined){
             res.status(400).json({message: "Bad Request. Please fill any field"});

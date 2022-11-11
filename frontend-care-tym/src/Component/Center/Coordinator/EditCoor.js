@@ -4,24 +4,24 @@ import BottonsUpdate from "../../Bottons/BottonsUpdate";
 export default function EditCoor(props) {
 
     useEffect(()=>{
-        setName(props.edit.nombre_completo)
+        setName(props.edit.full_name)
         setRut(props.edit.rut)
-        setEmail(props.edit.correo)
-        setCellphone(props.edit.telefono)
+        setEmail(props.edit.email)
+        //setPhone(props.edit.phone)
     },[props])
 
     const [name,setName] = useState()
     const [rut,setRut] = useState()
     const [email,setEmail] = useState()
-    const [cellphone,setCellphone] = useState()
+    //const [phone,setPhone] = useState()
     const [password,setPassword] = useState()
 
     const data = {
-        nombre_completo : name,
+        full_name: name,
         rut,
-        correo: email,
-        telefono: cellphone,
-        contraseña: password
+        email,
+        //phone,
+        password
     }
 
     return (
@@ -36,9 +36,6 @@ export default function EditCoor(props) {
 
                 <label className="my-2 block font-medium">Correo electronico</label>
                 <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={email} onChange={e=>setEmail(e.target.value)}/>
-
-                <label className="my-2 block font-medium">Telefono</label>
-                <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={cellphone} onChange={e=>setCellphone(e.target.value)}/>
 
                 <label className="my-2 block font-medium">Contraseña</label>
                 <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={e=>setPassword(e.target.value)}/>
