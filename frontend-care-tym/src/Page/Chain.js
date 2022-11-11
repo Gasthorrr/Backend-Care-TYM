@@ -4,7 +4,7 @@ export default function Chain() {
 
     //const {user}  = useContext(AuthProvider)
 
-    if(!sessionStorage.getItem("auth-token") || sessionStorage.getItem("rol") !== "cadena_medica") return <Navigate to="/"/>    
+    if(!sessionStorage.getItem("auth-token") || sessionStorage.getItem("rol") !== "medical_chain") return <Navigate to="/"/>    
 
     return (
         <div className="flex justify-center flex-col">

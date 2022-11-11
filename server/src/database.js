@@ -69,7 +69,7 @@ const login = async (key,password)=>{
         queryValidarContraseña = await client.query(`select * from ${userType} where (${primaryKey}=$1 )`,[key]);
         /// validates that there is one row that matches primary key
         if(queryValidarContraseña.rowCount==1){  
-            const encriptedPassword=queryValidarContraseña['rows'][0].contraseña;
+            const encriptedPassword=queryValidarContraseña['rows'][0].password;
             const result = await passwordManager.validatePassword(password,encriptedPassword);
             /// validates that the password(user input) matches with the encriptedPassword(stored in the database)
             if(result==true){

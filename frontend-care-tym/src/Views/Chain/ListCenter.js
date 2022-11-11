@@ -41,7 +41,7 @@ export default function ListChain(props) {
                             loading ?
                                 null :
                                 center.map((x) => (
-                                    <Component key={x.id} name={x.nombre} id={x.id} />
+                                    <Component key={x.id} name={x.name} id={x.id} address={x.address} />
                                 ))
                         }
                     </div>

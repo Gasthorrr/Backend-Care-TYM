@@ -5,12 +5,12 @@ import { getRequest } from "../../../Services/Request";
 export default function EditMedic(props) {
 
     useEffect(()=>{
-        setName(props.edit.nombre_completo)
+        setName(props.edit.full_name)
         setRut(props.edit.rut)
-        setEmail(props.edit.correo)
-        setCellphone(props.edit.telefono)
-        setSpecialty(props.edit.id_especialidad)
-        setTime(props.edit.duracion_atencion)
+        setEmail(props.edit.email)
+        setPhone(props.edit.phone)
+        setSpecialty(props.edit.id_specailty)
+        setAttentionDuration(props.edit.attention_duration)
 
 
     },[props])
@@ -18,9 +18,9 @@ export default function EditMedic(props) {
     const [name,setName] = useState()
     const [rut,setRut] = useState()
     const [email,setEmail] = useState()
-    const [cellphone,setCellphone] = useState()
+    const [phone,setPhone] = useState()
     const [specialty,setSpecialty] = useState()
-    const [time,setTime] = useState()
+    const [attentionDuration,setAttentionDuration] = useState()
     const [password,setPassword] = useState()
 
     const [loading, setLoading] = useState(true)
@@ -37,13 +37,13 @@ export default function EditMedic(props) {
 
 
     const data = {
-        nombre_completo : name,
+        name,
         rut,
-        correo: email,
-        telefono: cellphone,
-        id_especialidad : specialty,
-        duracion_atencion : time,
-        contraseña: password
+        email,
+        phone,
+        specialty,
+        attention_duration : attentionDuration,
+        password
     }
 
     return (
@@ -60,7 +60,7 @@ export default function EditMedic(props) {
                 <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={email} onChange={e=>setEmail(e.target.value)}/>
 
                 <label className="my-2 block font-medium">Telefono</label>
-                <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={cellphone} onChange={e=>setCellphone(e.target.value)}/>
+                <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={phone} onChange={e=>setPhone(e.target.value)}/>
 
                 <label className="my-2 block font-medium">Especialidad</label>
                 <select onChange={e=>setSpecialty(e.target.value)} value={specialty} className={"bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5"}>
@@ -69,14 +69,14 @@ export default function EditMedic(props) {
                             <div>Cargando</div>
                         ) : (
                             dataSpecialty.map((x)=>(
-                                <option value={x.id}>{x.nombre}</option>
+                                <option value={x.id}>{x.name}</option>
                             ))
                         )
                     }
                 </select>
 
                 <label className="my-2 block font-medium">Duracion de atencion</label>
-                <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={time} onChange={e=>setTime(e.target.value)}/>
+                <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={attentionDuration} onChange={e=>setAttentionDuration(e.target.value)}/>
 
                 <label className="my-2 block font-medium">Contraseña</label>
                 <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={e=>setPassword(e.target.value)}/>

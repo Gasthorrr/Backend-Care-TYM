@@ -6,6 +6,7 @@ const getLogin = async(req,res) =>{
         const key = req.body.key;
         const password = req.body.password;
         const result =  await client.login(key,password);
+        
         if(result !== "Not Found" && result !== "Incorrect Password"){
             console.log(result)
             const token = jwt.sign(result,"sdfghjklkjhg")//reemplazar por .env

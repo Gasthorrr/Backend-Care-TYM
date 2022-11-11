@@ -16,7 +16,7 @@ export default function ListChain(props) {
 
         request()
         setLoading(false)
-    }, [])
+    }, [props.type])
 
 
     return (
@@ -39,7 +39,7 @@ export default function ListChain(props) {
                             loading ?
                                 null :
                                 chain.map((x) => (
-                                    <Component key={x.id} name={x.nombre} id={x.id} />
+                                    <Component key={x.id} name={x.name} id={x.id} email={x.email} />
                                 ))
                         }
                     </div>

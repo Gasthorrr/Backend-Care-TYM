@@ -29,7 +29,7 @@ export default function ListMedic(props) {
                 ) : (
                     data.map((x) => (
                         <div key={x.rut} className="m-2">
-                            <h1 className="font-medium">{x.nombre_completo}</h1>
+                            <h1 className="font-medium">{x.full_name}</h1>
                             <h1 className="font-light">RUT {x.rut}</h1>
                         </div>
                     ))

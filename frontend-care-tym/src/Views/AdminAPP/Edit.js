@@ -8,23 +8,23 @@ import { getRequest } from "../../Services/Request"
 export default function Edit(props) {
 
     const { id } = useParams()
-    const [nameChain, setNameChain] = useState()
+    const [name, setName] = useState()
     const [password, setPassword] = useState()
     const [email, setEmail] = useState()
 
     useEffect(() => {
         const getData = async () => {
             const data = await getRequest("http://127.0.0.1:8000/api/admin/" + id)
-            setNameChain(data.nombre)
-            setEmail(data.correo)
+            setName(data.name)
+            setEmail(data.email)
         }
         getData()
     }, [])
 
     const data = {
-        nombre: nameChain,
-        contraseña: password,
-        correo: email
+        name,
+        password,
+        email
     }
 
     return (
@@ -41,7 +41,7 @@ export default function Edit(props) {
                         <form className="grid gap-6 m-3">
                             <div>
                                 <label className="my-2 block font-medium">Nombre</label>
-                                <input onChange={(x) => setNameChain(x.target.value)} value={nameChain} autocomplete="off" type="text" className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" />
+                                <input onChange={(x) => setName(x.target.value)} value={name} autocomplete="off" type="text" className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" />
                             </div>
                             <div>
                                 <label className="my-2 block font-medium">Correo institucional</label>

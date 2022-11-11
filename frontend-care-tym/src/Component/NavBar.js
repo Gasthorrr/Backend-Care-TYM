@@ -14,9 +14,9 @@ export default function NavBar() {
     const home = () =>{
         if(!sessionStorage.getItem("rol")) history("/")
         
-        if(sessionStorage.getItem("rol") === "administrador") history("/admin") 
-        if(sessionStorage.getItem("rol") === "cadena_medica") history("/chain") 
-        if(sessionStorage.getItem("rol") === "centro_medico") history("/center") 
+        if(sessionStorage.getItem("rol") === "admin") history("/admin") 
+        if(sessionStorage.getItem("rol") === "medical_chain") history("/chain") 
+        if(sessionStorage.getItem("rol") === "medical_center") history("/center") 
 
     }
 
@@ -24,13 +24,13 @@ export default function NavBar() {
     return (
         <>
             <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 m-1 rounded-2xl md:m-0 md:rounded-none mb-3">
-                <div className={"container px-4 mx-auto flex flex-wrap items-center justify-between"+(type !=="centro_medico" ? " flex-nowrap" : "")}>
+                <div className={"container px-4 mx-auto flex flex-wrap items-center justify-between"+(type !=="medical_center" ? " flex-nowrap" : "")}>
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                         <button onClick={() =>home()} className="font-bold text-2xl text-white">
                             {session ? sessionStorage.getItem("title") : "CareTYM"}
                         </button>
                         {   //logica de boton collapse y cerrar sesion
-                            type !== "centro_medico" ? (
+                            type !== "medical_center" ? (
                                    null
                                 
                             ) :
@@ -47,10 +47,10 @@ export default function NavBar() {
                                 )
                         }
                     </div>
-                    <div className={"lg:flex flex-grow justify-center" + (navbarOpen ? " flex" : " hidden") + (type !== "centro_medico" ? "flex grow-0 flex-row" : "") } id="example-navbar-danger">
+                    <div className={"lg:flex flex-grow justify-center" + (navbarOpen ? " flex" : " hidden") + (type !== "medical_center" ? "flex grow-0 flex-row" : "") } id="example-navbar-danger">
                         <ul className="flex flex-col items-center lg:flex-row list-none lg:ml-auto">
                             {   // logica ref de tipos de usuarios
-                                type === "centro_medico" && session ? (
+                                type === "medical_center" && session ? (
                                     <>
                                         <li>
                                             <a href="/center" className="mx-4 block py-2 pr-4 pl-3 text-white rounded md:bg-transparent dark:text-white" aria-current="page">Inicio</a>
@@ -74,7 +74,7 @@ export default function NavBar() {
 
                             <li>
                                 {   //cerrar sesion
-                                    session === true && type === "centro_medico" ? (
+                                    session === true && type === "medical_center" ? (
                                         <div className=" mx-4 self-center justify-end flex flex-row md:mr-0">
                                             <button onClick={Logout} className="bg-red-600 p-1 rounded-lg shadow-lg">
                                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
@@ -88,7 +88,7 @@ export default function NavBar() {
                             </li>
                         </ul>
                         {   //cerrar sesion
-                            session === true && type !== "centro_medico" ? (
+                            session === true && type !== "medical_center" ? (
                                 <div className=" mx-4 self-center justify-end flex flex-row md:mr-0">
                                     <button onClick={Logout} className="bg-red-600 p-1 rounded-lg shadow-lg">
                                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>

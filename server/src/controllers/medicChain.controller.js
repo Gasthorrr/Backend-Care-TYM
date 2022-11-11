@@ -32,9 +32,9 @@ const getMedicChains = async(req,res) =>{
 
 const addMedicChain = async(req,res) =>{
     try{
-        const name = req.body.nombre;
-        const password = req.body.contraseña;
-        const email = req.body.correo;
+        const name = req.body.name;
+        const password = req.body.password;
+        const email = req.body.email;
 
         if(name === undefined || password === undefined || email === undefined){
             res.status(400).json({message: "Bad Request. Please fill all field"});
@@ -68,9 +68,9 @@ const deleteMedicChain = async(req,res) =>{
 const updateMedicChain = async(req,res) =>{
     try{
         const id = req.params.id;
-        const name = req.body.nombre;
-        const password = req.body.contraseña;
-        const email = req.body.correo;
+        const name = req.body.name;
+        const password = req.body.password;
+        const email = req.body.email;
 
         const databaseAccess = await getConnection.client;
         if(name !== undefined ){

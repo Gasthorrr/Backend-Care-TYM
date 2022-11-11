@@ -4,7 +4,7 @@ export default function Admin() {
 
     //const {user}  = useContext(AuthProvider)
 
-    if(!sessionStorage.getItem("auth-token") || sessionStorage.getItem("rol") !== "administrador") return <Navigate to="/"/>    
+    if(!sessionStorage.getItem("auth-token") || sessionStorage.getItem("rol") !== "admin") return <Navigate to="/"/>    
 
     return (
         <div className="flex flex-col justify-center">

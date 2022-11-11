@@ -8,7 +8,7 @@ import { getRequest } from "../../Services/Request"
 export default function EditCenter() {
 
     const { id } = useParams()
-    const [nameCenter, setNameCenter] = useState()
+    const [name, setName] = useState()
     const [password, setPassword] = useState()
     const [email, setEmail] = useState()
     const [address, setAddress] = useState()
@@ -17,11 +17,11 @@ export default function EditCenter() {
     useEffect(() => {
         const getData = async () => {
             const data = await getRequest("http://127.0.0.1:8000/api/chain/" + id)
-            setNameCenter(data.nombre)
-            setAddress(data.direccion)
-            setCity(data.ciudad)
-            setEmail(data.correo)
-            setPassword(data.contraseña)
+            setName(data.name)
+            setAddress(data.address)
+            setCity(data.city)
+            setEmail(data.email)
+            setPassword(data.password)
         }
         getData()
 
@@ -29,11 +29,11 @@ export default function EditCenter() {
 
 
     const data = {
-        nombre: nameCenter,
-        contraseña: password,
-        direccion: address,
-        correo: email,
-        ciudad: city
+        name,
+        password,
+        address,
+        email,
+        city
     }
 
     return (
@@ -50,7 +50,7 @@ export default function EditCenter() {
                         <form className="grid gap-6 m-3">
                             <div>
                                 <label className="my-2 block font-medium">Nombre</label>
-                                <input onChange={(x) => setNameCenter(x.target.value)} value={nameCenter} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                                <input onChange={(x) => setName(x.target.value)} value={name} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                             </div>
                             <div>
                                 <label className="my-2 block font-medium">Ciudad</label>

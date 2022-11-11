@@ -18,7 +18,7 @@ const getMedicCenter = async(req,res) =>{
 const getMedicCenters = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const query = await client.query(`select id,id_medical_chain,name,address,city,email from medical_center where id_medical_center=$1`,[req.user.id]);
+        const query = await client.query(`select id,id_medical_chain,name,address,city,email from medical_center where id_medical_chain=$1`,[req.user.id]);
         const result = query['rows']
         res.status(200).json(result);
     }catch(error){
@@ -30,11 +30,11 @@ const getMedicCenters = async(req,res) =>{
 
 const addMedicCenter = async(req,res) =>{
     try{
-        const name = req.body.nombre;
-        const password = req.body.contraseña;
-        const address = req.body.direccion;
-        const city = req.body.ciudad;
-        const email = req.body.correo;
+        const name = req.body.name;
+        const password = req.body.password;
+        const address = req.body.address;
+        const city = req.body.city;
+        const email = req.body.email;
 
         if(name === undefined || password === undefined || address === undefined || city === undefined || email === undefined){
             return res.status(400).json({message: "Bad Request. Please fill all field"});
@@ -68,12 +68,12 @@ const deleteMedicCenter = async(req,res) =>{
 const updateMedicCenter = async(req,res) =>{
     try{
         const id = req.params.id;
-        const medic_center_id = req.body.id_cadena_medica;
-        const name = req.body.nombre;
-        const password = req.body.contraseña;
-        const address = req.body.direccion;
-        const city = req.body.ciudad;
-        const email = req.body.correo;
+        const medic_center_id = req.user.id;
+        const name = req.body.name;
+        const password = req.body.password;
+        const address = req.body.address;
+        const city = req.body.city;
+        const email = req.body.email;
 
         const client = await getConnection.client;
         if(medic_center_id !== undefined){

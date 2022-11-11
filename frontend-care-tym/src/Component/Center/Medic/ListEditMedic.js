@@ -16,7 +16,7 @@ export default function ListEditMedic(props) {
     useEffect(() => {
 
         const newData = backupData.filter((medic) => {
-            const name = medic.nombre_completo.toUpperCase()
+            const name = medic.full_name.toUpperCase()
             const rut = medic.rut
             return name.indexOf(search.toUpperCase()) > -1 || rut.indexOf(search) > -1
         })
@@ -94,11 +94,11 @@ export default function ListEditMedic(props) {
 
                         data.map((x) => (
                             <div key={x.rut} className="m-2">
-                                <h1 className="font-medium text-lg">{x.nombre_completo}</h1>
+                                <h1 className="font-medium text-lg">{x.full_name}</h1>
                                 <h1 className="font-normal">RUT: {x.rut}</h1>
-                                <h1 className="font-normal">Correo: {x.correo}</h1>
-                                <h1 className="font-normal">Telefono: {x.telefono}</h1>
-                                <h1 className="font-normal">Duracion de atencion: {x.duracion_atencion}</h1>
+                                <h1 className="font-normal">Correo: {x.email}</h1>
+                                <h1 className="font-normal">Telefono: {x.phone}</h1>
+                                <h1 className="font-normal">Duracion de atencion: {x.attention_duration}</h1>
                                 <div>
                                     <button className="m-2 p-1 ml-0 text-white border-2 border-blue-700 bg-blue-700 rounded-md font-medium" onClick={() => handleEdit(x)} >Editar</button>
                                     <button className="m-2 border-2 border-red-600 text-red-600 rounded-md p-1 font-medium" onClick={() => handleDelete(data, x)}>Eliminar</button>

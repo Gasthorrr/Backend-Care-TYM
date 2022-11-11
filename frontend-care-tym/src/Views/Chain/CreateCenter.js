@@ -9,18 +9,18 @@ export default function CreateCenter(props) {
 
     const id = useParams()
 
-    const [nameCenter, setNameCenter] = useState()
+    const [name, setName] = useState()
     const [password, setPassword] = useState()
     const [email, setEmail] = useState()
     const [address, setAddress] = useState()
     const [city, setCity] = useState()
 
     const data = {
-        nombre: nameCenter,
-        contraseña: password,
-        direccion: address,
-        correo: email,
-        ciudad: city
+        name,
+        password,
+        address,
+        email,
+        city
     }
 
     return (
@@ -40,7 +40,7 @@ export default function CreateCenter(props) {
                         <form className="grid gap-6 m-3">
                             <div>
                                 <label className="my-2 block font-medium">Nombre</label>
-                                <input onChange={(x) => setNameCenter(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                                <input onChange={(x) => setName(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
                             </div>
                             <div>
                                 <label className="my-2 block font-medium">Ciudad</label>

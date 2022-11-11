@@ -12,9 +12,9 @@ export default function Create() {
     const [email, setEmail] = useState()
 
     const data = {
-        nombre: name,
-        contraseña: password,
-        correo: email
+        name,
+        password,
+        email
     }
 
     return (
