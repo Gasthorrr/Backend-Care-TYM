@@ -4,8 +4,9 @@ const getSpecialty = async(req,res) =>{
     
     try{
         const id = req.params.id;
+        const centerId=req.user.id;
         const client = await getConnection.client;
-        const query = await client.query(`select * from specialty where medical_center_id=$1`,[id]);
+        const query = await client.query(`select * from specialty where (medical_center_id=$1 and id=$2)`,[centerId,id]);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -18,8 +19,10 @@ const getSpecialty = async(req,res) =>{
 const getSpecialties = async(req,res) =>{
 
     try{
+        const id = req.params.id;
+        const centerId=req.user.id;
         const client = await getConnection.client;
-        const query = await client.query(`select * from specialty`);
+        const query = await client.query(`select * from specialty where medical_center_id=$1`,[centerId]);
         const result = query['rows'];
         res.json(result);
     }catch(error){
@@ -53,8 +56,9 @@ const addSpecialty = async(req,res) =>{
 const deleteSpecialty = async(req,res) =>{
     try{
         const id = req.params.id;
+        const centerId=req.user.id;
         const client = await getConnection.client;
-        await client.query(`delete from specialty where id=$1`,[id]);
+        await client.query(`delete from specialty where (id=$1 and medical_center_id=$2)`,[id,centerId]);
         res.status(200).json({message:"Specialty deleted"});
     }catch(error){
         res.status(500);
@@ -66,7 +70,7 @@ const deleteSpecialty = async(req,res) =>{
 const updateSpecialty = async(req,res) =>{
     try{
         const id = req.params.id;
-        const name = req.body.name;
+        const name=req.body.name;
         const databaseAccess = await getConnection.client;
         if(name === undefined){
             res.status(400).json({message: "Bad Request. Please fill any field"});
