@@ -19,7 +19,7 @@ export default function Edit(props) {
             setEmail(data.email)
         }
         getData()
-    }, [])
+    }, [id])
 
     const data = {
         name,

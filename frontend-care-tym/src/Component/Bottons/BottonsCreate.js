@@ -1,27 +1,10 @@
-import { postRequest } from "../../Services/Request"
-import { useState } from "react"
-import Swal from "sweetalert2";
 
 export default function BottonsCreate(props) {
 
-    const [loading, setLoading] = useState(false);
-
-    const handleSubmit = async (x) => {
-        x.preventDefault()
-        setLoading(!loading)
-
-        const resp = await postRequest(props.api, JSON.stringify(props.data))
-        setLoading(false)
-
-        resp.status === 200 ? 
-            await Swal.fire("Accion exitosa", props.action + " creado exitosamente!!", "success") : document.getElementById("error").innerHTML = props.error
-        window.location.reload(true)
-    }
-
     return (
-        <button disabled={loading} onClick={handleSubmit} className="p-2 my-2 bg-green-400 rounded-lg shadow-lg font-semibold text-lg hover:shadow-sm w-full">
+        <button type="submit" form="form" disabled={props.loading}  className="p-2 my-2 bg-green-400 rounded-lg shadow-lg font-semibold text-lg hover:shadow-sm w-full">
             {
-                loading ?
+                props.loading ?
                     <div className="flex flex-row text-center justify-center ">
                         <svg role="status" className="inline mr-3 my-auto w-5 h-5 text-black animate-spin" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />

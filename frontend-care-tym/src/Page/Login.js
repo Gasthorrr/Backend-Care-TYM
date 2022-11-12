@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import NavBar from "../Component/NavBar";
 import { Link } from "react-router-dom"
 import AuthProvider from "../Auth/AuthProvider";
 
@@ -32,7 +31,7 @@ export default function Login() {
         <div className="grid ">
             <div className="m-4 flex flex-col md:justify-self-center md:bg-slate-50 md:w-1/2 md:max-w-lg md:rounded-xl md:shadow-xl">
                 <h1 className="font-semibold text-xl my-5 md:mt-10 md:text-center md:text-2xl">Acceso usuario</h1>
-                <form onSubmit={handleLogin} className="grid gap-6 m-3">
+                <form onSubmit={handleLogin} className="grid gap-6 m-3" autoComplete="on">
                     <div className="">
                         <label className="my-2 block font-medium">Usuario</label>
                         <input required className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={(e) => setKey(e.target.value)} />

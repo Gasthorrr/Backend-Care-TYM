@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { deleteRequest } from "../../Services/Request"
 import Swal from "sweetalert2";

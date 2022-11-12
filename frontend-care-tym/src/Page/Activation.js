@@ -1,4 +1,3 @@
-import NavBar from "../Component/NavBar";
 
 export default function Activation() {
     return(

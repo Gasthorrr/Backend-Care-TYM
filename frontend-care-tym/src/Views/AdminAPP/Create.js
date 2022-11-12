@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import BottonsCreate from "../../Component/Bottons/BottonsCreate"
+import Swal from "sweetalert2";
+import { postRequest } from "../../Services/Request"
 
 
 export default function Create() {
@@ -11,10 +13,27 @@ export default function Create() {
     const [password, setPassword] = useState()
     const [email, setEmail] = useState()
 
+    const [loading, setLoading] = useState(false)
+
     const data = {
         name,
         password,
         email
+    }
+
+    const handleSubmit = async (x) => {
+        x.preventDefault()
+
+        setLoading(!loading)
+        const resp = await postRequest("http://127.0.0.1:8000/api/admin", JSON.stringify(data))
+        setLoading(false)
+        if (resp.status === 200) {
+            await Swal.fire("Accion exitosa", "Cadena medica creada exitosamente!!", "success")
+            window.location.reload(true)
+        } else {
+            document.getElementById("error").innerHTML = "Error al procesar los datos."
+        }
+
     }
 
     return (
@@ -31,7 +50,7 @@ export default function Create() {
                 </div>
                 <div className="flex justify-center">
                     <div className="my-10 w-5/6 grid md:w-1/2 md:max-w-lg">
-                        <form className="grid gap-6 m-3">
+                        <form id="form" className="grid gap-6 m-3" onSubmit={handleSubmit}>
                             <div>
                                 <label className="my-2 block font-medium">Nombre</label>
                                 <input required onChange={(x) => setName(x.target.value)} type="text" className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" />
@@ -45,7 +64,7 @@ export default function Create() {
                                 <input required onChange={(x) => setPassword(x.target.value)} type="password" className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" />
                             </div>
                             <div id="error" className="text-red-500 text-center"></div>
-                            <BottonsCreate text={"Registrar"} load={"Registrando"} data={data} api={"http://127.0.0.1:8000/api/admin"} error={"Problemas al registrar la cadena medica"} />
+                            <BottonsCreate text={"Registrar"} load={"Registrando"} />
                         </form>
                     </div>
                 </div>

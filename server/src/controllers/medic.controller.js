@@ -30,7 +30,7 @@ const getMedics = async(req,res) =>{
 
 const addMedic = async(req,res) =>{
     try{
-        const rut = req.body.rut;
+        const rut = (req.body.rut).replace(/\s/g,'');
         const medic_center_id = req.user.id;
         const specialty_id = req.body.id_specialty;
         const complete_name = req.body.full_name; 

@@ -13,7 +13,7 @@ export default function Medic() {
             <h1 className="text-center font-semibold text-2xl sm:my-6">Administracion de medicos</h1>
             <div className="flex flex-col sm:flex-row justify-center px-1">
                 <div className="flex flex-col">
-                    <button className="bg-blue-700 sm:mx-4 text-white font-medium p-2.5 rounded-xl shadow-xl mt-4 hover:shadow-none" onClick={() => setType(1)}>Añadir medico</button>
+                    <button className="bg-blue-700 sm:mx-4 text-white font-medium p-2.5 rounded-xl shadow-xl mt-4 hover:shadow-none" onClick={() => {setType(1)}}>Añadir medico</button>
                     <ListEditMedic api={"http://127.0.0.1:8000/api/center/medic"} title={"Lista de medicos"} setEdit={setEdit} setType={setType} />
                 </div>
 

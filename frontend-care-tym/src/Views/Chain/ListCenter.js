@@ -8,8 +8,6 @@ export default function ListChain(props) {
     const [center, setCenter] = useState([])
     const [loading, setLoading] = useState(true)
 
-    console.log(props.type)
-
     useEffect(() => {
 
         const request = async () => {
@@ -18,7 +16,7 @@ export default function ListChain(props) {
 
         request()
         setLoading(false)
-    }, [])
+    }, [props.type])
 
 
     return (

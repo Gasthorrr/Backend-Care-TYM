@@ -1,13 +1,13 @@
 import { useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import BottonsCreate from "../../Component/Bottons/BottonsCreate"
+import Swal from "sweetalert2";
+import { postRequest } from "../../Services/Request"
 
 
 export default function CreateCenter(props) {
 
     const history = useNavigate()
-
-    const id = useParams()
 
     const [name, setName] = useState()
     const [password, setPassword] = useState()
@@ -15,12 +15,29 @@ export default function CreateCenter(props) {
     const [address, setAddress] = useState()
     const [city, setCity] = useState()
 
+    const [loading, setLoading] = useState(false)
+
     const data = {
         name,
         password,
         address,
         email,
         city
+    }
+
+    const handleSubmit = async (x) => {
+        x.preventDefault()
+
+        setLoading(!loading)
+        const resp = await postRequest("http://127.0.0.1:8000/api/chain", JSON.stringify(data))
+        setLoading(false)
+        if (resp.status === 200) {
+            await Swal.fire("Accion exitosa", "Centro creado exitosamente!!", "success")
+            window.location.reload(true)
+        } else {
+            document.getElementById("error").innerHTML = "Error al procesar los datos."
+        }
+
     }
 
     return (
@@ -37,29 +54,29 @@ export default function CreateCenter(props) {
                 </div>
                 <div className="flex justify-center">
                     <div className="my-10 w-5/6 grid md:w-1/2 md:max-w-lg">
-                        <form className="grid gap-6 m-3">
+                        <form className="grid gap-6 m-3" onSubmit={handleSubmit} id="form">
                             <div>
                                 <label className="my-2 block font-medium">Nombre</label>
-                                <input onChange={(x) => setName(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                                <input onChange={(x) => setName(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" required/>
                             </div>
                             <div>
                                 <label className="my-2 block font-medium">Ciudad</label>
-                                <input onChange={(x) => setCity(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                                <input onChange={(x) => setCity(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" required/>
                             </div>
                             <div>
                                 <label className="my-2 block font-medium">Direccion</label>
-                                <input onChange={(x) => setAddress(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                                <input onChange={(x) => setAddress(x.target.value)} autocomplete="off" type="text" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" required/>
                             </div>
                             <div>
                                 <label className="my-2 block font-medium">Correo institucional</label>
-                                <input onChange={(x) => setEmail(x.target.value)} autocomplete="off" type="email" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                                <input onChange={(x) => setEmail(x.target.value)} autocomplete="off" type="email" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" required/>
                             </div>
                             <div>
                                 <label className="my-2 block font-medium">Contraseña</label>
-                                <input onChange={(x) => setPassword(x.target.value)} autocomplete="off" type="password" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" />
+                                <input onChange={(x) => setPassword(x.target.value)} autocomplete="off" type="password" className="bg-gray-100 border rounded-lg shadow-lg block w-full p-2.5" required/>
                             </div>
                             <div id="error" className="text-red-500 text-center"></div>
-                            <BottonsCreate text={"Registrar"} load={"Registrando"} data={data} api={"http://127.0.0.1:8000/api/chain"} error={"Problemas al registrar la cadena medica"} />
+                            <BottonsCreate text={"Registrar"} load={"Registrando"} loading={loading}/>
                         </form>
                     </div>
                 </div>

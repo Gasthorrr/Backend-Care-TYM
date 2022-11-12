@@ -40,7 +40,7 @@ export default function Schedule() {
 
                 <form className="mx-32">
                     <label className="my-2 block font-medium">Ingresa tu RUT</label>
-                    <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={rut} onChange={e => setRut(e.target.value)} />
+                    <input id="rut" className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={rut} onChange={e => setRut(e.target.value)} />
                     <div id="password" className="my-4 hidden">
                         <label className="my-2 block font-medium">Ingresa tu contraseña</label>
                         <input id="password-input" className="my-2 bg-gray-100 border border-gray-500 rounded-lg shadow-lg w-full p-2.5 block" value={password} onChange={e => setPassword(e.target.value)} />

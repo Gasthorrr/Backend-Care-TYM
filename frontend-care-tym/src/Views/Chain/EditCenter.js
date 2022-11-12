@@ -25,7 +25,7 @@ export default function EditCenter() {
         }
         getData()
 
-    }, [])
+    }, [id])
 
 
     const data = {
