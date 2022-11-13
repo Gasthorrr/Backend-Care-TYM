@@ -5,7 +5,8 @@ const getMedic = async(req,res) =>{
     try{
         const rut = req.params.rut;
         const client = await getConnection.client;
-        const query = await client.query(`select * from doctor where rut=$1`,[rut]);
+        const centerId = req.user.id;
+        const query = await client.query(`select * from doctor where (rut=$1 and id_medical_center=$2)`,[rut,centerId]);
         const result = query['rows']
         res.json(result);
     }catch(error){
@@ -18,7 +19,8 @@ const getMedic = async(req,res) =>{
 const getMedics = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const query = await client.query(`select * from doctor`);
+        const centerId = req.user.id;
+        const query = await client.query(`select * from doctor where id_medical_center=$1`,[centerId]);
         const result = query['rows']
         res.json(result);
     }catch(error){
