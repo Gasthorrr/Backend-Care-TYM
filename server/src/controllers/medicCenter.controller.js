@@ -3,7 +3,7 @@ const passwordManager = require("../passwordManager");
 
 const getMedicCenter = async(req,res) =>{
     try{
-        const {id} = req.params;
+        const id = req.params;
         const client = await getConnection.client;
         const query = await client.query(`select id,id_medical_chain,name,address,city,email from medical_center where id=$1`,[id]);
         const result = query['rows'][0]
@@ -15,6 +15,7 @@ const getMedicCenter = async(req,res) =>{
     
 };
 
+
 const getMedicCenters = async(req,res) =>{
     try{
         const client = await getConnection.client;
@@ -25,6 +26,20 @@ const getMedicCenters = async(req,res) =>{
         res.status(500);
         res.send(error.message);
     }
+    
+};
+
+const getMedicCentersByChainId = async(req,res) =>{
+    try{
+        const chainId = req.params.chainId;
+        const client = await getConnection.client;
+        const query = await client.query(`select id,id_medical_chain,name,address,city,email from medical_center where id_medical_chain=$1`,[chainId]);
+        const result = query['rows'];
+        res.status(200).json(result);
+    }catch(error){
+        res.status(500);
+        res.send(error.message);
+    };
     
 };
 
@@ -108,6 +123,7 @@ const updateMedicCenter = async(req,res) =>{
 const methods = {
     getMedicCenter,
     getMedicCenters,
+    getMedicCentersByChainId,
     addMedicCenter,
     deleteMedicCenter,
     updateMedicCenter

@@ -5,8 +5,8 @@ const getConnection = require("../database");
 const getAvailableBlocks = async(req,res) =>{
     try{
         ///// date format "yyyy-mm-dd"
-        const medicRut = req.body.rut;  
-        const date = req.body.date;
+        const medicRut = req.params.rut;  
+        const date = req.params.date;
         console.log("medicRut+","+date");
         console.log(medicRut+","+date);
         //// check if the date is valid
