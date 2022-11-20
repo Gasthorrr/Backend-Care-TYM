@@ -9,9 +9,9 @@ const getLogin = async(req,res) =>{
         
         if(result !== "Not Found" && result !== "Incorrect Password"){
             console.log(result)
-            const token = jwt.sign(result,"sdfghjklkjhg")//reemplazar por .env
+            const token = jwt.sign(result.token,"sdfghjklkjhg")//reemplazar por .env
 
-            res.status(200).json(token);
+            res.status(200).json({"token": token, "data_user" : result.data_user});
         }else{
             res.status(400).json(result);
         }

@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     //const [user, setUser] = UseLocalStorage("auth-token", null)
     const history = useNavigate()
 
-    const Login = async (data) => {
+    const Login = async (data,idCenter) => {
         const resp = await fetch("http://127.0.0.1:8000/api/login/", {
             headers: {
                 "Content-Type": "application/json",
@@ -23,10 +23,10 @@ export const AuthProvider = ({ children }) => {
         })
         if (resp.status === 200) {
 
-            const token = await resp.json();
+            const data = await resp.json();
 
-            sessionStorage.setItem("auth-token", token)// se guarda jwt entregado la API
-            const decode = jwt(token)
+            sessionStorage.setItem("auth-token", data.token)// se guarda jwt entregado la API
+            const decode = jwt(data.token)
             sessionStorage.setItem("rol",decode.rol)
             if(decode.rol === "medical_chain" || decode.rol === "medical_center"){
                 sessionStorage.setItem("title", decode.key)
@@ -34,14 +34,17 @@ export const AuthProvider = ({ children }) => {
                 sessionStorage.setItem("title", "CareTYM")
             }
 
-            console.log(decode.rol === "admin")
-
             if (decode.rol === "admin"){
                 return history("/admin/")
             }else if(decode.rol === "medical_chain"){
                 return history("/chain/")
             }else if(decode.rol === "medical_center"){
                 return history("/center/")
+            }else if(decode.rol === "patient"){
+                console.log(data.data_user)
+                const data_user = data.data_user
+                sessionStorage.setItem("data_patient", JSON.stringify(data_user))
+                return history("/schedule/" + decode.key + "/" + idCenter)
             }
 
         }

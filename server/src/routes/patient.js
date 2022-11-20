@@ -7,7 +7,7 @@ const specialtyController = require("../controllers/specialty.controller");
 const medicController = require("../controllers/medic.controller");
 
 //// see available specialties
-router.get("/available_specialties",specialtyController.getSpecialtiesPatient);
+router.get("/available_specialties/:centerId",specialtyController.getSpecialtiesPatient);
 
 //// see available medics
 router.get("/available_medics",medicController.getMedicsPatient);

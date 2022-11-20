@@ -11,12 +11,13 @@ export default function NavBar() {
 
     const history = useNavigate()
 
-    const home = () =>{
-        if(!sessionStorage.getItem("rol")) history("/")
+    const home = () => {
         
-        if(sessionStorage.getItem("rol") === "admin") history("/admin") 
-        if(sessionStorage.getItem("rol") === "medical_chain") history("/chain") 
-        if(sessionStorage.getItem("rol") === "medical_center") history("/center") 
+        if (!sessionStorage.getItem("rol")) history("/")
+
+        if (sessionStorage.getItem("rol") === "admin") history("/admin")
+        if (sessionStorage.getItem("rol") === "medical_chain") history("/chain")
+        if (sessionStorage.getItem("rol") === "medical_center") history("/center")
 
     }
 
@@ -24,15 +25,14 @@ export default function NavBar() {
     return (
         <>
             <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 m-1 rounded-2xl md:m-0 md:rounded-none mb-3">
-                <div className={"container px-4 mx-auto flex flex-wrap items-center justify-between"+(type !=="medical_center" ? " flex-nowrap" : "")}>
+                <div className={"container px-4 mx-auto flex flex-wrap items-center justify-between" + (type !== "medical_center" ? " flex-nowrap" : "")}>
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-                        <button onClick={() =>home()} className="font-bold text-2xl text-white">
+                        <button onClick={() => home()} className="font-bold text-2xl text-white">
                             {session ? sessionStorage.getItem("title") : "CareTYM"}
                         </button>
                         {   //logica de boton collapse y cerrar sesion
                             type !== "medical_center" ? (
-                                   null
-                                
+                                null
                             ) :
                                 (
                                     <button className="text-black cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded  block lg:hidden outline-none focus:outline-none" type="button" onClick={() => setNavbarOpen(!navbarOpen)}>
@@ -47,7 +47,7 @@ export default function NavBar() {
                                 )
                         }
                     </div>
-                    <div className={"lg:flex flex-grow justify-center" + (navbarOpen ? " flex" : " hidden") + (type !== "medical_center" ? "flex grow-0 flex-row" : "") } id="example-navbar-danger">
+                    <div className={"lg:flex flex-grow justify-center" + (navbarOpen ? " flex" : " hidden") + (type !== "medical_center" ? "flex grow-0 flex-row" : "")} id="example-navbar-danger">
                         <ul className="flex flex-col items-center lg:flex-row list-none lg:ml-auto">
                             {   // logica ref de tipos de usuarios
                                 type === "medical_center" && session ? (
@@ -100,7 +100,7 @@ export default function NavBar() {
                                 )
                         }
                     </div>
-                    
+
                 </div>
             </nav>
         </>
