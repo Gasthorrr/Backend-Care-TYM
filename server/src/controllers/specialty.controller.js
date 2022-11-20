@@ -33,7 +33,7 @@ const getSpecialties = async(req,res) =>{
 
 const getSpecialtiesPatient = async(req,res) =>{
     try{
-        const centerId=req.body.centerId;
+        const centerId=req.params.centerId;
         const client = await getConnection.client;
         const query = await client.query(`select * from specialty where medical_center_id=$1`,[centerId]);
         const result = query['rows'];

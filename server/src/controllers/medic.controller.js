@@ -33,8 +33,8 @@ const getMedics = async(req,res) =>{
 const getMedicsPatient = async(req,res) =>{
     try{
         const client = await getConnection.client;
-        const centerId = req.body.centerId;
-        const specialtyId = req.body.specialtyId;
+        const centerId = req.params.centerId;
+        const specialtyId = req.params.specialtyId;
         const query = await client.query(`select * from doctor where (id_medical_center=$1 and id_specialty=$2)`,[centerId,specialtyId]);
         const result = query['rows']
         res.json(result);
