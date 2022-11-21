@@ -60,6 +60,7 @@ const addAttention = async(req,res) =>{
         const startTime = req.body.startTime;
         const estimatedEnd = req.body.estimatedEnd;
 
+        console.log(req.body)
 
         if((medicRut === undefined) || (patientRut === undefined) || (date === undefined)|| (startTime === undefined)|| (estimatedEnd === undefined)){
             return res.status(400).json({message: "Bad Request. Please fill all fields"});

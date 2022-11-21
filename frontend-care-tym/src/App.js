@@ -52,7 +52,7 @@ export default function App() {
 
                         <Route path="/:id" element={<LoginSchedule/>}/>
                         <Route path="/register/:rut" element={<Register/>}/>
-                        <Route path="/schedule/:rut/:id" element={<Schedule/>}/>
+                        <Route path="/schedule/" element={<Schedule/>}/>
 
 
                         <Route path="/recovery" element={<Login />} />

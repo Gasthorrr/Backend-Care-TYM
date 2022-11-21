@@ -6,10 +6,10 @@ const attentionController = require("../controllers/attention.controller");
 const specialtyController = require("../controllers/specialty.controller");
 const medicController = require("../controllers/medic.controller");
 const medicCenterController = require("../controllers/medicCenter.controller");
-const medicChainController = require("../controllers/medicChain.controller");
+
 
 //// see medic chain info
-router.get("/chainInfo/:chainId",medicChainController.getMedicChain);
+//lo cambie jejeje
 
 //// see available centers
 router.get("/available_centers/:chainId",medicCenterController.getMedicCentersByChainId);

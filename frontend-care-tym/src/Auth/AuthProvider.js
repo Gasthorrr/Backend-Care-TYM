@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
                 console.log(data.data_user)
                 const data_user = data.data_user
                 sessionStorage.setItem("data_patient", JSON.stringify(data_user))
-                return history("/schedule/" + decode.key + "/" + idCenter)
+                return history("/schedule/")
             }
 
         }
