@@ -35,7 +35,7 @@ app.use('/api/center',verifyToken,require('./routes/center'));
 
 app.use('/api/medic',verifyToken, require('./routes/medic'));
 
-app.use('/api/patient', require('./routes/patient'));
+app.use('/api/patient', verifyToken, require('./routes/patient'));
 
 app.use('/api/auth', require('./routes/auth'));
 

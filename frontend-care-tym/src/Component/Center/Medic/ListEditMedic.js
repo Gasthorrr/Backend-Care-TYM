@@ -72,9 +72,6 @@ export default function ListEditMedic(props) {
                 confirmButtonColor: "#1D4ED8"
             })
         }
-
-
-
     }
 
 

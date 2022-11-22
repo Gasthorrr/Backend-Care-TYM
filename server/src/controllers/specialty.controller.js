@@ -19,7 +19,6 @@ const getSpecialty = async(req,res) =>{
 const getSpecialties = async(req,res) =>{
 
     try{
-        const id = req.params.id;
         const centerId=req.user.id;
         const client = await getConnection.client;
         const query = await client.query(`select * from specialty where medical_center_id=$1`,[centerId]);
@@ -31,6 +30,21 @@ const getSpecialties = async(req,res) =>{
     }
     
 };
+
+const getSpecialtiesPatient = async(req,res) =>{
+    try{
+        const centerId=req.params.centerId;
+        const client = await getConnection.client;
+        const query = await client.query(`select * from specialty where medical_center_id=$1`,[centerId]);
+        const result = query['rows'];
+        res.json(result);
+    }catch(error){
+        res.status(500);
+        res.send(error.message);
+    }
+    
+};
+
 
 const addSpecialty = async(req,res) =>{
     try{
@@ -92,6 +106,7 @@ const updateSpecialty = async(req,res) =>{
 const methods = {
     getSpecialty,
     getSpecialties,
+    getSpecialtiesPatient,
     addSpecialty,
     deleteSpecialty,
     updateSpecialty,

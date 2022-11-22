@@ -3,11 +3,11 @@ const passwordManager = require("../passwordManager");
 
 const getMedicChain = async(req,res) =>{
     try{
-        const id = req.params.id;
+        const id = req.params.chainId;
         const client = await getConnection.client;
+        console.log("iddddddddddddd: "+id);
         const query = await client.query(`select id,name,email from medical_chain where id=$1`,[id]);
-        const result = query['rows'][0]
-        console.log(result)
+        const result = query['rows'][0];
         res.json(result);
     }catch(error){
         res.status(500);
