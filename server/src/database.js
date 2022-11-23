@@ -1,13 +1,14 @@
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
 const passwordManager = require("./passwordManager");
+require('dotenv').config()
 
 const databaseAccess = {
-    database: 'railway',
-    host: 'containers-us-west-60.railway.app',
-    password: 'ItZGES5HKkPtd5VjCNpZ',
-    port: 6535,
-    user: 'postgres',
+    database: process.env.DATABASE,
+    host: process.env.HOST,
+    password: process.env.PASSWORD,
+    port: process.env.PORT,
+    user: process.env.USER,
 };//reemplazar por .env
 
 const client = new Pool(databaseAccess);

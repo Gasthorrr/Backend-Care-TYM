@@ -29,7 +29,7 @@ export default function CreateCenter(props) {
         x.preventDefault()
 
         setLoading(!loading)
-        const resp = await postRequest("http://127.0.0.1:8000/api/chain", JSON.stringify(data))
+        const resp = await postRequest(process.env.REACT_APP_URL+"/api/chain", JSON.stringify(data))
         setLoading(false)
         if (resp.status === 200) {
             await Swal.fire("Accion exitosa", "Centro creado exitosamente!!", "success")

@@ -18,7 +18,7 @@ export default function EditSpecialty(props){
                 <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" value={name} onChange={e=>setName(e.target.value)}/>
 
                 <div className="my-2">
-                    <BottonsUpdate text={"Actualizar especialidad"} data={{name: name}} api={"http://127.0.0.1:8000/api/center/specialty/"+ props.edit.id}/>
+                    <BottonsUpdate text={"Actualizar especialidad"} data={{name: name}} api={process.env.REACT_APP_URL+"/api/center/specialty/"+ props.edit.id}/>
                 </div>
 
             </div>

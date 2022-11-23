@@ -41,7 +41,7 @@ export default function EditCoor(props) {
                 <input className="bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5" onChange={e=>setPassword(e.target.value)}/>
 
                 <div className="my-2">
-                    <BottonsUpdate text={"Actualizar coordinador"} data={data} api={"http://127.0.0.1:8000/api/center/coordinator/"+ props.edit.rut}/>
+                    <BottonsUpdate text={"Actualizar coordinador"} data={data} api={process.env.REACT_APP_URL+"/api/center/coordinator/"+ props.edit.rut}/>
                 </div>
 
             </div>

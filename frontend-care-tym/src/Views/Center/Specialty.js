@@ -14,7 +14,7 @@ export default function Specialty() {
             <div className="flex flex-col sm:flex-row justify-center px-1">
                 <div className="flex flex-col">
                     <button className="bg-blue-700 sm:mx-2 text-white font-medium p-2.5 rounded-xl shadow-xl mt-4 hover:shadow-none" onClick={() => setType(1)}>Añadir especialidad</button>
-                    <ListSpecialty api={"http://127.0.0.1:8000/api/center/specialty"} title={"Lista de especialidades"} setType={setType} setEdit={setEdit}/>
+                    <ListSpecialty api={process.env.REACT_APP_URL+"/api/center/specialty"} title={"Lista de especialidades"} setType={setType} setEdit={setEdit}/>
                 </div>
 
 

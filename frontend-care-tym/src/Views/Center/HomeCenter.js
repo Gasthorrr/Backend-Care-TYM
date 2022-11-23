@@ -8,11 +8,11 @@ export default function HomeCenter() {
                 <h1 className="text-center text-2xl font-semibold mt-2">Resumen centro medico</h1>
                 <div className="flex flex-col sm:flex-row flex-nowrap my-5">
 
-                    <ListShort title={"Especialidades globales"} api={"http://127.0.0.1:8000/api/center/specialty"}/>
+                    <ListShort title={"Especialidades globales"} api={process.env.REACT_APP_URL+"/api/center/specialty"}/>
 
-                    <ListMedicCoor title={"Medicos"} api={"http://127.0.0.1:8000/api/center/medic"} route={"/center/medic"}/>
+                    <ListMedicCoor title={"Medicos"} api={process.env.REACT_APP_URL+"/api/center/medic"} route={"/center/medic"}/>
 
-                    <ListMedicCoor title={"Coordinadores"} api={"http://127.0.0.1:8000/api/center/coordinator"} route={"/center/coordinator"}/>
+                    <ListMedicCoor title={"Coordinadores"} api={process.env.REACT_APP_URL+"/api/center/coordinator"} route={"/center/coordinator"}/>
 
                 </div>
 

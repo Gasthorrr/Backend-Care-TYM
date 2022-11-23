@@ -25,7 +25,7 @@ export default function CreateCoor() {
         x.preventDefault()
         if(dni.CL.validate(document.getElementById("rut").value)){
             setLoading(!loading)
-            const resp = await postRequest("http://127.0.0.1:8000/api/center/coordinator", JSON.stringify(data))
+            const resp = await postRequest(process.env.REACT_APP_URL+"/api/center/coordinator", JSON.stringify(data))
             setLoading(false)
             if (resp.status === 200) {
                 await Swal.fire("Accion exitosa", "Medico creado exitosamente!!", "success")

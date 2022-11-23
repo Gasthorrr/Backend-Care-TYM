@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Swal from "sweetalert2"
-import { getRequest, postRequest} from "../../Services/Request"
+import { getRequest, postRequest } from "../../Services/Request"
 
 export default function Schedule() {
 
@@ -36,7 +36,7 @@ export default function Schedule() {
 
     useEffect(() => {
         const getCenters = async () => {
-            setCenters(await getRequest("http://127.0.0.1:8000/api/patient/available_centers/" + data_chain.id))
+            setCenters(await getRequest(process.env.REACT_APP_URL+"/api/patient/available_centers/" + data_chain.id))
             setLoadingCenter(false)
             console.log(formatDate)
         }
@@ -46,8 +46,8 @@ export default function Schedule() {
 
     useEffect(() => {
         const getSpecialtys = async () => {
-            if(center !== undefined){
-                setSpecialtys(await getRequest("http://127.0.0.1:8000/api/patient/available_specialties/" + center))
+            if (center !== undefined) {
+                setSpecialtys(await getRequest(process.env.REACT_APP_URL+"/api/patient/available_specialties/" + center))
                 setLoadingSpecialty(false)
             }
         }
@@ -58,7 +58,7 @@ export default function Schedule() {
     useEffect(() => {
         const getMedics = async () => {
             if (center !== undefined && specialty !== undefined) {
-                setMedics(await getRequest("http://127.0.0.1:8000/api/patient/available_medics/" + center + "/" + specialty))
+                setMedics(await getRequest(process.env.REACT_APP_URL+"/api/patient/available_medics/" + center + "/" + specialty))
                 setLoadingMedic(false)
             }
         }
@@ -69,7 +69,7 @@ export default function Schedule() {
     useEffect(() => {
         const getBlock = async () => {
             if (center !== undefined && specialty !== undefined && selectDate !== undefined && selectDate !== undefined) {
-                setBlocks(await getRequest("http://127.0.0.1:8000/api/patient/available_attentions/" + medic + "/" + selectDate))
+                setBlocks(await getRequest(process.env.REACT_APP_URL+"/api/patient/available_attentions/" + medic + "/" + selectDate))
                 setLoadingBlock(false)
             }
             console.log(blocks)
@@ -78,11 +78,11 @@ export default function Schedule() {
 
     }, [specialty, center, medic, selectDate])
 
-    const handleSubmit = async() => {
+    const handleSubmit = async () => {
 
         const submit = await Swal.fire({
             title: '¿Estas seguro que quieres agendar la hora?',
-            text: "Medico "+medic+" con fecha "+selectDate+" a las " + block,
+            text: "Medico " + medic + " con fecha " + selectDate + " a las " + block,
             icon: "warning",
             showCancelButton: true,
             cancelButtonText: "Cancelar",
@@ -91,7 +91,7 @@ export default function Schedule() {
             confirmButtonColor: "#1D4ED8"
         })
         if (submit.isConfirmed) {
-            const resp = await postRequest("http://127.0.0.1:8000/api/patient/my_attentions/",JSON.stringify({"medicRut" : medic, "patientRut" : data_user.rut, "date" : selectDate, "startTime" : block[0], "estimatedEnd" : block[1]}))
+            const resp = await postRequest(process.env.REACT_APP_URL+"/api/patient/my_attentions/", JSON.stringify({ "medicRut": medic, "patientRut": data_user.rut, "date": selectDate, "startTime": block[0], "estimatedEnd": block[1] }))
             if (resp.status === 200) {
                 Swal.fire({
                     title: "Hora agendada, se envio una copia a su correo electronico.",
@@ -116,8 +116,10 @@ export default function Schedule() {
         <div className="flex justify-center">
             <div className="m-2 flex-col ">
 
-                <div className="my-5 sm:mx-4 sm:w-[700px] py-5 px-2 bg-slate-50 rounded-xl shadow-lg flex flex-col justify-center">
-                    <h1 className="text-center text-lg font-medium mb-5">Datos del usuario</h1>
+                <button className="bg-blue-600 p-3 rounded-xl shadow-lg font-medium text-white my-2 sm:m-4">Mis horas medicas</button>
+
+                <div className="mb-5 sm:mx-4 sm:w-[700px] py-5 px-2 bg-slate-50 rounded-xl shadow-lg flex flex-col justify-center">
+                    <h1 className="text-center text-xl font-medium mb-5">Datos del usuario</h1>
                     <div className="grid grid-cols-2 sm:grid-cols-4">
                         <h1 className="text-end mr-2 mb-2 font-medium">Nombre completo:</h1>
                         <h1>{data_user.full_name}</h1>
@@ -136,15 +138,15 @@ export default function Schedule() {
                 </div>
 
                 <div className="my-5 sm:mx-4 sm:w-[700px] p-5 bg-slate-50 rounded-xl shadow-lg flex flex-col justify-center">
-                    <h1 className="text-center text-lg font-medium mb-5">Agendamiento de hora medica</h1>
+                    <h1 className="text-center text-xl font-medium mb-5">Agendamiento de hora medica</h1>
 
 
                     <div className="flex flex-col sm:flex-row mb-5">
-                        <div className=" mx-auto sm:mx-5 sm:my-auto rounded-full bg-blue-600 w-10 h-10 flex justify-center ">
-                            <h1 className="text-white font-medium text-xl">1</h1>
+                        <div className=" m-auto sm:mx-5 sm:my-auto rounded-full bg-blue-600 w-10 h-10 flex justify-center ">
+                            <h1 className="text-white font-medium text-xl m-auto">1</h1>
                         </div>
                         <div className="flex-auto">
-                            <h1 className="my-5 text-center sm:text-start">Selecciona un centro medico</h1>
+                            <h1 className="my-5 text-center sm:text-start font-medium text-lg">Selecciona un centro medico</h1>
                             {
                                 loadingCenter ? (<p>Cargando...</p>) :
                                     (
@@ -166,10 +168,10 @@ export default function Schedule() {
 
                     <div className="flex flex-col sm:flex-row mb-5">
                         <div className="mx-auto sm:mx-5 sm:my-auto rounded-full bg-blue-600 w-10 h-10 flex justify-center align-middle">
-                            <h1 className="text-white font-medium text-xl">2</h1>
+                            <h1 className="text-white font-medium text-xl m-auto">2</h1>
                         </div>
                         <div className="flex-auto">
-                            <h1 className="my-5 text-center sm:text-start">Selecciona una especialidad medica</h1>
+                            <h1 className="my-5 text-center sm:text-start font-medium text-lg">Selecciona una especialidad medica</h1>
                             {
                                 loadingSpecialty ? (<p>Primero debe seleccionar un centro medico</p>) :
                                     (
@@ -188,10 +190,10 @@ export default function Schedule() {
 
                     <div className="flex flex-col sm:flex-row mb-5">
                         <div className="mx-auto sm:mx-5 sm:my-auto rounded-full bg-blue-600 w-10 h-10 flex justify-center align-middle">
-                            <h1 className="text-white font-medium text-xl">3</h1>
+                            <h1 className="text-white font-medium text-xl m-auto">3</h1>
                         </div>
                         <div className="flex-auto">
-                            <h1 className="my-5 text-center sm:text-start">Selecciona un medic@</h1>
+                            <h1 className="my-5 text-center sm:text-start font-medium text-lg">Selecciona un medic@</h1>
                             {
                                 loadingMedic ? (<p>Primero debe seleccionar una especialidad</p>) :
                                     (
@@ -210,27 +212,27 @@ export default function Schedule() {
 
                     <div className="flex flex-col sm:flex-row mb-5">
                         <div className="mx-auto sm:mx-5 sm:my-auto rounded-full bg-blue-600 w-10 h-10 flex justify-center align-middle">
-                            <h1 className="text-white font-medium text-xl">4</h1>
+                            <h1 className="text-white font-medium text-xl m-auto">4</h1>
                         </div>
                         <div className="flex-auto">
-                            <h1 className="my-5 text-center sm:text-start">Selecciona una fecha</h1>
+                            <h1 className="my-5 text-center sm:text-start font-medium text-lg">Selecciona una fecha</h1>
                             <input type="date" onChange={(e) => setSelectDate(e.target.value)} min={formatDate} className={"bg-gray-100 border border-gray-500 rounded-lg shadow-lg block w-full p-2.5"} />
                         </div>
                     </div>
 
                     <div className="flex flex-col sm:flex-row mb-5">
                         <div className="mx-auto sm:mx-5 sm:mt-9 rounded-full bg-blue-600 w-10 h-10 flex justify-center align-middle">
-                            <h1 className="text-white font-medium text-xl">5</h1>
+                            <h1 className="text-white font-medium text-xl m-auto">5</h1>
                         </div>
                         <div className="flex-auto">
-                            <h1 className="my-5 text-center sm:text-start">Selecciona una hora</h1>
+                            <h1 className="my-5 text-center sm:text-start font-medium text-lg">Selecciona una hora</h1>
                             {
                                 loadingBlock ? (<p>Completa todos los campos requeridos!</p>) :
                                     (
                                         <div className="grid grid-cols-2 gap-4">
                                             {
                                                 blocks.map((x) => (
-                                                    <button id={x} onClick={(e) => setBlock(x)} className="bg-gray-100 border-2 border-blue-600 rounded-full shadow-lg block w-full p-2.5">
+                                                    <button id={x} onClick={(e) => setBlock(x)} className="bg-blue-600 text-white text-base border-2 border-blue-600 rounded-full font-medium shadow-md block w-full p-2.5 focus:bg-white focus:text-black hover:bg-blue-700">
                                                         {x[0]}
                                                     </button>
                                                 ))
@@ -243,26 +245,42 @@ export default function Schedule() {
 
                     <div className="flex flex-col sm:flex-row mb-5">
                         <div className="mx-auto sm:mx-5 sm:mt-9 rounded-full bg-blue-600 w-10 h-10 flex justify-center align-middle">
-                            <h1 className="text-white font-medium text-xl">6</h1>
+                            <h1 className="text-white font-medium text-xl m-auto">6</h1>
                         </div>
                         <div className="flex-auto">
-                            <h1 className="my-5 text-center sm:text-start">Resumen de agendamiento</h1>
+                            <h1 className="my-5 text-center sm:text-start font-medium text-lg">Resumen de agendamiento</h1>
                             {
                                 block.length === 0 ? (<p>Completa hasta el punto 5 para ver tu resumen.</p>) :
                                     (
-                                        <>
-                                            <h1>Centro medico: {center}</h1>
-                                            <h1>Especialidad: {specialty}</h1>
-                                            <h1>Medico: {medic}</h1>
-                                            <h1>Fecha: {selectDate}</h1>
-                                            <h1>Hora: {block[0]}</h1>
-                                        </>
+                                        <div className="flex flex-col justify-start ">
+                                            <div className="flex flex-row m-1">
+                                                <h1 className="text-end font-medium mr-1 w-28">Centro medico: </h1>
+                                                <h1 className="text-start">{center}</h1>
+                                            </div>
+                                            <div className="flex flex-row m-1">
+                                                <h1 className="text-end font-medium mr-1 w-28">Especialidad: </h1>
+                                                <h1 className="text-start">{specialty}</h1>
+                                            </div>
+                                            <div className="flex flex-row m-1">
+                                                <h1 className="text-end font-medium mr-1 w-28">Medico: </h1>
+                                                <h1 className="text-start">{medic}</h1>
+                                            </div>
+                                            <div className="flex flex-row m-1">
+                                                <h1 className="text-end font-medium mr-1  w-28">Fecha: </h1>
+                                                <h1 className="text-start">{selectDate}</h1>
+                                            </div>
+                                            <div className="flex flex-row m-1">
+                                                <h1 className="text-end font-medium mr-1 w-28">Hora: </h1>
+                                                <h1 className="text-start">{block[0]}</h1>
+                                            </div>
+                                            <button className="bg-blue-600 p-2 rounded-full text-white mt-6 font-medium" onClick={handleSubmit}>Agendar hora</button>
+                                        </div>
                                     )
                             }
                         </div>
                     </div>
 
-                    <button className="bg-blue-600 p-2 rounded-full text-white" onClick={handleSubmit}>Agendar hora</button>
+                    
 
                 </div>
             </div >

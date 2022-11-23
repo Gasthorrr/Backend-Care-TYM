@@ -16,7 +16,7 @@ export default function EditCenter() {
 
     useEffect(() => {
         const getData = async () => {
-            const data = await getRequest("http://127.0.0.1:8000/api/chain/" + id)
+            const data = await getRequest(process.env.REACT_APP_URL+"/api/chain/" + id)
             setName(data.name)
             setAddress(data.address)
             setCity(data.city)
@@ -71,10 +71,10 @@ export default function EditCenter() {
                             <div id="error" className="text-red-500 text-center"></div>
 
                             <div className="grid grid-cols-2">
-                                <BottonsUpdate api={"http://127.0.0.1:8000/api/chain/" + id} text={"Actualizar"} load={"Actualizando"} data={data} error={"Error al actualizar"} />
+                                <BottonsUpdate api={process.env.REACT_APP_URL+"/api/chain/" + id} text={"Actualizar"} load={"Actualizando"} data={data} error={"Error al actualizar"} />
                                 <BottonsCancel redirect={"/chain"} text={"Cancelar"} />
                             </div>
-                            <BottonsDelete api={"http://127.0.0.1:8000/api/chain/" + id} text={"Eliminar centro medico"} load={"Eliminando"} error={"Error al eliminar centro"} />
+                            <BottonsDelete api={process.env.REACT_APP_URL+"/api/chain/" + id} text={"Eliminar centro medico"} load={"Eliminando"} error={"Error al eliminar centro"} />
 
                         </form>
                     </div>

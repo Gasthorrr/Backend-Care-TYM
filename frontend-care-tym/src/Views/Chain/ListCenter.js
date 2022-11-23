@@ -11,7 +11,7 @@ export default function ListChain(props) {
     useEffect(() => {
 
         const request = async () => {
-            setCenter(await getRequest("http://127.0.0.1:8000/api/" + props.type))
+            setCenter(await getRequest(process.env.REACT_APP_URL+"/api/" + props.type))
         }
 
         request()

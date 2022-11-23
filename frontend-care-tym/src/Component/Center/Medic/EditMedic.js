@@ -28,7 +28,7 @@ export default function EditMedic(props) {
 
     useEffect(()=>{
         const getData = async() => {
-            setDataSpecialty(await getRequest("http://127.0.0.1:8000/api/center/specialty/"))
+            setDataSpecialty(await getRequest(process.env.REACT_APP_URL+"/api/center/specialty/"))
             setLoading(false)
         }
         getData()

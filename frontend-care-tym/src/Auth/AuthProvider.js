@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 //import { UseLocalStorage } from "./UseLocalStorage";
 import jwt from "jwt-decode"
+import env from "react-dotenv";
 
 
 const AuthContext = createContext();
@@ -14,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     const history = useNavigate()
 
     const Login = async (data,idCenter) => {
-        const resp = await fetch("http://127.0.0.1:8000/api/login/", {
+        const resp = await fetch(process.env.REACT_APP_URL+"/api/login/", {
             headers: {
                 "Content-Type": "application/json",
             },

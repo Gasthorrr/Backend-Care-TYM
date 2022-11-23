@@ -25,7 +25,7 @@ export default function Create() {
         x.preventDefault()
 
         setLoading(!loading)
-        const resp = await postRequest("http://127.0.0.1:8000/api/admin", JSON.stringify(data))
+        const resp = await postRequest(process.env.REACT_APP_URL+"/api/admin", JSON.stringify(data))
         setLoading(false)
         if (resp.status === 200) {
             await Swal.fire("Accion exitosa", "Cadena medica creada exitosamente!!", "success")

@@ -35,7 +35,7 @@ export default function ListSpecialty(props) {
             confirmButtonColor: "#D33"
         })
         if (deleteAccion.isConfirmed) {
-            const resp = await deleteRequest("http://127.0.0.1:8000/api/center/specialty/" + x.id)
+            const resp = await deleteRequest(process.env.REACT_APP_URL+"/api/center/specialty/" + x.id)
             if (resp.status === 200) {
                 Swal.fire({
                     title: x.rut + " eliminado con exito!",

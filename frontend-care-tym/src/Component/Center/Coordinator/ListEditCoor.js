@@ -51,7 +51,7 @@ export default function ListEditCoor(props) {
             confirmButtonColor: "#D33"
         })
         if (deleteAccion.isConfirmed) {
-            const resp = await deleteRequest("http://127.0.0.1:8000/api/center/coordinator/" + x.rut)
+            const resp = await deleteRequest(process.env.REACT_APP_URL+"/api/center/coordinator/" + x.rut)
             if (resp.status === 200) {
                 Swal.fire({
                     title: "Coordinador con rut: " + x.rut + " eliminado con exito!",

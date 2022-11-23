@@ -32,7 +32,7 @@ export default function CreateMedic() {
 
     useEffect(()=>{
         const getData = async() => {
-            setDataSpecialty(await getRequest("http://127.0.0.1:8000/api/center/specialty/"))
+            setDataSpecialty(await getRequest(process.env.REACT_APP_URL+"/api/center/specialty/"))
             setLoading(false)
         }
         getData()
@@ -42,7 +42,7 @@ export default function CreateMedic() {
         x.preventDefault()
         if(dni.CL.validate(document.getElementById("rut").value)){
             setLoading(!loading)
-            const resp = await postRequest("http://127.0.0.1:8000/api/center/medic", JSON.stringify(data))
+            const resp = await postRequest(process.env.REACT_APP_URL+"/api/center/medic", JSON.stringify(data))
             setLoading(false)
             if (resp.status === 200) {
                 await Swal.fire("Accion exitosa", "Medico creado exitosamente!!", "success")

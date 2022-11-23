@@ -13,7 +13,7 @@ export default function CreateSpecialty() {
         x.preventDefault()
 
         setLoading(!loading)
-        const resp = await postRequest("http://127.0.0.1:8000/api/center/specialty", JSON.stringify({ name: specialty }))
+        const resp = await postRequest(process.env.REACT_APP_URL+"/api/center/specialty", JSON.stringify({ name: specialty }))
         setLoading(false)
         if (resp.status === 200) {
             await Swal.fire("Accion exitosa", "Especialidad creada exitosamente!!", "success")

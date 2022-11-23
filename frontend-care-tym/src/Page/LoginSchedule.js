@@ -20,7 +20,7 @@ export default function LoginSchedule() {
 
     useEffect(()=>{
         const getDataChain = async() => {
-            const data = await getRequest("http://127.0.0.1:8000/api/auth/chainInfo/"+id)
+            const data = await getRequest(process.env.REACT_APP_URL+"/api/auth/chainInfo/"+id)
             sessionStorage.setItem("data_chain", JSON.stringify(data))
             const title = JSON.parse(sessionStorage.getItem("data_chain")).name
             console.log(title)
@@ -33,7 +33,7 @@ export default function LoginSchedule() {
     //Realiza consulta a backend para verificar si el usuario existe
     const handleRut = async(e,rut) => {
         e.preventDefault()
-        const resp = await postRequest("http://127.0.0.1:8000/api/auth/",JSON.stringify({rut}))
+        const resp = await postRequest(process.env.REACT_APP_URL+"/api/auth/",JSON.stringify({rut}))
         const verification = await resp.json()
         
         console.log(Object.entries(verification).length)

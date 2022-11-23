@@ -14,7 +14,7 @@ export default function Medic() {
             <div className="flex flex-col sm:flex-row justify-center px-1">
                 <div className="flex flex-col">
                     <button className="bg-blue-700 sm:mx-4 text-white font-medium p-2.5 rounded-xl shadow-xl mt-4 hover:shadow-none" onClick={() => {setType(1)}}>Añadir medico</button>
-                    <ListEditMedic api={"http://127.0.0.1:8000/api/center/medic"} title={"Lista de medicos"} setEdit={setEdit} setType={setType} />
+                    <ListEditMedic api={process.env.REACT_APP_URL+"/api/center/medic"} title={"Lista de medicos"} setEdit={setEdit} setType={setType} />
                 </div>
 
                 { //temporal !!!!!!!?
@@ -24,24 +24,14 @@ export default function Medic() {
 
                         </div>
                     ) : (
-
                         type === 1 ? (
                             <CreateMedic />
                         ) : (
                             <EditMedic edit={edit} />
                         )
-
                     )
-
                 }
-
-
-
             </div>
-            <div>
-
-            </div>
-
         </div>
     )
 }

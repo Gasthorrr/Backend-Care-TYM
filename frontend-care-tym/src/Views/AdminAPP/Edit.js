@@ -14,7 +14,7 @@ export default function Edit(props) {
 
     useEffect(() => {
         const getData = async () => {
-            const data = await getRequest("http://127.0.0.1:8000/api/admin/" + id)
+            const data = await getRequest(process.env.REACT_APP_URL+"/api/admin/" + id)
             setName(data.name)
             setEmail(data.email)
         }
@@ -54,10 +54,10 @@ export default function Edit(props) {
                             <div id="error" className="text-red-500 text-center"></div>
 
                             <div className="grid grid-cols-2">
-                                <BottonsUpdate api={"http://127.0.0.1:8000/api/admin/" + id} text={"Actualizar"} load={"Actualizando"} data={data} error={"Error al actualizar"} />
+                                <BottonsUpdate api={process.env.REACT_APP_URL+"/api/admin/" + id} text={"Actualizar"} load={"Actualizando"} data={data} error={"Error al actualizar"} />
                                 <BottonsCancel redirect={"/admin"} text={"Cancelar"} />
                             </div>
-                            <BottonsDelete api={"http://127.0.0.1:8000/api/admin/" + id} text={"Eliminar cadena medica"} load={"Eliminando"} error={"Error al eliminar la cadena"} />
+                            <BottonsDelete api={process.env.REACT_APP_URL+"/api/admin/" + id} text={"Eliminar cadena medica"} load={"Eliminando"} error={"Error al eliminar la cadena"} />
 
                         </form>
                     </div>
