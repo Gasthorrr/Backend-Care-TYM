@@ -1,4 +1,6 @@
 const getConnection = require("./../database");
+const nodemailer = require('nodemailer');
+const express = require('express');
 
 function getAge(date){
     const today = new Date();
@@ -18,6 +20,33 @@ function temporalPass(){
     return password;
 }
 
+function sendMail(email,password){
+    let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "official.caretym@gmail.com",
+            pass: "joekbgaowkklwqzf",
+        },
+        tls: {
+            rejectUnauthorized: false,
+        }
+    })
+    
+    let mailOptions = {
+        from: "official.caretym@gmail.com",
+        to: email,
+        subject: "Contraseña Provisoria",
+        text: password
+    }
+    
+    transporter.sendMail(mailOptions, function(err, success){
+        if(err){
+            console.log(err)
+        } else {
+            console.log("Email sent successfully")
+        }
+    })
+}
 const createAccount = async(req,res) => {
     try{
         const rut = req.body.rut;
@@ -38,6 +67,7 @@ const createAccount = async(req,res) => {
         const client = await getConnection.client;
         await client.query(`INSERT INTO "patient" ("rut", "full_name", "password", "phone", "age", "gender", "address", "email", "health_coverage", "date_of_birth", "state") 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, [rut, full_name, password, phone, age, gender, address, email, health_coverage, date_of_birth, state]);
+        sendMail(email,password);
         res.status(200).json({ message: "Patient added" });
 
     } catch (error) {
