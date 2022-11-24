@@ -42,13 +42,13 @@ export default function LoginSchedule() {
             history("/register/"+rut)
         }
 
-        if (verification.state === "verificado") {
+        //if (verification.state === "verificado") {
             document.getElementById("password").className += "block"
             document.getElementById("password-input").focus()
             document.getElementById("button").onclick = handleValidation
             document.getElementById("button").innerText = "Iniciar sesion"
             document.getElementById("rut").disabled = true
-        }
+        //}
     }
 
     const handleValidation = () => {

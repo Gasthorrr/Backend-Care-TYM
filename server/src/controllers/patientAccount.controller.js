@@ -8,7 +8,7 @@ function getAge(date){
 }
 
 function temporalPass(){
-    const password = '';
+    let password = '';
     const str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 'abcdefghijklmnopqrstuvwxyz0123456789@#$';
 
     for(i=1;i<=8;i++){
@@ -20,17 +20,17 @@ function temporalPass(){
 
 const createAccount = async(req,res) => {
     try{
-        const rut = req.params.rut;
-        const full_name = req.params.full_name;
-        const date_of_birth = req.params.date_of_birth;
-        const phone = req.params.phone;
-        const gender = req.params.gender;
-        const address = req.params.address;
-        const email = req.params.email;
-        const health_coverage = req.params.health_coverage;
+        const rut = req.body.rut;
+        const full_name = req.body.full_name;
+        const date_of_birth = req.body.date_of_birth;
+        const phone = req.body.phone;
+        const gender = req.body.gender;
+        const address = req.body.address;
+        const email = req.body.email;
+        const health_coverage = req.body.health_coverage;
         const state = 'sin verificar';
         const age = getAge(date_of_birth);
-        const password = temporalPass();
+        const password = await temporalPass();
 
         if(rut === undefined || full_name === undefined || date_of_birth === undefined || phone === undefined || gender === undefined || address === undefined || email === undefined || health_coverage === undefined){
             return res.status(400).json({message: "Bad Request. Please fill all field"});
