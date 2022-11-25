@@ -41,7 +41,7 @@ const getAttentions = async(req,res) =>{
     try{
         const client = await getConnection.client;
         const rut = req.user.key;
-        const query = await client.query(`select * from attention where rut_pattient=$1`,[rut]);
+        const query = await client.query(`select id, rut_doctor, start_time, to_char(date, 'DD-MM-YYYY') as date from attention where rut_pattient=$1`,[rut]);
         const result = query['rows']
         res.json(result);
     }catch(error){

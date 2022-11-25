@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 
 const getEncriptedPassword  = async (password)=>{ 
     try {
-     const encripted = await bcrypt.hash(password,10);
+     const encripted = await bcrypt.hash(password,9);
      return(encripted);
     } catch (error) {
          return("Error");

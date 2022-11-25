@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 import { getRequest, postRequest } from "../../Services/Request"
 
 export default function Schedule() {
+
+    const history = useNavigate()
 
     const data_user = JSON.parse(sessionStorage.getItem("data_patient"))
     const data_chain = JSON.parse(sessionStorage.getItem("data_chain"))
@@ -116,7 +119,7 @@ export default function Schedule() {
         <div className="flex justify-center">
             <div className="m-2 flex-col ">
 
-                <button className="bg-blue-600 p-3 rounded-xl shadow-lg font-medium text-white my-2 sm:m-4">Mis horas medicas</button>
+                <button className="bg-blue-600 p-3 rounded-xl shadow-lg font-medium text-white my-2 sm:m-4" onClick={()=>history("/medical-hours")}>Mis horas medicas</button>
 
                 <div className="mb-5 sm:mx-4 sm:w-[700px] py-5 px-2 bg-slate-50 rounded-xl shadow-lg flex flex-col justify-center">
                     <h1 className="text-center text-xl font-medium mb-5">Datos del usuario</h1>

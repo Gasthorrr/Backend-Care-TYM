@@ -1,5 +1,6 @@
 const getConnection = require("./../database");
 const nodemailer = require('nodemailer');
+const passwordManager = require("../passwordManager");
 const express = require('express');
 
 function getAge(date){
@@ -11,7 +12,7 @@ function getAge(date){
 
 function temporalPass(){
     let password = '';
-    const str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 'abcdefghijklmnopqrstuvwxyz0123456789@#$';
+    const str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 'abcdefghijklmnopqrstuvwxyz0123456789';
 
     for(i=1;i<=8;i++){
         const char = Math.floor(Math.random() * str.length + 1);
@@ -65,8 +66,10 @@ const createAccount = async(req,res) => {
             return res.status(400).json({message: "Bad Request. Please fill all field"});
         }
         const client = await getConnection.client;
+        console.log(password)
+        const passEncripted = await passwordManager.getEncriptedPassword(password)
         await client.query(`INSERT INTO "patient" ("rut", "full_name", "password", "phone", "age", "gender", "address", "email", "health_coverage", "date_of_birth", "state") 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, [rut, full_name, password, phone, age, gender, address, email, health_coverage, date_of_birth, state]);
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, [rut, full_name, passEncripted, phone, age, gender, address, email, health_coverage, date_of_birth, state]);
         sendMail(email,password);
         res.status(200).json({ message: "Patient added" });
 

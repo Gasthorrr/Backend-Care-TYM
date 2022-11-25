@@ -73,6 +73,7 @@ const login = async (key, password) => {
             const encriptedPassword = queryValidarContraseña['rows'][0].password;
             const result = await passwordManager.validatePassword(password, encriptedPassword);
             /// validates that the password(user input) matches with the encriptedPassword(stored in the database)
+            console.log(queryValidarContraseña.rows);
             if (result == true) {
                 console.log(queryValidarContraseña.rows);
                 if (userType == "medical_chain" || userType == "medical_center") {
