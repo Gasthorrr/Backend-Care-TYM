@@ -2,15 +2,7 @@ const { query } = require("express");
 const { json } = require("sequelize");
 const getConnection = require("./../database");
 
-const validDaysDicctionary={
-    "Lunes":1,
-    "Martes":1,
-    "Miercoles":1,
-    "Jueves":1,
-    "Viernes":1,
-    "Sabado":1,
-    "Domingo":1
-};
+const validDaysDicctionary=["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"];
 
 const getBlocks = async(req,res) =>{
     try{
@@ -32,12 +24,9 @@ const addBlock = async(req,res) =>{
         const day=req.body.day;
         const startTime=req.body.startTime;
         const endTime=req.body.endTime;
-        if(day.indexOf(validDaysDicctionary) === -1){
+        console.log(validDaysDicctionary.indexOf(day))
+        if(validDaysDicctionary.indexOf(day) === -1){
             return res.status(403).json({error:"Invalid day value"});
-        }
-
-        if(medic_center_id !== undefined ){
-            await client.query(`update coordinator set id_medical_center=$1 where rut=$2`,[medic_center_id,rut]);
         }
         console.log(rut+","+day+","+startTime+","+endTime);  /// startTime, endTime -> "hh:mm:ss"
         const client = await getConnection.client;
