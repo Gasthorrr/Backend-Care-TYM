@@ -51,6 +51,35 @@ const getAttentions = async(req,res) =>{
     
 };
 
+const getAttentionsMedic = async(req,res) =>{
+    try{
+        const client = await getConnection.client;
+        const rut = req.user.key;
+        const query = await client.query(`select id, rut_doctor, start_time, to_char(date, 'DD-MM-YYYY') as date from attention where (rut_doctor=$1)`,[rut]);
+        const result = query['rows']
+        res.json(result);
+    }catch(error){
+        res.status(500);
+        res.send(error.message);
+    };
+    
+};
+
+const getAttentionsByDateMedic = async(req,res) =>{
+    try{
+        const client = await getConnection.client;
+        const rut = req.user.key;
+        const date = req.params.date;
+        const query = await client.query(`select id, rut_doctor, start_time, to_char(date, 'DD-MM-YYYY') as date from attention where (rut_doctor=$1 and date=$2)`,[rut,date]);
+        const result = query['rows']
+        res.json(result);
+    }catch(error){
+        res.status(500);
+        res.send(error.message);
+    };
+    
+};
+
 
 const addAttention = async(req,res) =>{
     try{
@@ -100,6 +129,8 @@ const methods = {
     getAvailableBlocks,
     getAttention,
     getAttentions,
+    getAttentionsMedic,
+    getAttentionsByDateMedic,
     addAttention,
     deleteAttention
 };
