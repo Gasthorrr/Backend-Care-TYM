@@ -32,7 +32,8 @@ function sendMail(email,password){
             rejectUnauthorized: false,
         }
     })
-    
+
+  
     let mailOptions = {
         from: "official.caretym@gmail.com",
         to: email,
@@ -48,6 +49,36 @@ function sendMail(email,password){
         }
     })
 }
+
+function customSendMail(email,customSubject,customText){
+    let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "official.caretym@gmail.com",
+            pass: "joekbgaowkklwqzf",
+        },
+        tls: {
+            rejectUnauthorized: false,
+        }
+    })
+
+  
+    let mailOptions = {
+        from: "official.caretym@gmail.com",
+        to: email,
+        subject: customSubject,
+        text: customText
+    }
+    
+    transporter.sendMail(mailOptions, function(err, success){
+        if(err){
+            console.log(err)
+        } else {
+            console.log("Email sent successfully")
+        }
+    })
+}
+
 const createAccount = async(req,res) => {
     try{
         const rut = req.body.rut;
@@ -71,7 +102,7 @@ const createAccount = async(req,res) => {
         await client.query(`INSERT INTO "patient" ("rut", "full_name", "password", "phone", "age", "gender", "address", "email", "health_coverage", "date_of_birth", "state") 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, [rut, full_name, passEncripted, phone, age, gender, address, email, health_coverage, date_of_birth, state]);
         sendMail(email,password);
-        res.status(200).json({ message: "Patient added" });
+        res.status(200).json({ message: "Patient added "});
 
     } catch (error) {
         res.status(500);
@@ -80,5 +111,6 @@ const createAccount = async(req,res) => {
 };
 
 module.exports = {
-    createAccount
+    createAccount,
+    customSendMail
 };

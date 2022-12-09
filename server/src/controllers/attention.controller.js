@@ -1,5 +1,6 @@
 const schedule = require("../scheduleManager");
 const getConnection = require("../database");
+const mailManager = require("./patientAccount.controller")
 
 
 const getAvailableBlocks = async(req,res) =>{
@@ -81,33 +82,54 @@ const getAttentionsByDateMedic = async(req,res) =>{
 };
 
 
-const addAttention = async(req,res) =>{
-    try{
+const addAttention = async (req, res) => {
+    try {
         const medicRut = req.body.medicRut;
-        const patientRut=req.user.key;
+        const patientRut = req.user.key;
         const date = req.body.date;
         const startTime = req.body.startTime;
         const estimatedEnd = req.body.estimatedEnd;
 
         console.log(req.body)
 
-        if((medicRut === undefined) || (patientRut === undefined) || (date === undefined)|| (startTime === undefined)|| (estimatedEnd === undefined)){
-            return res.status(400).json({message: "Bad Request. Please fill all fields"});
+        if ((medicRut === undefined) || (patientRut === undefined) || (date === undefined) || (startTime === undefined) || (estimatedEnd === undefined)) {
+            return res.status(400).json({ message: "Bad Request. Please fill all fields" });
         }
 
         console.log("add attention");
-        console.log(medicRut+","+patientRut+","+date+","+startTime+","+estimatedEnd);
-        
+        console.log(medicRut + "," + patientRut + "," + date + "," + startTime + "," + estimatedEnd);
+
         const client = await getConnection.client;
         await client.query(
             `INSERT INTO "attention" (rut_doctor,rut_pattient,date,start_time,estimated_finish_time) 
-            VALUES ($1,$2,$3,$4,$5)`, [medicRut,patientRut,date,startTime,estimatedEnd]);
+            VALUES ($1,$2,$3,$4,$5)`, [medicRut, patientRut, date, startTime, estimatedEnd]);
+
+        const currentDate = Date.now();
+        const now = new Date(currentDate);
+        const day = now.getDay();
+        const month = now.getMonth();
+        const year = now.getFullYear();
+        const hour = now.getHours();
+        const minutes = now.getMinutes();
+        const timeString = day + "/" + month + "/" + year + " a las  " + hour + ":" + minutes + "hrs"
+        
+        const p =await client.query('select * from patient where rut=$1', [patientRut]);
+        const m =await client.query('select * from doctor where rut=$1', [medicRut]);
+        
+        const email = p.rows[0]['email'];
+        const name = p.rows[0]['full_name'];
+        const medicName = m.rows[0]['full_name'];
+        console.log(email);
+        const subject = 'Hora reservada';
+        const text = 'Hola '+name+' acabas de reservar una hora con '+medicName+'  el dia '+timeString;
+        mailManager.customSendMail(email, subject, text);
         res.status(200).json({ message: "Attention added" });
-    }catch(error){
+
+    } catch (error) {
         res.status(500);
         res.send(error.message);
     }
-    
+
 };
 
 const deleteAttention = async(req,res) =>{
