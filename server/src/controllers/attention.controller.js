@@ -111,7 +111,7 @@ const addAttention = async (req, res) => {
         const year = now.getFullYear();
         const hour = now.getHours();
         const minutes = now.getMinutes();
-        const timeString = day + "/" + month + "/" + year + " a las  " + hour + ":" + minutes + "hrs"
+        const timeString = date+ " a las  " + startTime + "hrs"
         
         const p =await client.query('select * from patient where rut=$1', [patientRut]);
         const m =await client.query('select * from doctor where rut=$1', [medicRut]);
